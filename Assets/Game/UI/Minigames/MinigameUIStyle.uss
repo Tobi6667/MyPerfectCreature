@@ -1,0 +1,60 @@
+:root {
+}
+
+
+.hud {
+    flex-grow: 1;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    align-items: flex-end;
+}
+
+.timer {
+    flex-grow: 0;
+    width: 150px;
+    height: 100px;
+    align-items: stretch;
+    justify-content: flex-start;
+    flex-shrink: 1;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+
+.fullscreen-center {
+    flex-grow: 1;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+}
+
+.countdown-label {
+    font-size: 100px;
+
+}
+
+.injury-panel {
+    flex-grow: 0;
+    width: 300px;
+    height: 100px;
+    align-items: stretch;
+    justify-content: flex-start;
+    flex-shrink: 1;
+    flex-direction: column;
+    flex-wrap: wrap;
+    background-color: rgba(0, 255, 0, 0.5);
+}
+
+.ready-label {
+    font-size: 58px;
+
+}
+
+.hidden {
+    opacity: 0;
+}
+

@@ -1,0 +1,19 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Game/UI/Minigames/MinigameUIStyle.uss?fileID=7433441132597879392&amp;guid=1290eaec0adbf514eb64092aa49577c3&amp;type=3#MinigameUIStyle"/>
+    <ui:VisualElement name="HUD" class="hud">
+        <ui:Label text="Label" name="timer-label"/>
+    </ui:VisualElement>
+    <ui:VisualElement name="countdown" class="fullscreen-center">
+        <ui:Label text="3" name="countdown-label" class="countdown-label"/>
+    </ui:VisualElement>
+    <ui:VisualElement name="ready" class="fullscreen-center hidden ready-panel">
+        <ui:Label text="READY?" name="ready-label" class="ready-label"/>
+    </ui:VisualElement>
+    <ui:VisualElement name="tutorial" class="fullscreen-center hidden" style="right: 96px; opacity: 1;">
+        <ui:Label text="TUTORIAL" name="tutorial-label"/>
+    </ui:VisualElement>
+    <ui:VisualElement name="intro" class="fullscreen-center">
+        <ui:Label text="intro" name="intro-label" class="countdown-label"/>
+    </ui:VisualElement>
+    <ui:VisualElement name="Injury" class="injury-panel"/>
+</ui:UXML>

@@ -1,0 +1,25 @@
+using UnityEngine;
+
+namespace Game.Minigames
+{
+
+    public class GestureGameManager : MinigameBase
+    {
+        [SerializeField] private SoHandGesturesRoundData _data;
+        [SerializeField] private HandGestureController _controller;
+        protected override void BuildPipeline()
+        {
+            Pipeline = new MinigamePipeline();
+
+            foreach (var round in _data.rounds)
+            {
+                Pipeline
+                    .Add(new TutorialPhase(round.instruction))
+                    .Add(new ReadyPhase(2f))
+                    .Add(new CountdownPhase(3))
+                    .Add(new HandGestureGameplayPhase(round, _controller));
+            }
+            Pipeline.Add(new ResultPhase());
+        }
+    }
+}
