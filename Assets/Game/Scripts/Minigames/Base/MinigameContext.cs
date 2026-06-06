@@ -3,6 +3,7 @@ using Game.Input;
 using Game.Minigames;
 using System;
 using System.Collections;
+using UnityEngine;
 
 public class MinigameContext
 {
@@ -12,7 +13,7 @@ public class MinigameContext
 
     public int CountdownTime;
     public float ReadyTime;
-
+    public Transform StartTransform;
     public UIMinigameManager UI;
     public AudioMinigameManager Audio;
 

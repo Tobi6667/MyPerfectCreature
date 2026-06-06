@@ -13,16 +13,18 @@ namespace Game.Minigames
         protected MinigameContext Context;
         protected MinigamePipeline Pipeline;
         public event Action Completed;
-        protected virtual void SetContext(IInputReceiver _receiver)
-        {
-            Context = new MinigameContext
-            {
+        [SerializeField] private Transform _startTransform;
 
-                Receiver = _receiver,
-                UI = UIMinigameManager.Instance,
-                Audio = AudioMinigameManager.Instance
-            };
+        public void Initialize(MinigameContext context)
+        {
+            Context = context;
         }
+
+        public Transform GetStartTrans()
+        {
+            return _startTransform;
+        }
+
 
         public void StartMinigame()
         {

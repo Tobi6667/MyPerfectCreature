@@ -1,0 +1,28 @@
+using Game.Minigames;
+using UnityEngine;
+
+
+namespace Game.Minigames
+{
+
+    public class TorsoGameManager : MinigameBase
+    {
+        [SerializeField] private SoTorsoGameRoundData _data;
+
+        protected override void BuildPipeline()
+        {
+            Pipeline = new MinigamePipeline();
+
+            foreach (var round in _data.rounds)
+            {
+                Pipeline
+                    .Add(new TutorialPhase(round.instruction))
+                    .Add(new ReadyPhase(2f))
+                    .Add(new CountdownPhase(3))
+                    .Add(new TorsoGameplayPhase(round));
+            }
+            Pipeline.Add(new ResultPhase());
+        }
+
+    }
+}

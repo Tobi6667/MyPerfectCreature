@@ -49,7 +49,6 @@ namespace Game.Body
         private Vector3 baseScale;
         private DG.Tweening.Sequence _currentSequence;
         private Tween _delayedCall;
-        private bool _isActive = true;
         private UnityEngine.AI.NavMeshAgent _agent;
         private bool _isHopping = false;
 

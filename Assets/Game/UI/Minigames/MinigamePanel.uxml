@@ -1,7 +1,7 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/Game/UI/Minigames/MinigameUIStyle.uss?fileID=7433441132597879392&amp;guid=1290eaec0adbf514eb64092aa49577c3&amp;type=3#MinigameUIStyle"/>
-    <ui:VisualElement name="HUD" class="hud">
-        <ui:Label text="Label" name="timer-label"/>
+    <ui:VisualElement name="HUD" class="hud" style="margin-top: 0; padding-top: 32px; padding-right: 32px;">
+        <ui:Label text="Label" name="timer-label" style="font-size: 32px; -unity-font-style: bold;"/>
     </ui:VisualElement>
     <ui:VisualElement name="countdown" class="fullscreen-center">
         <ui:Label text="3" name="countdown-label" class="countdown-label"/>

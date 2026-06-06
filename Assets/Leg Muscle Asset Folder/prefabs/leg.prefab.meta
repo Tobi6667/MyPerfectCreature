@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 83799b8919e9940149f6f6851cf23993
+timeCreated: 1510346886
+licenseType: Store
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 104710
+  packageName: LEG Muscles Motion
+  packageVersion: 1.0
+  assetPath: Assets/Leg Muscle Asset Folder/prefabs/leg.prefab
+  uploadId: 493949

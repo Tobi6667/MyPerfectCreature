@@ -1,3 +1,4 @@
+using Game.Body;
 using System;
 using UnityEngine;
 
@@ -14,7 +15,8 @@ namespace Game.Input
         void OnLook(UnityEngine.Vector2 input);
         void OnMove(UnityEngine.Vector2 input);
         void OnInteract();
-
+        void OnMousePosition(Vector2 mouse);
+        void Bind(BodyPartBase bodypart);
         void OnInject();
 
     }

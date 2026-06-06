@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 6e8a761e2b4e541879919ce08ba8aecc
+timeCreated: 1512578146
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 104710
+  packageName: LEG Muscles Motion
+  packageVersion: 1.0
+  assetPath: Assets/Leg Muscle Asset Folder/Materials/bone material.mat
+  uploadId: 493949

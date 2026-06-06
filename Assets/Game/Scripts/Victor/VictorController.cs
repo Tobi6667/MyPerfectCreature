@@ -1,17 +1,19 @@
+using Game.Main;
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem.XR;
+using static UnityEditor.SceneView;
 
 namespace Game.Input
 {
     [RequireComponent(typeof(CharacterController))]
-    public class VictorController : MonoBehaviour, IInputReceiver
+    public class VictorController : MonoBehaviour, IInteractable
     {
 
         [SerializeField] private Transform _cameraReference;
         [SerializeField] private float _speed = 5f; 
         [SerializeField] private PlayerInputModule _inputModule;
-
+        private Action<IInteractable> onInteract;
 
         //[SerializeField] private Animator _animator;
 
@@ -23,30 +25,50 @@ namespace Game.Input
         public event Action Confirmed;
         public event Action Injected;
 
-        public void Initialize()
+       
+
+        public void Initialize(Action<IInteractable> onInteractCallback)
         {
             _controller = GetComponent<CharacterController>();
-            _inputModule.SetReceiver(this);
+            onInteract = onInteractCallback;
+            
         }
+
 
         public void OnConfirm()
         {
-            throw new System.NotImplementedException();
+
         }
 
         public void OnInject()
         {
-            throw new NotImplementedException();
+
         }
 
         public void OnInteract()
         {
-            throw new System.NotImplementedException();
+
+
+            Collider[] hits = Physics.OverlapSphere(transform.position, 2f);
+
+            foreach (var hit in hits)
+            {
+                if (hit.gameObject == gameObject)
+                    continue;
+
+                if (hit.TryGetComponent(out IInteractable interactable))
+                {
+                    Debug.Log(interactable);
+                    onInteract?.Invoke(interactable);
+                    break;
+                }
+            }
+
         }
 
         public void OnLook(Vector2 input)
         {
-            throw new System.NotImplementedException();
+
         }
 
         public void OnMove(Vector2 moveInput)

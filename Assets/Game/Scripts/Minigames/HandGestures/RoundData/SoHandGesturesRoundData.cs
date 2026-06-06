@@ -1,8 +1,11 @@
 using System;
 using UnityEngine;
 
-[CreateAssetMenu]
-public class SoHandGesturesRoundData : ScriptableObject
+namespace Game.Minigames
 {
-    public HandGesturesRoundData[] rounds;
+    [CreateAssetMenu]
+    public class SoHandGesturesRoundData : ScriptableObject
+    {
+        public HandGesturesRoundData[] rounds;
+    }
 }

@@ -1,26 +1,57 @@
 using UnityEngine;
-using GameInput;
 using Game.Input;
 using Game.Body;
 using Game.Minigames;
+using System.Collections.Generic;
 
 namespace Game.Main
 {
     public class GameManager : MonoBehaviour
     {
         [SerializeField] private VictorController _victorController;
-        //  [SerializeField] private BodyPartBase _handController;
-        [SerializeField] private PingPongManager _pingPongManager;
+
         [SerializeField] private PlayerInputModule _inputModule;
-        [SerializeField] private PingPongInputReceiver _pingPongReceiver;
-        // Start is called once before the first execution of Update after the MonoBehaviour is created
+        [SerializeField] private VictorInputReceiver _inputReceiver;
+
+
+        [SerializeField] private List<BodyPartBase> _bodypartsList;
+
+        public static GameManager Instance;
+
+
+        private void Awake()
+        {
+            Instance = this;
+        }
+
         void Start()
         {
-            //_victorController.Initialize();
-          //  _handController.Initialize();
-            _inputModule.SetReceiver(_pingPongReceiver);
-           // _pingPongManager.StartMinigame();
 
+            foreach (var part in _bodypartsList)
+            {
+                part.Initialize();
+            }
+            
+            _victorController.Initialize((interactor) =>
+            {
+                Debug.Log(interactor);
+                OnInteract(interactor);
+            });
+            _inputModule.SetReceiver(_inputReceiver);
+
+        }
+
+        public void ChangeReceiver(IInputReceiver inputReceiver)
+        {
+            Debug.Log(inputReceiver);
+            _inputModule.SetReceiver(inputReceiver);
+        }
+
+
+        private void OnInteract(IInteractable interactor)
+        {
+            Debug.Log(interactor);
+            MinigameManager.Instance.StartMinigame(interactor as BodyPartBase);
         }
 
         // Update is called once per frame

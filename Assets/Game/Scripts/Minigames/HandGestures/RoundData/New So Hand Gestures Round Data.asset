@@ -12,4 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e97c06b29e234774fb8b89e74da7d248, type: 3}
   m_Name: New So Hand Gestures Round Data
   m_EditorClassIdentifier: Assembly-CSharp::SoHandGesturesRoundData
-  rounds: []
+  rounds:
+  - roundId: 
+    instruction: 
+    showInstruction: 0
+    duration: 0
+    targetScore: 0
+    handGestures: 
+    gestureMatchThreshold: 1.5
+    gestureMatchTimer: 0
+    maxWrongCount: 3
+    resetTime: 0
+    gestureInterval: 0

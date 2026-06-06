@@ -192,6 +192,15 @@ namespace GameInput
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MousePosition"",
+                    ""type"": ""Value"",
+                    ""id"": ""51087db0-37c2-48a3-9fa3-ddd9869ea42c"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -588,6 +597,17 @@ namespace GameInput
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Inject"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c5372d44-e602-4e12-825e-e9c1b79e012a"",
+                    ""path"": ""<Mouse>/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""MousePosition"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1186,6 +1206,7 @@ namespace GameInput
             m_Gameplay_Sprint = m_Gameplay.FindAction("Sprint", throwIfNotFound: true);
             m_Gameplay_Confirm = m_Gameplay.FindAction("Confirm", throwIfNotFound: true);
             m_Gameplay_Inject = m_Gameplay.FindAction("Inject", throwIfNotFound: true);
+            m_Gameplay_MousePosition = m_Gameplay.FindAction("MousePosition", throwIfNotFound: true);
             // UI
             m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
             m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1290,6 +1311,7 @@ namespace GameInput
         private readonly InputAction m_Gameplay_Sprint;
         private readonly InputAction m_Gameplay_Confirm;
         private readonly InputAction m_Gameplay_Inject;
+        private readonly InputAction m_Gameplay_MousePosition;
         /// <summary>
         /// Provides access to input actions defined in input action map "Gameplay".
         /// </summary>
@@ -1345,6 +1367,10 @@ namespace GameInput
             /// Provides access to the underlying input action "Gameplay/Inject".
             /// </summary>
             public InputAction @Inject => m_Wrapper.m_Gameplay_Inject;
+            /// <summary>
+            /// Provides access to the underlying input action "Gameplay/MousePosition".
+            /// </summary>
+            public InputAction @MousePosition => m_Wrapper.m_Gameplay_MousePosition;
             /// <summary>
             /// Provides access to the underlying input action map instance.
             /// </summary>
@@ -1404,6 +1430,9 @@ namespace GameInput
                 @Inject.started += instance.OnInject;
                 @Inject.performed += instance.OnInject;
                 @Inject.canceled += instance.OnInject;
+                @MousePosition.started += instance.OnMousePosition;
+                @MousePosition.performed += instance.OnMousePosition;
+                @MousePosition.canceled += instance.OnMousePosition;
             }
 
             /// <summary>
@@ -1448,6 +1477,9 @@ namespace GameInput
                 @Inject.started -= instance.OnInject;
                 @Inject.performed -= instance.OnInject;
                 @Inject.canceled -= instance.OnInject;
+                @MousePosition.started -= instance.OnMousePosition;
+                @MousePosition.performed -= instance.OnMousePosition;
+                @MousePosition.canceled -= instance.OnMousePosition;
             }
 
             /// <summary>
@@ -1825,6 +1857,13 @@ namespace GameInput
             /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
             /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
             void OnInject(InputAction.CallbackContext context);
+            /// <summary>
+            /// Method invoked when associated input action "MousePosition" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+            /// </summary>
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+            void OnMousePosition(InputAction.CallbackContext context);
         }
         /// <summary>
         /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "UI" which allows adding and removing callbacks.

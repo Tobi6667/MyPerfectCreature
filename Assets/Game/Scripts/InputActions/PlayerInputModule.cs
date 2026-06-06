@@ -11,6 +11,7 @@ namespace Game.Input
         private Vector2 _moveInput;
         private Vector2 _mouseInput;
         public event Action OnConfirmed;
+        public Vector2 _mousePosition;
 
         private void Awake()
         {
@@ -31,12 +32,23 @@ namespace Game.Input
             _input.Gameplay.Look.performed += ctx =>
             {
                 _mouseInput = ctx.ReadValue<Vector2>();
+
             };
+
+            _input.Gameplay.MousePosition.performed += ctx =>
+            {
+                _mousePosition = ctx.ReadValue<Vector2>();
+            };
+
+
 
             _input.Gameplay.Look.canceled += ctx =>
             {
                 _mouseInput = Vector2.zero;
+
+
             };
+
 
 
             _input.Gameplay.Interact.performed += ctx =>
@@ -69,7 +81,10 @@ namespace Game.Input
         {
             _activeInputReceiver?.OnMove(_moveInput);
             _activeInputReceiver?.OnLook(_mouseInput);
+            _activeInputReceiver?.OnMousePosition(_mousePosition);
         }
+
+       
 
 
         public void EnableGameplay()

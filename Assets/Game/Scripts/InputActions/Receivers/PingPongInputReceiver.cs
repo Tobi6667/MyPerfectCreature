@@ -1,3 +1,4 @@
+using Game.Body;
 using Game.Input;
 using Game.Minigames;
 using System;
@@ -46,6 +47,16 @@ namespace Game.Input
         {
             Debug.Log("Inject");
             Injected?.Invoke();
+        }
+
+        public void Bind(BodyPartBase bodypart)
+        {
+            
+        }
+
+        public void OnMousePosition(Vector2 mouse)
+        {
+            throw new NotImplementedException();
         }
     }
 

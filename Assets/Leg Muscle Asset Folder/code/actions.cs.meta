@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: 74ebc00fe875049c5a7a0cc1155681a6
+timeCreated: 1510121786
+licenseType: Store
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 104710
+  packageName: LEG Muscles Motion
+  packageVersion: 1.0
+  assetPath: Assets/Leg Muscle Asset Folder/code/actions.cs
+  uploadId: 493949
