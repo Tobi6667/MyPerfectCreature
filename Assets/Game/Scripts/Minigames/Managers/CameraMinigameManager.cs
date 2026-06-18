@@ -6,7 +6,7 @@ namespace Game.Minigames
     public class CameraMinigameManager : MonoBehaviour
     {
         public static CameraMinigameManager Instance;
-
+      [SerializeField]  private CinemachineCamera _victorCam;
         private CinemachineCamera _activeCam;
 
         private const int _prioMax = 20;
@@ -24,6 +24,12 @@ namespace Game.Minigames
 
             _activeCam = cam;
             _activeCam.Priority = _prioMax;
+        }
+
+        public void VictorCam()
+        {
+            ChangeTo(_victorCam);
+
         }
     }
 }

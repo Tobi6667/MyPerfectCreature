@@ -10,11 +10,12 @@ namespace Game.Input
 
     public class PingPongInputReceiver : MonoBehaviour, IInputReceiver
     {
-        [SerializeField] private PingPongHandComponent _hand;
+        [SerializeField] private PingPongHandComponent _pingPongHand;
+        private HandController _handController;
         [SerializeField] private PingPongManager _pingManager;
         public event Action Confirmed;
         public event Action Injected;
-
+        private bool _isActive = false;
         public void Initialize()
         {
 
@@ -34,7 +35,8 @@ namespace Game.Input
 
         public void OnLook(Vector2 input)
         {
-            _hand.Slide(Mouse.current.position.ReadValue());
+            if (!_isActive) return;
+            _pingPongHand.Slide(Mouse.current.position.ReadValue());
         }
 
 
@@ -51,12 +53,31 @@ namespace Game.Input
 
         public void Bind(BodyPartBase bodypart)
         {
+            _handController = bodypart as HandController;
+            _pingPongHand = _handController.GetComponent<PingPongHandComponent>();
+            _isActive = true;
             
         }
 
         public void OnMousePosition(Vector2 mouse)
         {
-            throw new NotImplementedException();
+        }
+
+        public void OnOne()
+        {
+        }
+
+        public void OnDefault()
+        {
+        }
+
+        public void OnJump()
+        {
+        }
+
+        public void Deactivate()
+        {
+            _isActive = false;
         }
     }
 

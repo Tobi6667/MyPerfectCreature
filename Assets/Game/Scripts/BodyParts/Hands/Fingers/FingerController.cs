@@ -1,7 +1,6 @@
 using System;
 using UnityEngine;
 
-
 namespace Game.Body
 {
     public class FingerController : MonoBehaviour
@@ -16,17 +15,18 @@ namespace Game.Body
         [Range(-1f, 1f)] public float offset = 0f;
         [Range(0f, 1f)] public float noise = 0f;
 
-
         [Header("Idle Animation")]
         [SerializeField] private bool useIdle = true;
-
         [SerializeField] private float idleSpeed = 1.2f;
         [SerializeField] private float idleCurlAmount = 0.03f;
         [SerializeField] private float idleTwistAmount = 0.03f;
         [SerializeField] private float idleSpreadAmount = 0.02f;
+
         private float _idleTime;
+
         public SingleFingerData[] fingers;
         public PalmData palm;
+
         private HandInjuryTypes _activeHandInjury;
 
         internal void Initialize(Action onInit)
@@ -37,35 +37,33 @@ namespace Game.Body
             {
                 int count = finger.BoneCount;
                 finger.restRotations = new Quaternion[count];
-
-                finger.restLocalPos = finger.root.localPosition; // IMPORTANT FIX
+                finger.restLocalPos = finger.root.localPosition;
 
                 for (int i = 0; i < count; i++)
-                {
                     finger.restRotations[i] = finger.GetBone(i).localRotation;
-                }
             }
 
-
-
             _fingerControls = true;
-
             onInit?.Invoke();
         }
 
         void Update()
         {
             if (!_fingerControls) return;
+
             _idleTime += Time.deltaTime;
+
             for (int i = 0; i < fingers.Length; i++)
-            {
                 ApplyFinger(fingers[i]);
-            }
 
             ApplyPalm();
         }
+
         private void ApplyFinger(SingleFingerData finger)
         {
+            // =========================
+            // BASE CURL
+            // =========================
             finger.currentCurl = Mathf.Lerp(
                 finger.currentCurl,
                 finger.targetCurl,
@@ -74,6 +72,9 @@ namespace Game.Body
 
             float curl = finger.currentCurl;
 
+            // =========================
+            // IDLE
+            // =========================
             if (useIdle)
             {
                 float phase = _idleTime * idleSpeed + finger.spreadIndex * 0.35f;
@@ -81,13 +82,36 @@ namespace Game.Body
                 curl += Mathf.Sin(phase) * idleCurlAmount;
 
                 curl += Mathf.PerlinNoise(
-        finger.spreadIndex * 10f,
-        _idleTime * 0.5f
-    ) * 0.01f;
+                    finger.spreadIndex * 10f,
+                    _idleTime * 0.5f
+                ) * 0.01f;
             }
 
             // =========================
-            // FIXED NATURAL SPREAD
+            // INJURY (APPLY ONCE PER FINGER)
+            // =========================
+            if (_activeHandInjury != null)
+            {
+                var injury = GetFingerInjury(_activeHandInjury, finger.Type);
+
+                if (injury != null)
+                {
+                    curl *= (1f - injury.strengthLoss);
+
+                    curl += (Mathf.PerlinNoise(
+                        finger.spreadIndex * 50f,
+                        Time.time * 2f
+                    ) * 2f - 1f) * injury.noise;
+
+                    curl += Mathf.Sin(Time.time * 25f) * injury.tremor;
+
+                    float maxCurl = 1f - injury.rangeLoss;
+                    curl = Mathf.Clamp(curl, 0f, maxCurl);
+                }
+            }
+
+            // =========================
+            // SPREAD (FINGER POSITION)
             // =========================
             float spreadFactor = Mathf.SmoothStep(0f, 1f, palm.currentSpread);
 
@@ -97,7 +121,7 @@ namespace Game.Body
                 (finger.spreadIndex * spreadFactor * finger.spreadAmount * finger.spreadWeight);
 
             // =========================
-            // CURL BONES (ANATOMICAL)
+            // BONES
             // =========================
             for (int i = 0; i < finger.BoneCount; i++)
             {
@@ -105,52 +129,11 @@ namespace Game.Body
 
                 float shape = Mathf.SmoothStep(0f, 1f, t);
                 shape = Mathf.Pow(shape, 1.2f);
-                float jointBias;
 
-                // MCP (base) → strongest
-                if (i == 0)
-                {
-                    jointBias = 1.0f;
-                }
-                // PIP (middle) → main bending joint
-                else if (i == 1)
-                {
-                    jointBias = 0.85f;
-                }
-                // DIP (tip) → subtle follow-through
-                else
-                {
-                    jointBias = 0.6f;
-                }
-
-
-                SingleFingerInjuryData injury = null;
-
-                if (_activeHandInjury != null)
-                {
-                    injury = GetFingerInjury(_activeHandInjury, finger.Type);
-                }
-
-                if (injury != null)
-                {
-                    // strength loss
-                    curl *= (1f - injury.strengthLoss);
-
-                    // stable nerve noise
-                    curl += (
-                        Mathf.PerlinNoise(
-                            finger.spreadIndex * 50f,
-                            Time.time * 2f
-                        ) * 2f - 1f
-                    ) * injury.noise;
-
-                    // tremor
-                    curl += Mathf.Sin(Time.time * 25f) * injury.tremor;
-
-                    // range limit
-                    float maxCurl = 1f - injury.rangeLoss;
-                    curl = Mathf.Clamp(curl, 0f, maxCurl);
-                }
+                float jointBias =
+                    (i == 0) ? 1.0f :
+                    (i == 1) ? 0.85f :
+                               0.6f;
 
                 float angle = curl * shape * 170f * jointBias;
 
@@ -160,35 +143,25 @@ namespace Game.Body
             }
         }
 
-
         internal void InjectInjury(HandInjuryTypes injury)
         {
-            Debug.Log("injected fucker");
+            Debug.Log("INJURY INJECTED: " + injury.injuryName);
             _activeHandInjury = injury;
         }
 
         private SingleFingerInjuryData GetFingerInjury(
-        HandInjuryTypes handInjury, EFingerTypes fingerType)
+            HandInjuryTypes handInjury,
+            EFingerTypes fingerType)
         {
-            switch (fingerType)
+            return fingerType switch
             {
-                case EFingerTypes.Thumb:
-                    return handInjury.thumb;
-
-                case EFingerTypes.Index:
-                    return handInjury.index;
-
-                case EFingerTypes.Middle:
-                    return handInjury.middle;
-
-                case EFingerTypes.Ring:
-                    return handInjury.ring;
-
-                case EFingerTypes.Pinky:
-                    return handInjury.pinky;
-            }
-
-            return null;
+                EFingerTypes.Thumb => handInjury.thumb,
+                EFingerTypes.Index => handInjury.index,
+                EFingerTypes.Middle => handInjury.middle,
+                EFingerTypes.Ring => handInjury.ring,
+                EFingerTypes.Pinky => handInjury.pinky,
+                _ => null
+            };
         }
 
         private void ApplyPalm()
@@ -196,8 +169,6 @@ namespace Game.Body
             palm.currentCurl = Mathf.Lerp(palm.currentCurl, palm.curl, Time.deltaTime * 8f);
             palm.currentSpread = Mathf.Lerp(palm.currentSpread, palm.spread, Time.deltaTime * 8f);
             palm.currentTwist = Mathf.Lerp(palm.currentTwist, palm.twist, Time.deltaTime * 8f);
-
-
 
             float idleTwist = 0f;
             float idleSpread = 0f;
@@ -236,7 +207,7 @@ namespace Game.Body
         }
 
         // ===============================
-        // HIGH-LEVEL HAND API
+        // API
         // ===============================
 
         internal void Grab(float strength = 1f)
@@ -261,38 +232,27 @@ namespace Game.Body
 
         internal void SetFingerCurl(EFingerTypes type, float curl)
         {
-            curl = Mathf.Clamp(curl, -180, 180f);
-            curl = curl / 180f;
+            curl = Mathf.Clamp(curl, -180f, 180f) / 180f;
+
             foreach (var f in fingers)
-            {
                 if (f.Type == type)
-                {
                     f.targetCurl = curl;
-                }
-            }
         }
 
         public void SetGesturePosition(HandPositions positions)
         {
-            //Debug.Log("set hand");
-            foreach (var gest in positions.FingerPositions)
-            {
-                SetFingerCurl(gest.FingerType, gest.FingerCurl);
-            }
+            foreach (var g in positions.FingerPositions)
+                SetFingerCurl(g.FingerType, g.FingerCurl);
 
-            SetPalm(
-                positions.PalmCurl,
-                positions.PalmSpread,
-                positions.PalmTwist
-            );
+            palm.curl = positions.PalmCurl;
+            palm.spread = positions.PalmSpread;
+            palm.twist = positions.PalmTwist;
         }
 
         public void SetFingers(EFingerTypes[] types, float curl)
         {
             foreach (var t in types)
-            {
                 SetFingerCurl(t, curl);
-            }
         }
 
         public void StretchFinger(EFingerTypes type, float stretch)
@@ -300,18 +260,8 @@ namespace Game.Body
             float curl = 1f - Mathf.Clamp01(stretch);
 
             foreach (var f in fingers)
-            {
                 if (f.Type == type)
                     f.signalCurl = curl;
-            }
-        }
-
-        private void SetPalm(float curl, float spread, float twist)
-        {
-            palm.curl = Mathf.Clamp01(curl);
-            palm.spread = Mathf.Clamp01(spread);
-            palm.twist = Mathf.Clamp01(twist);
         }
     }
-
 }

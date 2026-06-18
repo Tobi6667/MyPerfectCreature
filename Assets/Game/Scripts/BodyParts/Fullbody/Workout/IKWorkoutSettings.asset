@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 326fc63c93a029f46b108ed5404be36f, type: 3}
+  m_Name: IKWorkoutSettings
+  m_EditorClassIdentifier: Assembly-CSharp::SoWorkoutSettings
+  snakeHeadAmount: 0.22
+  snakePelvisAmount: 0.12
+  snakeFeetAmount: 0.08
+  snakeWaveSpeed: 6
+  snakeWaveOffset: 0.45
+  spineSideAmount: 28.99
+  spineInputSmooth: 8
+  walkSpeed: 1.5
+  hipHeightOffset: 0.9
+  hipSmooth: 8
+  spineSmooth: 10
+  spineForwardLean: 0.2
+  pelvisTilt: 8
+  pelvisReturnSpeed: 6
+  stanceWidth: 0.18
+  hipLeadAmount: 0.25
+  swingArcHeight: 0.35
+  strideLength: 0.6
+  plantThreshold: 0.2
+  plantSmooth: 15
+  snakeAmplitude: 0.25
+  snakeFrequency: 2
+  spineDelay: 0.15
+  pelvisDelay: 0.3
+  feetDelay: 0.45
+  snakeRootAmount: 0.35
+  snakeRootSpeed: 5
+  snakeRootLag: 0.15

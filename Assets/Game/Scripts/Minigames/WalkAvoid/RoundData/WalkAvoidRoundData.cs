@@ -17,7 +17,10 @@ namespace Game.Minigames
         [Header("Difficulty")]
         public float difficultyMultiplier = 1f;
 
-
         public bool floorTargets = false;
+
+        [Header("Spawning")]
+        public float spawnInterval = 3f;
+        public SpiderController spiderPrefab;
     }
 }

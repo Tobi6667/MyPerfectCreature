@@ -14,7 +14,7 @@ namespace Game.Minigames
         [SerializeField] private EHandGestures _resetGesture = EHandGestures.Open;
         [SerializeField] private float _resetTime = 0.5f;
         [SerializeField] private float _gestureMatchThreshold = 1.5f;
-
+       [SerializeField] private EnemyHandController _enemyHandController;
         private List<EHandGestures> _availableGestures;
 
         private Coroutine _gestureRoutine;
@@ -59,7 +59,7 @@ namespace Game.Minigames
             _availableGestures = data.handGestures;
 
             // add this field to your data if needed
-           // _requiredCorrectGestures = data.requiredCorrectGestures;
+           _requiredCorrectGestures = data.requiredCorrectGestures;
 
             _correctGestureCount = 0;
             _wrongGestureCount = 0;
@@ -182,7 +182,6 @@ namespace Game.Minigames
             PickRandomGesture();
 
             ShowEnemyGesture(_currentGesture);
-
             _gestureMatchTimer = 0f;
 
             _inResetPhase = false;
@@ -206,7 +205,16 @@ namespace Game.Minigames
 
         private void ShowEnemyGesture(EHandGestures gesture)
         {
-            // Hook enemy hand visuals here
+            var inst = GestureDatabase.Instance.GetGesture(gesture);
+            UIMinigameManager.Instance.ShowInstruction(inst.GestureKey);
+            _enemyHandController.SetGesture(inst);
+        }
+
+
+        private void Start()
+        {
+
+            _enemyHandController.Initialize();
         }
     }
 }

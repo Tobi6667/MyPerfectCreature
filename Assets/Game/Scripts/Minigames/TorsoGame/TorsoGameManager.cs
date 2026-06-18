@@ -16,12 +16,15 @@ namespace Game.Minigames
             foreach (var round in _data.rounds)
             {
                 Pipeline
+                    .Add(new SetUpPhase())
                     .Add(new TutorialPhase(round.instruction))
                     .Add(new ReadyPhase(2f))
                     .Add(new CountdownPhase(3))
                     .Add(new TorsoGameplayPhase(round));
             }
             Pipeline.Add(new ResultPhase());
+
+
         }
 
     }

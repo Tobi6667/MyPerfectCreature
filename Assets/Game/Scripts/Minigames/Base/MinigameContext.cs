@@ -16,7 +16,13 @@ public class MinigameContext
     public Transform StartTransform;
     public UIMinigameManager UI;
     public AudioMinigameManager Audio;
-
+    public MinigameBase Minigame;
+    [Header("State Clips")]
+    public AudioClip _playingClip;
+    public AudioClip _roundEndClip;
+    public AudioClip _roundFailClip;
+    public AudioClip _finishedClip;
+    public FrankensteinWorkoutData _workoutData;
     public event Action OnInjuryInjected;
     public bool Cancelled;
     public IEnumerator RunPhase(IMinigamePhase phase)

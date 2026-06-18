@@ -30,8 +30,8 @@ MonoBehaviour:
   - roundId: LL
     instruction: DVSYVY
     showInstruction: 1
-    duration: 40
-    targetScore: 0
+    duration: 5
+    targetScore: 5
     rootMoveMultiplier: 1.59
     randomPushForce: 1.22
     randomPushIntervalMin: 0.87
@@ -41,3 +41,8 @@ MonoBehaviour:
     damping: 1.62
     maxOffset: 1.21
     controlResponsiveness: 1.09
+  audioClips:
+    _playingClip: {fileID: 0}
+    _roundEndClip: {fileID: 0}
+    _roundFailClip: {fileID: 0}
+    _finishedClip: {fileID: 0}

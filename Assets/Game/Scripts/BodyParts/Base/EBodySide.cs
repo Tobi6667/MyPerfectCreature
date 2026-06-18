@@ -8,9 +8,11 @@ namespace Game.Body
         Spine,
         Shoulder,
         Arm,
+        Torso,
         Hand,
         Hip,
         Leg,
-        Foot
+        Foot,
+        Fullbody
     }
 }

@@ -14,16 +14,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SoWalkAvoidRoundData
   rounds:
   - roundId: 
-    instruction: 
-    showInstruction: 0
+    instruction: ahhhhhhhhhhh
+    showInstruction: 1
     duration: 0
     targetScore: 0
     roundDuration: 40
-    moveSpeedMultiplier: 0
+    moveSpeedMultiplier: 1
     instabilityMultiplier: 0
     cangetHits: 0
-    difficultyMultiplier: 0
+    difficultyMultiplier: 1
     floorTargets: 0
+    spawnInterval: 3
+    spiderPrefab: {fileID: 7748055232199553567, guid: 6939ae9fce477cc4f8abe67076df7059, type: 3}
   - roundId: 
     instruction: 
     showInstruction: 0
@@ -35,3 +37,5 @@ MonoBehaviour:
     cangetHits: 0
     difficultyMultiplier: 0
     floorTargets: 0
+    spawnInterval: 3
+    spiderPrefab: {fileID: 0}

@@ -13,14 +13,20 @@ MonoBehaviour:
   m_Name: New So Hand Gestures Round Data
   m_EditorClassIdentifier: Assembly-CSharp::SoHandGesturesRoundData
   rounds:
-  - roundId: 
-    instruction: 
-    showInstruction: 0
-    duration: 0
-    targetScore: 0
-    handGestures: 
+  - roundId: dd
+    instruction: gfhgh
+    showInstruction: 1
+    duration: 10
+    targetScore: 4
+    handGestures: 0200000003000000
     gestureMatchThreshold: 1.5
-    gestureMatchTimer: 0
+    requiredCorrectGestures: 3
+    gestureMatchTimer: 40
     maxWrongCount: 3
-    resetTime: 0
-    gestureInterval: 0
+    resetTime: 4
+    gestureInterval: 2
+  audioClips:
+    _playingClip: {fileID: 0}
+    _roundEndClip: {fileID: 0}
+    _roundFailClip: {fileID: 0}
+    _finishedClip: {fileID: 0}

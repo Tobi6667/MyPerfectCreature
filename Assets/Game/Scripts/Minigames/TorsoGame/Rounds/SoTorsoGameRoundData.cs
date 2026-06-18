@@ -6,5 +6,7 @@ namespace Game.Minigames
     public class SoTorsoGameRoundData : ScriptableObject
     {
         public TorsoGameRoundData[] rounds;
+        public MinigameAudioClipsData audioClips;
+
     }
 }

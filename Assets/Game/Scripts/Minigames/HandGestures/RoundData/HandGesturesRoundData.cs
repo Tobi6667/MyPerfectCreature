@@ -9,9 +9,9 @@ public class HandGesturesRoundData : MinigameRoundData
 
     [Header("Gesture Match")]
     public float gestureMatchThreshold = 1.5f;
-
+    public int requiredCorrectGestures = 3;
     public float gestureMatchTimer;
     public int maxWrongCount = 3;
-    public float resetTime = 0;
+    public float resetTime = 0.5f;
     public float gestureInterval = 0;
 }

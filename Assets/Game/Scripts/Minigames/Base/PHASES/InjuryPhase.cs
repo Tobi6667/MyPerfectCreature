@@ -1,5 +1,8 @@
+using Game.Body;
 using System.Collections;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 namespace Game.Minigames
 {
@@ -7,7 +10,11 @@ namespace Game.Minigames
     {
         public IEnumerator Execute(MinigameContext context)
         {
-            context.UI.ShowInjuryPanel();
+            Debug.Log("show injury");
+
+            IInjuryData inj = GetInjury(context.BodyPart.Region);
+            context.UI.ShowInjuryPanel(inj);
+            context.BodyPart.OnInject(inj);
 
             bool confirmed = false;
 
@@ -30,6 +37,14 @@ namespace Game.Minigames
 
             context.UI.HideInjuryPanel();
         }
+
+        private IInjuryData GetInjury(EBodyRegion region)
+        {
+            var database = GodInjuryDatabase.Get(region);
+            var injury = database.GetRandomInjury();
+            return injury;
+        }
+
     }
     
 }

@@ -27,7 +27,8 @@ public class VictorInputReceiver : MonoBehaviour, IInputReceiver
 
     public void OnLook(Vector2 input)
     {
-        // optional camera logic later
+        _victor?.OnLook(input);
+       
     }
 
     public void OnConfirm()
@@ -53,5 +54,25 @@ public class VictorInputReceiver : MonoBehaviour, IInputReceiver
     public void OnMousePosition(Vector2 mouse)
     {
   
+    }
+
+    public void OnOne()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void OnDefault()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void OnJump()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void Deactivate()
+    {
+        //_isActive = false;
     }
 }

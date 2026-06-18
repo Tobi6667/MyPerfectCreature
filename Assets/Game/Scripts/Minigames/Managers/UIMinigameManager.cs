@@ -17,12 +17,15 @@ namespace Game.Minigames
         private VisualElement _countdownPanel;
         private VisualElement _hudPanel;
         private VisualElement _readyPanel;
+        private VisualElement _instructionPanel;
 
         private VisualElement _injuryPanel;
         private Label _countdownLabel;
         private Label _introLabel;
         private Label _tutorialLabel;
         private Label _timerLabel;
+        private Label _instructionLabel;
+        private Label _injuryTitel;
 
         void OnEnable()
         {
@@ -34,11 +37,13 @@ namespace Game.Minigames
             _hudPanel = root.Q("HUD");
             _readyPanel = root.Q("ready");
             _injuryPanel = root.Q("Injury");
-
+            _instructionPanel = root.Q("anweisung");
             _countdownLabel = root.Q<Label>("countdown-label");
             _introLabel = _introPanel.Q<Label>("intro-label");
             _tutorialLabel = _tutorialPanel.Q<Label>("tutorial-label");
             _timerLabel = _hudPanel.Q<Label>("timer-label");
+            _injuryTitel = _injuryPanel.Q<Label>("injury-titel");
+            _instructionLabel = _instructionPanel.Q<Label>("anweisung-label");
             HideAll();
         }
 
@@ -89,6 +94,7 @@ namespace Game.Minigames
             SetVisible(_introPanel, false);
             SetVisible(_tutorialPanel, false);
             SetVisible(_injuryPanel, false);
+            SetVisible(_instructionPanel, false);
         }
         public void ShowTutorial(string text)
         {
@@ -123,6 +129,13 @@ namespace Game.Minigames
         }
 
 
+        public void ShowInstruction(string instruction)
+        {
+            Debug.Log("inst: " + instruction);
+            SetVisible(_instructionPanel, true);
+            _instructionLabel.text = instruction;
+        }
+
         private IEnumerator AnimateCountdownPop(Label label)
         {
             const float riseTime = 0.12f;
@@ -155,8 +168,9 @@ namespace Game.Minigames
             label.style.scale = new StyleScale(new Scale(Vector2.one));
         }
 
-        public void ShowInjuryPanel()
+        public void ShowInjuryPanel(IInjuryData injury)
         {
+            _injuryTitel.text = injury.InjuryName;
             SetVisible(_injuryPanel, true);
             AnimatePanelIn(_injuryPanel);
         }

@@ -1,5 +1,6 @@
 using Game.Body;
 using Game.Input;
+using Game.Minigames;
 using System;
 using UnityEngine;
 
@@ -10,20 +11,26 @@ namespace Game.Input
     {
         public event Action Confirmed;
         public event Action Injected;
+        private HandController _controller;
+        private HandGestureController _gestureController;
+        private bool _isActive = false;
 
         public void Bind(BodyPartBase bodypart)
         {
-            throw new NotImplementedException();
+            _controller = bodypart as HandController;
+            _gestureController = GetComponent<HandGestureController>();
+            _isActive = true;
         }
 
         public void Initialize()
         {
-            throw new NotImplementedException();
+            
         }
 
         public void OnConfirm()
         {
-            throw new NotImplementedException();
+            Debug.Log("conf");
+            Confirmed?.Invoke();
         }
 
         public void OnInject()
@@ -33,22 +40,22 @@ namespace Game.Input
 
         public void OnInteract()
         {
-            throw new NotImplementedException();
+            
         }
 
         public void OnLook(Vector2 input)
         {
-            throw new NotImplementedException();
+            
         }
 
         public void OnMousePosition(Vector2 mouse)
         {
-            throw new NotImplementedException();
+           
         }
 
         public void OnMove(Vector2 input)
         {
-            throw new NotImplementedException();
+            
         }
 
         // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -61,6 +68,37 @@ namespace Game.Input
         void Update()
         {
 
+        }
+
+        public void OnOne()
+        {
+
+            if (!_isActive) return;
+
+            Debug.Log($"_controller: {_controller}");
+            Debug.Log($"_gestureController: {_gestureController}");
+            Debug.Log($"GestureDatabase.Instance: {GestureDatabase.Instance}");
+
+            _controller.ShowGesture(GestureDatabase.Instance.GetGesture(EHandGestures.OneFinger));
+            _gestureController.PlayerDidGesture(EHandGestures.OneFinger);
+        }
+
+        public void OnDefault()
+        {
+            if (!_isActive) return;
+
+            _controller.ShowGesture(GestureDatabase.Instance.GetGesture(EHandGestures.Open));
+        }
+
+        public void OnJump()
+        {
+            throw new NotImplementedException();
+        }
+
+
+        public void Deactivate()
+        {
+            _isActive = false;
         }
     }
 }

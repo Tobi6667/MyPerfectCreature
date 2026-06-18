@@ -16,7 +16,7 @@ MonoBehaviour:
   - roundId: g
     instruction: ghf
     showInstruction: 1
-    duration: 20
+    duration: 10
     targetScore: 10
     requiredHits: 2
     ballSpeed: 2
@@ -33,7 +33,7 @@ MonoBehaviour:
   - roundId: g
     instruction: hhh
     showInstruction: 1
-    duration: 20
+    duration: 4
     targetScore: 10
     requiredHits: 2
     ballSpeed: 2
@@ -47,3 +47,8 @@ MonoBehaviour:
     stunTime: 0.15
     _pushVelocity: 0
     _pushOffset: 0
+  audioClips:
+    _playingClip: {fileID: 0}
+    _roundEndClip: {fileID: 0}
+    _roundFailClip: {fileID: 0}
+    _finishedClip: {fileID: 0}

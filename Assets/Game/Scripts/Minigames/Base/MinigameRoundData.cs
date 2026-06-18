@@ -10,4 +10,5 @@ public class MinigameRoundData
     public bool showInstruction;
     public float duration;
     public int targetScore;
+
 }

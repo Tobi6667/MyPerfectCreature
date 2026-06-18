@@ -20,9 +20,14 @@ namespace Game.Body
         private List<MinigameBase> _minigamePrefabs = new();
         [SerializeField] private NavMeshAgent _agent;
         [SerializeField] private Vector3 _offsetAtTarget;
+        [SerializeField] private Vector3 _offsetRotationAtTarget;
         [SerializeField] protected HopComponent _hopComponent;
+        [SerializeField] private EBodyRegion _region;
 
+        public HopComponent HopComponent => _hopComponent;
+        public EBodyRegion Region => _region;
         public IReadOnlyList<MinigameBase> MinigamePrefabs => _minigamePrefabs;
+
 
         public MinigameBase GetMinigame(int index = 0)
         {
@@ -39,14 +44,16 @@ namespace Game.Body
         public abstract void Initialize();
         public abstract void MoveToObject(Transform target, Action onReached,float speed = 4f, float arriveDistance = 0f);
 
+        public abstract void OnInject(IInjuryData injury);
+
         public void MoveToInteractionPoint(Vector3 target, Action onArrived)
         {
             if (_agent)
                 _agent.enabled = false;
-            _hopComponent.StopHopping();
+           if(_hopComponent) _hopComponent.StopHopping();
             DG.Tweening.Sequence seq = DOTween.Sequence();
             seq.Join(transform.DOMove(target + _offsetAtTarget, 2f));
-            seq.Join(transform.DORotateQuaternion(Quaternion.Euler(_offsetAtTarget), 2f).SetEase(Ease.InOutSine));
+            seq.Join(transform.DORotateQuaternion(Quaternion.Euler(_offsetRotationAtTarget), 2f).SetEase(Ease.InOutSine));
             seq.OnComplete(() => onArrived?.Invoke());
         }
 

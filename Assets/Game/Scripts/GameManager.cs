@@ -47,9 +47,21 @@ namespace Game.Main
             _inputModule.SetReceiver(inputReceiver);
         }
 
+        public void ChangeToDefaultReceiver()
+        {
+            _inputModule.SetReceiver(_inputReceiver);
+        }
+
 
         private void OnInteract(IInteractable interactor)
         {
+            if(interactor as FrankensteinController)
+            {
+               MinigameManager.Instance.StartMinigame(interactor as BodyPartBase);
+              // FrankWorkoutManager.Instance.OpenWorkoutSelection();
+                Debug.Log("dgfdfdfdfdfdAAAAA");
+                return;
+            }
             Debug.Log(interactor);
             MinigameManager.Instance.StartMinigame(interactor as BodyPartBase);
         }

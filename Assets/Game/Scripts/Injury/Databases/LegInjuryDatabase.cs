@@ -14,14 +14,12 @@ public enum ELegInjury
     DeadLeg
 }
 
-public static class LegInjuryDatabase
+public class LegInjuryDatabase : IDatabaseBase
 {
+
     private static List<LegInjuryInstance> _cache;
 
-    // =========================================================
-    // MAIN ENTRY
-    // =========================================================
-    public static List<LegInjuryInstance> GetAll()
+    public List<LegInjuryInstance> GetAll()
     {
         if (_cache == null)
             _cache = BuildDatabase();
@@ -29,57 +27,39 @@ public static class LegInjuryDatabase
         return _cache;
     }
 
-    // =========================================================
-    // RANDOM INJURY
-    // =========================================================
-    public static LegInjuryInstance GetRandomInjury(
-        bool useSeed = false,
-        int seed = 0)
+    public LegInjuryInstance GetRandomLegInjury()
     {
         var list = GetAll();
 
         if (list.Count == 0)
             return null;
 
-        if (useSeed)
-        {
-            Random.InitState(seed);
-        }
-
         return list[Random.Range(0, list.Count)];
     }
 
-    // =========================================================
-    // GET BY ENUM
-    // =========================================================
-    public static LegInjuryInstance GetInjury(ELegInjury injury)
+    public IInjuryData GetRandomInjury()
     {
-        return GetAll().Find(x => x.injuryType == injury);
+        return GetRandomLegInjury();
     }
 
-    // =========================================================
-    // GET BY STRING
-    // =========================================================
-    public static LegInjuryInstance GetInjury(string injuryName)
+    public List<IInjuryData> GetAllInjuries()
     {
-        var list = GetAll();
-
-        for (int i = 0; i < list.Count; i++)
-        {
-            if (list[i].injuryName == injuryName ||
-                list[i].injuryRealName == injuryName)
-            {
-                return list[i];
-            }
-        }
-
-        return null;
+        return GetAll()
+            .ConvertAll<IInjuryData>(x => x);
     }
 
-    // =========================================================
-    // DATABASE
-    // =========================================================
-    private static List<LegInjuryInstance> BuildDatabase()
+    public List<IInjuryData> GetShownInjuries()
+    {
+        return GetAll()
+            .ConvertAll<IInjuryData>(x => x);
+    }
+
+
+
+// =========================================================
+// DATABASE
+// =========================================================
+private List<LegInjuryInstance> BuildDatabase()
     {
         return new List<LegInjuryInstance>()
         {
@@ -369,4 +349,5 @@ public static class LegInjuryDatabase
             },
         };
     }
+
 }

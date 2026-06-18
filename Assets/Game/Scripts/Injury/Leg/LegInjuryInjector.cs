@@ -1,6 +1,4 @@
 using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEditor.PackageManager.Requests;
 using UnityEngine;
 
 namespace Game.Body
@@ -11,46 +9,7 @@ namespace Game.Body
         [SerializeField] private LegController _controller;
 
         private LegInjuryInstance _currentInjury;
-        private List<LegInjuryInstance> _shownInjuries = new List<LegInjuryInstance>();
 
-        private List<LegInjuryInstance> AvailableInjuries => LegInjuryDatabase.GetAll();
-
-
-        internal void InjectRandomInjury()
-        {
-            var injuries = AvailableInjuries;
-
-            if (injuries == null || injuries.Count == 0)
-            {
-                Debug.LogError("No injuries found in LegInjuryDatabase!");
-                return;
-            }
-
-            int randomIndex = Random.Range(0, injuries.Count);
-
-            LegInjuryInstance injuryToInject = injuries[randomIndex];
-            _currentInjury = injuryToInject;
-            _shownInjuries.Add(_currentInjury);
-
-        }
-
-        internal List<IInjuryData> GetAll()
-        {
-            return new List<IInjuryData>(AvailableInjuries);
-
-        }
-
-
-        internal List<IInjuryData> GetShownInjuries()
-        {
-            return (List<IInjuryData>)(_shownInjuries as IInjuryData);
-        }
-
-        internal void InjectInjury(ELegInjury einjury)
-        {
-            LegInjuryInstance injury = LegInjuryDatabase.GetInjury(einjury);
-            _currentInjury = injury;
-        }
 
 
 

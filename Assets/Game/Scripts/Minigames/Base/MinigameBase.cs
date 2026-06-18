@@ -14,10 +14,13 @@ namespace Game.Minigames
         protected MinigamePipeline Pipeline;
         public event Action Completed;
         [SerializeField] private Transform _startTransform;
+        [SerializeField] private SoWorkoutSettings _soWorkoutSettings;
 
         public void Initialize(MinigameContext context)
         {
+            context.Minigame = this;
             Context = context;
+            
         }
 
         public Transform GetStartTrans()
@@ -29,12 +32,19 @@ namespace Game.Minigames
         public void StartMinigame()
         {
             BuildPipeline();
+
             StartCoroutine(Pipeline.Run(Context));
         }
 
         protected void Finish()
         {
             Completed?.Invoke();
+            DestroyMinigame();
+        }
+
+        protected void DestroyMinigame()
+        {
+            Destroy(this.gameObject);
         }
 
         protected abstract void BuildPipeline();

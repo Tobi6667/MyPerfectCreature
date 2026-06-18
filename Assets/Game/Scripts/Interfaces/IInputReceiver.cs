@@ -14,6 +14,12 @@ namespace Game.Input
         public void OnConfirm();
         void OnLook(UnityEngine.Vector2 input);
         void OnMove(UnityEngine.Vector2 input);
+
+        void OnJump();
+        void OnOne();
+
+        void Deactivate();
+        void OnDefault();
         void OnInteract();
         void OnMousePosition(Vector2 mouse);
         void Bind(BodyPartBase bodypart);

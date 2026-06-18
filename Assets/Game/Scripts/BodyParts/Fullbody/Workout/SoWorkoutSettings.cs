@@ -7,7 +7,6 @@ using UnityEngine.Animations.Rigging;
 )]
 public class SoWorkoutSettings : ScriptableObject
 {
-    [Header("Snake Motion")]
     public float snakeHeadAmount = 0.22f;
     public float snakePelvisAmount = 0.12f;
     public float snakeFeetAmount = 0.08f;

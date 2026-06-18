@@ -28,7 +28,7 @@ namespace Game.Minigames
             context.Receiver.Injected += OnInjury;
             _currentHits = 0;
             _roundFinished = false;
-
+            context.Receiver.Bind(context.BodyPart);
             float timer = _round.duration;
 
             SpawnBall(_round, context);

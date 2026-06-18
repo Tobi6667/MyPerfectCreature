@@ -7,5 +7,7 @@ namespace Game.Minigames
     public class SoHandGesturesRoundData : ScriptableObject
     {
         public HandGesturesRoundData[] rounds;
+        public MinigameAudioClipsData audioClips;
+
     }
 }

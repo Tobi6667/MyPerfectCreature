@@ -9,45 +9,55 @@ namespace Game.Input
     {
         public event Action Confirmed;
         public event Action Injected;
+        private TorsoController _torsoController;
+        private bool _isActive = false;
 
         public void Bind(BodyPartBase bodypart)
         {
-            throw new NotImplementedException();
+            _torsoController = bodypart as TorsoController;
+           _isActive = true;
         }
 
         public void Initialize()
         {
-            throw new NotImplementedException();
         }
 
         public void OnConfirm()
         {
-            throw new NotImplementedException();
+            Confirmed?.Invoke();
+        }
+
+        public void OnDefault()
+        {
         }
 
         public void OnInject()
         {
-            throw new NotImplementedException();
+
+            Injected?.Invoke();
         }
 
         public void OnInteract()
         {
-            throw new NotImplementedException();
         }
 
         public void OnLook(Vector2 input)
         {
-            throw new NotImplementedException();
         }
 
         public void OnMousePosition(Vector2 mouse)
         {
-            throw new NotImplementedException();
         }
 
         public void OnMove(Vector2 input)
         {
-            throw new NotImplementedException();
+            if (!_isActive) return;
+            _torsoController.Move(input);
+            //_torsoController.Move
+        }
+
+        public void OnOne()
+        {
         }
 
         // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -60,6 +70,17 @@ namespace Game.Input
         void Update()
         {
 
+        }
+
+        public void OnJump()
+        {
+            if (!_isActive) return;
+            _torsoController.BangHead(true);
+        }
+
+        public void Deactivate()
+        {
+            _isActive = false;
         }
     }
 

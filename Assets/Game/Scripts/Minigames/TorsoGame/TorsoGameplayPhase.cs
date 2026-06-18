@@ -8,7 +8,7 @@ namespace Game.Minigames
 {
     public class TorsoGameplayPhase : IMinigamePhase
     {
-
+        private TorsoController _torsoController;
         private readonly TorsoGameRoundData _round;
         private bool _roundFinished = false;
         private bool _injuryRequested = false;
@@ -26,7 +26,8 @@ namespace Game.Minigames
             _roundFinished = false;
 
             float timer = _round.duration;
-
+            context.Receiver.Bind(context.BodyPart);
+            _torsoController = context.BodyPart as TorsoController;
             try
             {
 
@@ -58,7 +59,8 @@ namespace Game.Minigames
 
         private void OnInjury()
         {
-            throw new NotImplementedException();
+            _injuryRequested = true;
+
         }
     }
 }

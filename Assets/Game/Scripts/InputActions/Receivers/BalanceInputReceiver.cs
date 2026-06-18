@@ -33,7 +33,7 @@ namespace Game.Input
 
         public void OnInject()
         {
-  
+            Injected?.Invoke();
         }
 
         public void OnInteract()
@@ -56,6 +56,26 @@ namespace Game.Input
         {
             if (!_isActive) return;
             _controller.MoveLegRoot(mouse);
+        }
+
+        public void OnOne()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void OnDefault()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void OnJump()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Deactivate()
+        {
+            _isActive = false;
         }
     }
 }

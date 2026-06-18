@@ -50,6 +50,7 @@ namespace Game.Minigames
                 BodyPart = bodyPart,
                 Receiver = receiver,
                 StartTransform = instance.GetStartTrans(),
+                
             };
 
             Debug.Log($"[Minigame] Context created:");
@@ -67,6 +68,37 @@ namespace Game.Minigames
             instance.StartMinigame();
 
         }
+
+        public void StartMinigame(MinigameBase prefab, BodyPartBase bodyPart = null)
+        {
+            Debug.Log($"[Minigame] Starting {prefab.name}");
+
+            var instance = Instantiate(prefab);
+
+            var receiver = instance.GetComponent<IInputReceiver>();
+
+            if (receiver == null)
+            {
+                Debug.LogError("No IInputReceiver found");
+                return;
+            }
+
+            var context = new MinigameContext
+            {
+                UI = UIMinigameManager.Instance,
+                Audio = AudioMinigameManager.Instance,
+                BodyPart = bodyPart,
+                Receiver = receiver,
+                StartTransform = instance.GetStartTrans(),
+
+            };
+
+            GameManager.Instance.ChangeReceiver(receiver);
+
+            instance.Initialize(context);
+            instance.StartMinigame();
+        }
+
         private void OnMinigameCompleted()
         {
             _activeMinigame.Completed -= OnMinigameCompleted;

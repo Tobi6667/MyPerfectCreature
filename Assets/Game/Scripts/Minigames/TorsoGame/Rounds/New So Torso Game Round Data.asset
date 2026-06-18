@@ -14,14 +14,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SoTorsoGameRoundData
   rounds:
   - roundId: 
-    instruction: 
-    showInstruction: 0
-    duration: 0
-    targetScore: 0
-    roundDuration: 0
-    moveSpeedMultiplier: 0
+    instruction: ahhjhh
+    showInstruction: 1
+    duration: 10
+    targetScore: 44
+    moveSpeedMultiplier: 1
     instabilityMultiplier: 0
-    _imagesToCollect: 0
-    difficultyMultiplier: 0
-    _maxBangAmount: 0
-    _dropSpeedMultiplier: 0
+    _imagesToCollect: 10
+    difficultyMultiplier: 1
+    _maxBangAmount: 4
+    _dropSpeedMultiplier: 1
+  audioClips:
+    _playingClip: {fileID: 0}
+    _roundEndClip: {fileID: 0}
+    _roundFailClip: {fileID: 0}
+    _finishedClip: {fileID: 0}

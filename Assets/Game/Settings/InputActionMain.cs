@@ -143,7 +143,7 @@ namespace GameInput
                     ""name"": ""Jump"",
                     ""type"": ""Button"",
                     ""id"": ""f1ba0d36-48eb-4cd5-b651-1c94a6531f70"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -201,6 +201,24 @@ namespace GameInput
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""One"",
+                    ""type"": ""Button"",
+                    ""id"": ""6dd0a6f6-f406-4922-b6a3-e1ec1d72167b"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Bang"",
+                    ""type"": ""Button"",
+                    ""id"": ""283dfd17-9368-48af-b6e6-9321946d5d3b"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -608,6 +626,28 @@ namespace GameInput
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse"",
                     ""action"": ""MousePosition"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""05f74137-49f6-4abc-a38b-ccac16a0d1c8"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""One"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f99eae7a-8c5d-480d-badd-8c049ac31f34"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Bang"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1207,6 +1247,8 @@ namespace GameInput
             m_Gameplay_Confirm = m_Gameplay.FindAction("Confirm", throwIfNotFound: true);
             m_Gameplay_Inject = m_Gameplay.FindAction("Inject", throwIfNotFound: true);
             m_Gameplay_MousePosition = m_Gameplay.FindAction("MousePosition", throwIfNotFound: true);
+            m_Gameplay_One = m_Gameplay.FindAction("One", throwIfNotFound: true);
+            m_Gameplay_Bang = m_Gameplay.FindAction("Bang", throwIfNotFound: true);
             // UI
             m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
             m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1312,6 +1354,8 @@ namespace GameInput
         private readonly InputAction m_Gameplay_Confirm;
         private readonly InputAction m_Gameplay_Inject;
         private readonly InputAction m_Gameplay_MousePosition;
+        private readonly InputAction m_Gameplay_One;
+        private readonly InputAction m_Gameplay_Bang;
         /// <summary>
         /// Provides access to input actions defined in input action map "Gameplay".
         /// </summary>
@@ -1371,6 +1415,14 @@ namespace GameInput
             /// Provides access to the underlying input action "Gameplay/MousePosition".
             /// </summary>
             public InputAction @MousePosition => m_Wrapper.m_Gameplay_MousePosition;
+            /// <summary>
+            /// Provides access to the underlying input action "Gameplay/One".
+            /// </summary>
+            public InputAction @One => m_Wrapper.m_Gameplay_One;
+            /// <summary>
+            /// Provides access to the underlying input action "Gameplay/Bang".
+            /// </summary>
+            public InputAction @Bang => m_Wrapper.m_Gameplay_Bang;
             /// <summary>
             /// Provides access to the underlying input action map instance.
             /// </summary>
@@ -1433,6 +1485,12 @@ namespace GameInput
                 @MousePosition.started += instance.OnMousePosition;
                 @MousePosition.performed += instance.OnMousePosition;
                 @MousePosition.canceled += instance.OnMousePosition;
+                @One.started += instance.OnOne;
+                @One.performed += instance.OnOne;
+                @One.canceled += instance.OnOne;
+                @Bang.started += instance.OnBang;
+                @Bang.performed += instance.OnBang;
+                @Bang.canceled += instance.OnBang;
             }
 
             /// <summary>
@@ -1480,6 +1538,12 @@ namespace GameInput
                 @MousePosition.started -= instance.OnMousePosition;
                 @MousePosition.performed -= instance.OnMousePosition;
                 @MousePosition.canceled -= instance.OnMousePosition;
+                @One.started -= instance.OnOne;
+                @One.performed -= instance.OnOne;
+                @One.canceled -= instance.OnOne;
+                @Bang.started -= instance.OnBang;
+                @Bang.performed -= instance.OnBang;
+                @Bang.canceled -= instance.OnBang;
             }
 
             /// <summary>
@@ -1864,6 +1928,20 @@ namespace GameInput
             /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
             /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
             void OnMousePosition(InputAction.CallbackContext context);
+            /// <summary>
+            /// Method invoked when associated input action "One" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+            /// </summary>
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+            void OnOne(InputAction.CallbackContext context);
+            /// <summary>
+            /// Method invoked when associated input action "Bang" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+            /// </summary>
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+            void OnBang(InputAction.CallbackContext context);
         }
         /// <summary>
         /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "UI" which allows adding and removing callbacks.

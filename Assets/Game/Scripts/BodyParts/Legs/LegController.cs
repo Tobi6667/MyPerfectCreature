@@ -1,6 +1,3 @@
-using DG.Tweening;
-using Game.Body;
-using Game.Main;
 using Game.Minigames;
 using System;
 using Unity.Cinemachine;
@@ -77,9 +74,9 @@ namespace Game.Body
 
         internal void MoveLegRoot(Vector3 screenPos)
         {
-            Debug.Log(screenPos);
+            //Debug.Log(screenPos);
             if (!_active) return;
-            Debug.Log(screenPos);
+            //Debug.Log(screenPos);
             Camera cam = Camera.main;
             if (cam == null) return;
 
@@ -299,6 +296,11 @@ namespace Game.Body
         public override CinemachineCamera GetTransitionCam()
         {
             return _followCam;
+        }
+
+        public override void OnInject(IInjuryData injury)
+        {
+           
         }
     }
 }

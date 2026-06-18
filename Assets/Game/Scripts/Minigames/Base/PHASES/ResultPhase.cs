@@ -1,5 +1,7 @@
+using Game.Main;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Game.Minigames
 {
@@ -8,6 +10,15 @@ namespace Game.Minigames
         public IEnumerator Execute(MinigameContext context)
         {
             Debug.Log("FINISHED");
+            context.BodyPart.HopComponent.HopOffObject(null);
+            context.Receiver.Deactivate();
+            //context.BodyPart.MoveT
+            
+            GameManager.Instance.ChangeToDefaultReceiver();
+            CameraMinigameManager.Instance.VictorCam();
+            yield return new WaitForSeconds(2f);
+
+            Object.Destroy(context.Minigame.gameObject);
             yield break;
         }
 

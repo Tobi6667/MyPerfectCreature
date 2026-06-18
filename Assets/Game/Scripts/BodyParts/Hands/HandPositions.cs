@@ -7,6 +7,7 @@ namespace Game.Body
     {
         public EHandGestures HandGesture;
         public List<FingerPositions> FingerPositions;
+        public string GestureKey;
         public float PalmCurl;
         public float PalmSpread;
         public float PalmTwist;

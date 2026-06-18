@@ -1,54 +1,87 @@
-using Game.Minigames;
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
-
 
 namespace Game.Minigames
 {
-
     public class HandGestureGameplayPhase : IMinigamePhase
     {
-        private readonly HandGesturesRoundData _data;
-        private readonly HandGestureController _controller;
+        private readonly HandGesturesRoundData _round;
+        private readonly HandGestureController _gestureController;
+
+        private bool _roundCompleted;
+        private bool _roundFailed;
+        private bool _injuryRequested;
+
 
         public HandGestureGameplayPhase(
-            HandGesturesRoundData data,
-            HandGestureController controller)
+            HandGesturesRoundData round,
+            HandGestureController gestureController)
         {
-            _data = data;
-            _controller = controller;
+            _round = round;
+            _gestureController = gestureController;
         }
 
         public IEnumerator Execute(MinigameContext context)
         {
-            bool completed = false;
-            bool failed = false;
+            context.State = EMinigameState.Playing;
 
-            void OnCompleted() => completed = true;
-            void OnFailed() => failed = true;
+            float timer = _round.duration;
 
-            _controller.RoundCompleted += OnCompleted;
-            _controller.RoundFailed += OnFailed;
+            _gestureController.RoundCompleted += OnRoundCompleted;
+            _gestureController.RoundFailed += OnRoundFailed;
+
+            _gestureController.StartRound(_round);
+            context.Receiver.Bind(context.BodyPart);
+            context.Receiver.Injected += OnInjury;
 
             try
             {
-                _controller.StartRound(_data);
-                _controller.StartGestures();
+                while (timer > 0f)
+                {
+                    if (_roundFailed)
+                    {
+                        context.Cancelled = true;
+                        yield break;
+                    }
 
-                while (!completed && !failed)
+                    if (_roundCompleted)
+                    {
+                        yield break;
+                    }
+
+                    if (_injuryRequested)
+                    {
+                        _injuryRequested = false;
+
+                        yield return context.RunPhase(
+                            new InjuryPhase());
+                    }
+
+                    timer -= Time.deltaTime;
+                    context.UI.UpdateTimer(timer);
+
                     yield return null;
+                }
 
-                if (failed)
-                    context.Cancelled = true;
+                // Timer ran out without completion = failure
+                context.Cancelled = true;
             }
             finally
             {
-                _controller.StopGestures();
+                _gestureController.StopRound();
+                _gestureController.RoundCompleted -= OnRoundCompleted;
+                _gestureController.RoundFailed -= OnRoundFailed;
+                context.Receiver.Injected -= OnInjury;
 
-                _controller.RoundCompleted -= OnCompleted;
-                _controller.RoundFailed -= OnFailed;
             }
+        }
+
+        private void OnRoundCompleted() => _roundCompleted = true;
+        private void OnRoundFailed() => _roundFailed = true;
+
+        private void OnInjury()
+        {
+            _injuryRequested = true;
         }
     }
 }

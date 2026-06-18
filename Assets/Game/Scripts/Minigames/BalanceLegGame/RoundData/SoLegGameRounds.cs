@@ -5,4 +5,6 @@ using UnityEngine;
 public class SoLegGameRounds : ScriptableObject
 {
         public LegGameRoundData[] rounds;
+    public MinigameAudioClipsData audioClips;
+
 }

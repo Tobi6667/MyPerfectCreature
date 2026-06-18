@@ -22,65 +22,65 @@ namespace Game.Body
         [SerializeField] private Transform hipsTarget;
         [SerializeField] private Transform spineTarget;
         [SerializeField] private Transform headTarget;
-
+        [SerializeField] private SoWorkoutSettings _workoutSettings;
         [Header("GRAPH")]
         public BodyParameterGraph graph;
 
         // public BodyState injuryState = new BodyState();
         private RuntimeWorkoutSettings runtime;
         private SoWorkoutSettings baseSettings;
-        private float spineMod = 1f;
-        private float pelvisMod = 1f;
-        private float instabilityMod = 1f;
-        private float legModL = 1f;
-        private float legModR = 1f;
-        private float painMod = 0f;
-        private float neckMod = 1f;
+        [Header("DEBUG / MODIFIERS")]
+        [SerializeField] private float spineMod = 1f;
+        [SerializeField] private float pelvisMod = 1f;
+        [SerializeField] private float instabilityMod = 1f;
+        [SerializeField] private float legModL = 1f;
+        [SerializeField] private float legModR = 1f;
+        [SerializeField] private float painMod = 0f;
+        [SerializeField] private float neckMod = 1f;
+        private BodyState injuryState = new BodyState();
+        [Header("RUNTIME STATE")]
+        [SerializeField] private float _snakeTime;
+        [SerializeField] private float spineInputTarget;
+        [SerializeField] private float _spineInputSmooth;
 
-        private float _snakeTime;
-        private Coroutine _jumpRoutine;
-        // INPUT SYSTEM (FIXED + DECOUPLED)
-        private float spineInputTarget;
-        private float _spineInputSmooth;
+        [SerializeField] private Vector3 _rootStartLocalPos;
 
-        private Vector3 _rootStartLocalPos;
+        [SerializeField] private float _leftWeightSmooth;
+        [SerializeField] private float _rightWeightSmooth;
 
-        private float _leftWeightSmooth;
-        private float _rightWeightSmooth;
+        [SerializeField] private Vector3 leftPlantPos;
+        [SerializeField] private Vector3 rightPlantPos;
 
-        private Vector3 leftPlantPos;
-        private Vector3 rightPlantPos;
+        [SerializeField] private bool leftPlanted;
+        [SerializeField] private bool rightPlanted;
 
-        private bool leftPlanted;
-        private bool rightPlanted;
+        [SerializeField] private bool _isActive = false;
 
-        private bool _isActive = false;
+        [SerializeField] private float groundY;
+        [SerializeField] private float proceduralPhase;
 
-        private float groundY;
-        private float proceduralPhase;
+        [SerializeField] private float stepLength;
+        [SerializeField] private float stepHeight;
+        [SerializeField] private float rightStrideMultiplier;
+        [SerializeField] private float rightHeightMultiplier;
+        [SerializeField] private float hipSideShift;
+        [SerializeField] private float instability;
 
-        private float stepLength;
-        private float stepHeight;
-        private float rightStrideMultiplier;
-        private float rightHeightMultiplier;
-        private float hipSideShift;
-        private float instability;
+        [SerializeField] private Vector3 forward;
+        [SerializeField] private Vector3 side;
 
-        private Vector3 forward;
-        private Vector3 side;
+        [SerializeField] private Vector3 leftPos;
+        [SerializeField] private Vector3 rightPos;
 
-        private Vector3 leftPos;
-        private Vector3 rightPos;
+        [SerializeField] private float leftCycle;
+        [SerializeField] private float rightCycle;
 
-        private float leftCycle;
-        private float rightCycle;
+        [SerializeField] private float leftLift;
+        [SerializeField] private float rightLift;
 
-        private float leftLift;
-        private float rightLift;
+        [SerializeField] private float stanceWidthOffset;
 
-        private float stanceWidthOffset;
-
-        private Vector3 spineBaseWorld;
+        [SerializeField] private Vector3 spineBaseWorld;
 
         // ─────────────────────────────
         // INIT
@@ -92,8 +92,14 @@ namespace Game.Body
 
         }
 
+        private void Start()
+        {
+            
+        }
+
         internal void SetStartData(SoWorkoutSettings settings)
         {
+            Debug.Log("set data");
             workoutSettings = settings;
             CopyToRuntime(settings);
             groundY = rootReference.position.y;
@@ -130,13 +136,13 @@ namespace Game.Body
 
         void LateUpdate()
         {
-            if (!_isActive || workoutSettings == null || graph == null) return;
+            if (!_isActive || workoutSettings == null) return;
 
-            // ApplyInjuryState();
-            // ApplyInjuryToSettings();
-
+             ApplyInjuryState();
+             ApplyInjuryToSettings();
+  
             UpdateWorldSpace();
-            UpdateGraphValues();
+            //UpdateGraphValues();
             UpdateProceduralCycle();
 
             SolveSnakeRootMotion();
@@ -211,6 +217,7 @@ namespace Game.Body
         internal void SetSpineInput(float input)
         {
             // normalized: 0–1920 → -1..1
+
             float n = Mathf.InverseLerp(0f, 1920f, input) * 2f - 1f;
             spineInputTarget = Mathf.Clamp(n, -1f, 1f);
         }
@@ -362,14 +369,15 @@ namespace Game.Body
         // ─────────────────────────────
         // ROOT MOTION
         // ─────────────────────────────
-
         void SolveSnakeRootMotion()
         {
             _snakeTime += Time.deltaTime * runtime.snakeRootSpeed;
 
             float headWave = Mathf.Sin(_snakeTime) * runtime.snakeRootAmount;
 
-            Vector3 rootOffset = side * headWave;
+            float inputShift = _spineInputSmooth * spineMod * 0.3f;
+
+            Vector3 rootOffset = side * (headWave + inputShift);
 
             rootReference.localPosition =
                 Vector3.Lerp(rootReference.localPosition,
@@ -380,7 +388,7 @@ namespace Game.Body
         // ─────────────────────────────
         // INJURY
         // ─────────────────────────────
-        /*
+        
      void ApplyInjuryState()
      {
          instabilityMod = 1f - injuryState.instability;
@@ -393,12 +401,12 @@ namespace Game.Body
      }
 
 
-     internal void InjectInjury(FullbodyInjuryEntry injury)
+     internal void InjectInjury(IInjuryData injury)
      {
 
-
-
-         var mod = injury.modifiers;
+            var inj = injury as FullbodyInjuryEntry;
+        
+         var mod = inj.modifiers;
          injuryState.spineInjury = Mathf.Clamp01(mod.spineStiffness);
          injuryState.fullBodyInjury = Mathf.Clamp01(mod.bendRestriction);
          injuryState.leftLegInjury = Mathf.Clamp01(mod.leftLegWeakness);
@@ -410,7 +418,7 @@ namespace Game.Body
          injuryState.coordinationLoss = Mathf.Clamp01(mod.coordinationLoss);
          injuryState.bendRestriction = Mathf.Clamp01(mod.bendRestriction);
      }
-     */
+     
         private void CopyToRuntime(SoWorkoutSettings settings)
         {
 
@@ -460,7 +468,7 @@ namespace Game.Body
             };
 
         }
-        /*
+        
         void ApplyInjuryToSettings()
         {
             // 1. ALWAYS reset from base first
@@ -496,10 +504,11 @@ namespace Game.Body
         }
 
 
-        */
+        
 
         public void TriggerJump(float jumpWidth = 3f, float jumpDuration = 0.15f)
         {
+            /*
             Debug.Log("juuuump");
             if (_jumpRoutine != null)
             {
@@ -508,7 +517,7 @@ namespace Game.Body
 
             _jumpRoutine = StartCoroutine(
                 JumpRoutine(jumpWidth, jumpDuration)
-            );
+            );*/
         }
 
         private IEnumerator JumpRoutine(float jumpWidth, float jumpDuration)
@@ -555,7 +564,7 @@ namespace Game.Body
 
             stanceWidthOffset = originalOffset;
 
-            _jumpRoutine = null;
+           // _jumpRoutine = null;
         }
 
     }

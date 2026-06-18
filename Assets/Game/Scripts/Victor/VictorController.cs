@@ -1,8 +1,7 @@
 using Game.Main;
 using System;
 using UnityEngine;
-using UnityEngine.InputSystem.XR;
-using static UnityEditor.SceneView;
+
 
 namespace Game.Input
 {
@@ -11,11 +10,13 @@ namespace Game.Input
     {
 
         [SerializeField] private Transform _cameraReference;
+        [SerializeField] private PlayerCameraModule _playerCameraModule;
+
         [SerializeField] private float _speed = 5f; 
         [SerializeField] private PlayerInputModule _inputModule;
         private Action<IInteractable> onInteract;
 
-        //[SerializeField] private Animator _animator;
+        [SerializeField] private Animator _animator;
 
 
         [SerializeField] private float _gravity = -25f;
@@ -47,7 +48,7 @@ namespace Game.Input
 
         public void OnInteract()
         {
-
+           
 
             Collider[] hits = Physics.OverlapSphere(transform.position, 2f);
 
@@ -58,6 +59,7 @@ namespace Game.Input
 
                 if (hit.TryGetComponent(out IInteractable interactable))
                 {
+                    Debug.Log("WTTTFFF");
                     Debug.Log(interactable);
                     onInteract?.Invoke(interactable);
                     break;
@@ -68,7 +70,7 @@ namespace Game.Input
 
         public void OnLook(Vector2 input)
         {
-
+           _playerCameraModule.ManualLook(input);
         }
 
         public void OnMove(Vector2 moveInput)
@@ -96,7 +98,7 @@ namespace Game.Input
 
             _controller.Move(velocity * Time.deltaTime);
 
-            //_animator.SetBool("isWalking",dir.sqrMagnitude > 0.001f);
+            _animator.SetBool("isWalking",dir.sqrMagnitude > 0.001f);
         }
 
         public void OnSecondary()

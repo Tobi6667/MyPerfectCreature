@@ -225,7 +225,7 @@ namespace Game.Body
         }
 
         // Now takes an optional callback — fires AFTER landing, before ContinueHopping
-        internal void HopOffObject(Transform _, Action onLanded = null)
+        internal void HopOffObject(Action onLanded = null)
         {
             StopHopping();
 

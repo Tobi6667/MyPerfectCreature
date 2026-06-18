@@ -13,9 +13,7 @@ namespace Game.Minigames
         [SerializeField] private AudioClip _introClip;
         [SerializeField] private AudioClip _countdownClip;     // tick per number
         [SerializeField] private AudioClip _countdownGoClip;   // "GO!" sting
-        [SerializeField] private AudioClip _playingClip;       // looping bg
-        [SerializeField] private AudioClip _roundEndClip;
-        [SerializeField] private AudioClip _roundFailClip;
+
         [SerializeField] private AudioClip _finishedClip;
 
         public static AudioMinigameManager Instance { get; private set; }
@@ -40,13 +38,13 @@ namespace Game.Minigames
                 case EMinigameState.Intro:
                     PlayMusic(_introClip, loop: false);
                     break;
-                case EMinigameState.Playing:
+             /*   case EMinigameState.Playing:
                     PlayMusic(_playingClip, loop: true);
                     break;
                 case EMinigameState.RoundEnded:
                     StopMusic();
                     PlaySfx(_roundEndClip);
-                    break;
+                    break;*/
                 case EMinigameState.Finished:
                     StopMusic();
                     PlaySfx(_finishedClip);
@@ -59,7 +57,7 @@ namespace Game.Minigames
 
         public void PlayCountdownTick() => PlaySfx(_countdownClip);
         public void PlayCountdownGo() => PlaySfx(_countdownGoClip);
-        public void PlayRoundFail() => PlaySfx(_roundFailClip);
+       // public void PlayRoundFail() => PlaySfx(_roundFailClip);
 
         private void PlayMusic(AudioClip clip, bool loop)
         {
