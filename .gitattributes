@@ -1,3 +1,4 @@
+Assets/Almaz[[:space:]]Assets/ENV[[:space:]]NULLED.prefab filter=lfs diff=lfs merge=lfs -text
 *.prefab filter=lfs diff=lfs merge=lfs -text
 *.fbx filter=lfs diff=lfs merge=lfs -text
 *.exr filter=lfs diff=lfs merge=lfs -text

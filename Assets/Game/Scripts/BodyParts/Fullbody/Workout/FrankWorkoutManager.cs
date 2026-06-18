@@ -20,7 +20,7 @@ namespace Game.Minigames
 
         [Header("Body")]
         [SerializeField] private FrankensteinController _frankensteinBody;
-
+        [SerializeField] private WorkoutReceiver _workoutReceiver;
         private ActiveWorkoutRuntime activeWorkout;
 
         private void Awake()
@@ -76,8 +76,16 @@ namespace Game.Minigames
             _frankensteinBody = Context.BodyPart as FrankensteinController;
             
             _frankensteinBody.FrankensteinMovementModule.PlayWorkout(workdata);
-
+            GameManager.Instance.ChangeReceiver(_workoutReceiver);
+            _workoutReceiver.Confirmed += OnConfirm;
             //OnReachedWorkout();
+        }
+
+        private void OnConfirm()
+        {
+            _frankensteinBody.FrankensteinMovementModule.StopWorkout();
+            GameManager.Instance.ChangeToDefaultReceiver();
+            Destroy(this.gameObject);
         }
 
         private void StartMiniGame(FrankensteinWorkoutData workdata)

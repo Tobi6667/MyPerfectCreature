@@ -136,10 +136,10 @@ public class FrankensteinMovementModule : MonoBehaviour
         _overrideController[_workoutSlotName] = workout.workoutClip;
         _overrideControllerFrank[_workoutSlotName] = workout.workoutClip;
 
-       // _animator.SetBool("isWorkingout", true);
+        _animator.SetBool("isWorkingout", true);
         _animatorFrank.SetBool("isWorkingout", true);
 
-       // _animator.CrossFade(_workoutHash, transition);
+        _animator.CrossFade(_workoutHash, transition);
         _animatorFrank.CrossFade(_workoutHash, transition);
 
 
@@ -148,7 +148,16 @@ public class FrankensteinMovementModule : MonoBehaviour
 
     // =========================================================
     // STATES (UNCHANGED LOGIC)
-    // =========================================================
+    // =======
+    //
+    //
+    // ==================================================
+    
+    internal void StopWorkout()
+    {
+        EnterIdleState();
+    }
+    
     private void EnterMoveState()
     {
         _isMoving = true;
@@ -156,7 +165,7 @@ public class FrankensteinMovementModule : MonoBehaviour
 
         _activeWorkout = null;
 
-       // _animator.SetBool("isWorkingout", false);
+        _animator.SetBool("isWorkingout", false);
         _animatorFrank.SetBool("isWorkingout", false);
     }
 
@@ -177,7 +186,7 @@ public class FrankensteinMovementModule : MonoBehaviour
             _agent.ResetPath();
         }
 
-       // _animator.SetBool("isWalking", false);
+        _animator.SetBool("isWalking", false);
        _animatorFrank.SetBool("isWalking", false);
     }
 
@@ -191,12 +200,13 @@ public class FrankensteinMovementModule : MonoBehaviour
             StopCoroutine(_moveRoutine);
             _moveRoutine = null;
         }
-
-        _agent.isStopped = true;
-
-    //    _animator.SetBool("isWalking", false);
+        if (_agent.isActiveAndEnabled)
+        { 
+            _agent.isStopped = true;
+    }
+       _animator.SetBool("isWalking", false);
         _animatorFrank.SetBool("isWalking", false);
-    //    _animator.SetBool("isWorkingout", false);
+       _animator.SetBool("isWorkingout", false);
       _animatorFrank.SetBool("isWorkingout", false);
 
 
