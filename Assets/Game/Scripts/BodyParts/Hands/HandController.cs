@@ -1,3 +1,4 @@
+using Game.Main;
 using System;
 using Unity.Cinemachine;
 using UnityEngine;
@@ -6,6 +7,7 @@ namespace Game.Body
 {
     public class HandController : BodyPartBase, IInteractable
     {
+        public Action OnFailed;
 
         [SerializeField] private FingerController _fingerController;
         [SerializeField] private PingPongHandComponent _pingPongHandComponent;
@@ -21,7 +23,7 @@ namespace Game.Body
             _hopComponent = GetComponent<HopComponent>();
             _hopComponent.Initialize();
             _fingerController.Initialize(null);
-            _pingPongHandComponent.Initialize();
+            _pingPongHandComponent.Initialize();            
         }
 
         internal void ShowGesture(HandPositions gesture)

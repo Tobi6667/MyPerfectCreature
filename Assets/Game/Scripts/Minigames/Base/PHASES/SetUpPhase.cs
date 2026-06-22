@@ -20,7 +20,7 @@ namespace Game.Minigames
             context.BodyPart.MoveToInteractionPoint(
                 context.StartTransform.position,
                 () => finished = true);
-            CameraMinigameManager.Instance.ChangeTo(context.BodyPart.GetTransitionCam());
+            CameraMinigameManager.Instance.ChangeTo(context.Minigame.GameCam);
             Debug.Log("[SetUpPhase] Waiting for MoveToInteractionPoint to complete...");
 
             while (!finished)

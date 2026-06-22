@@ -16,7 +16,7 @@ MonoBehaviour:
   - roundId: dd
     instruction: gfhgh
     showInstruction: 1
-    duration: 10
+    duration: 40
     targetScore: 4
     handGestures: 0200000003000000
     gestureMatchThreshold: 1.5

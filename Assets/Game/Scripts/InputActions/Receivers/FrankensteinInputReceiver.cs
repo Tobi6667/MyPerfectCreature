@@ -48,7 +48,7 @@ public class FrankensteinInputReceiver : MonoBehaviour, IInputReceiver
     public void OnInject()
     {
         var god = GodInjuryDatabase.Get(EBodyRegion.Fullbody);
-        _frank.IkBlendController.InjectInjury(god.GetRandomInjury());
+       // _frank.IkBlendController.InjectInjury(god.GetRandomInjury());
         Injected?.Invoke();
     }
 
@@ -82,7 +82,8 @@ public class FrankensteinInputReceiver : MonoBehaviour, IInputReceiver
 
     public void OnJump()
     {
-        throw new NotImplementedException();
+        if (!_isActive) return;
+        _frank.IkBlendController.TriggerJump();
     }
 
     public void Deactivate()

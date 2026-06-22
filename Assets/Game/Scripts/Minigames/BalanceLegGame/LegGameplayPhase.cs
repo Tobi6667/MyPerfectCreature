@@ -7,7 +7,7 @@ namespace Game.Minigames
     public class LegGameplayPhase : IMinigamePhase
     {
         private readonly LegGameRoundData _round;
-        private readonly LegController _leg;
+        private LegController _leg;
         private readonly Transform _footTarget;
         private bool _injuryRequested;
         private bool _fell;
@@ -18,20 +18,21 @@ namespace Game.Minigames
         {
             _round = round;
             _footTarget = target;
+
         }
 
         public IEnumerator Execute(MinigameContext context)
         {
-            context.Receiver.Bind(context.BodyPart as LegController);
+
+            _leg = context.BodyPart as LegController;
+            context.Receiver.Bind(_leg);
+
             context.State = EMinigameState.Playing;
+
             float timer = _round.duration;
-            var xt = context.BodyPart as LegController;
 
-            xt.Activate();
-            context.Receiver.Injected += OnInjury;
-           // _leg.FellOver += OnFellOver;
-
-
+            _leg.Activate();
+            _leg.FellOver += OnFellOver;
 
             try
             {
@@ -39,40 +40,24 @@ namespace Game.Minigames
                 {
                     if (_fell)
                     {
-                        context.Cancelled = true;
-                        yield break;
-                    }
-
-                    if (_injuryRequested)
-                    {
-                        _injuryRequested = false;
-
+                        _fell = false;
                         yield return context.RunPhase(
-                            new InjuryPhase());
+                            new LegInjuryPhase());
                     }
 
                     timer -= Time.deltaTime;
-
                     context.UI.UpdateTimer(timer);
 
                     yield return null;
                 }
-
-                // survived entire round
             }
             finally
             {
-               // _controller.StopBalance();
-
-                context.Receiver.Injected -= OnInjury;
-                //_controller.FellOver -= OnFellOver;
+                _leg.FellOver -= OnFellOver;
+                _leg.Deactivate();
             }
         }
 
-        private void OnInjury()
-        {
-            _injuryRequested = true;
-        }
 
         private void OnFellOver()
         {

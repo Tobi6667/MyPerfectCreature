@@ -3,6 +3,7 @@ using Game.Input;
 using Game.Minigames;
 using System;
 using System.Collections;
+using Unity.Cinemachine;
 using UnityEngine;
 
 public class MinigameContext
@@ -18,10 +19,6 @@ public class MinigameContext
     public AudioMinigameManager Audio;
     public MinigameBase Minigame;
     [Header("State Clips")]
-    public AudioClip _playingClip;
-    public AudioClip _roundEndClip;
-    public AudioClip _roundFailClip;
-    public AudioClip _finishedClip;
     public FrankensteinWorkoutData _workoutData;
     public event Action OnInjuryInjected;
     public bool Cancelled;

@@ -30,23 +30,6 @@ MonoBehaviour:
     stunTime: 0.15
     _pushVelocity: 0
     _pushOffset: 0
-  - roundId: g
-    instruction: hhh
-    showInstruction: 1
-    duration: 4
-    targetScore: 10
-    requiredHits: 2
-    ballSpeed: 2
-    ballsToSpawn: 1
-    reactionSpeed: 12
-    strikeOffsetZ: 0.4
-    strikeDistance: 1.2
-    strikeSpeed: 10
-    recoilDistance: 0.6
-    recoilRecoverSpeed: 5
-    stunTime: 0.15
-    _pushVelocity: 0
-    _pushOffset: 0
   audioClips:
     _playingClip: {fileID: 0}
     _roundEndClip: {fileID: 0}

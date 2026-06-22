@@ -16,7 +16,7 @@ MonoBehaviour:
   - roundId: H
     instruction: DVSYVY
     showInstruction: 1
-    duration: 10
+    duration: 5
     targetScore: 0
     rootMoveMultiplier: 0.87
     randomPushForce: 0.85

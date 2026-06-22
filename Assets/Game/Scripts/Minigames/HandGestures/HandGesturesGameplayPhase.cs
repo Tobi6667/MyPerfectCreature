@@ -1,3 +1,4 @@
+using Game.Body;
 using System.Collections;
 using UnityEngine;
 
@@ -26,7 +27,6 @@ namespace Game.Minigames
             context.State = EMinigameState.Playing;
 
             float timer = _round.duration;
-
             _gestureController.RoundCompleted += OnRoundCompleted;
             _gestureController.RoundFailed += OnRoundFailed;
 
@@ -38,6 +38,14 @@ namespace Game.Minigames
             {
                 while (timer > 0f)
                 {
+
+                    if(context.State == EMinigameState.Paused)
+                    {
+                        context.State = EMinigameState.Playing;
+                       _gestureController.StartGestures();
+
+                    }
+
                     if (_roundFailed)
                     {
                         context.Cancelled = true;
@@ -52,7 +60,7 @@ namespace Game.Minigames
                     if (_injuryRequested)
                     {
                         _injuryRequested = false;
-
+                        context.State = EMinigameState.Paused;
                         yield return context.RunPhase(
                             new InjuryPhase());
                     }
@@ -77,7 +85,7 @@ namespace Game.Minigames
         }
 
         private void OnRoundCompleted() => _roundCompleted = true;
-        private void OnRoundFailed() => _roundFailed = true;
+        private void OnRoundFailed() => _injuryRequested = true;
 
         private void OnInjury()
         {

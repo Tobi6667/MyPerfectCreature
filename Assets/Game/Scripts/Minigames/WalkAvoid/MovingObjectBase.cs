@@ -41,7 +41,7 @@ public abstract class MovingObjectBase : MonoBehaviour
 
     protected virtual void Move()
     {
-        Debug.Log("shall move"+_direction);
+
         transform.position += _direction * _speed * Time.deltaTime;
     }
 

@@ -19,10 +19,13 @@ namespace Game.Minigames
             foreach (var phase in _phases)
             {
                 if (context.Cancelled)
-                    yield break;
+                    break;
 
                 yield return phase.Execute(context);
             }
+
+            // Always let the result phase run, cancelled or not
+            yield return new ResultPhase().Execute(context);
         }
     }
 }

@@ -1,7 +1,9 @@
-using Game.Body;
+ using Game.Body;
 using Game.Input;
 using Game.Main;
 using Game.Minigames;
+using Unity.Cinemachine;
+using UnityEditor;
 using UnityEngine;
 
 
@@ -12,6 +14,9 @@ namespace Game.Minigames
         public static MinigameManager Instance;
 
         private MinigameBase _activeMinigame;
+        private BodyPartBase _activeBodyPart;
+
+        [SerializeField] private CinemachineCamera _tableCam;
 
         private void Awake()
         {
@@ -20,7 +25,7 @@ namespace Game.Minigames
         public void StartMinigame(BodyPartBase bodyPart)
         {
             Debug.Log($"[Minigame] Start request from BodyPart: {bodyPart.name}");
-
+            _activeBodyPart = bodyPart;
             var prefab = bodyPart.GetMinigame();
             Debug.Log($"[Minigame] Prefab resolved: {prefab}");
 
@@ -32,7 +37,8 @@ namespace Game.Minigames
 
             var instance = Instantiate(prefab);
             Debug.Log($"[Minigame] Instance created: {instance.name}");
-
+            _activeMinigame = instance;
+            _activeMinigame.Completed += OnMinigameCompleted;
             var receiver = instance.GetComponent<IInputReceiver>();
             Debug.Log($"[Minigame] Receiver found: {receiver}");
 
@@ -50,7 +56,7 @@ namespace Game.Minigames
                 BodyPart = bodyPart,
                 Receiver = receiver,
                 StartTransform = instance.GetStartTrans(),
-                
+
             };
 
             Debug.Log($"[Minigame] Context created:");
@@ -74,7 +80,8 @@ namespace Game.Minigames
             Debug.Log($"[Minigame] Starting {prefab.name}");
 
             var instance = Instantiate(prefab);
-
+            _activeMinigame = instance;
+            _activeMinigame.Completed += OnMinigameCompleted;
             var receiver = instance.GetComponent<IInputReceiver>();
 
             if (receiver == null)
@@ -101,10 +108,68 @@ namespace Game.Minigames
 
         private void OnMinigameCompleted()
         {
-            _activeMinigame.Completed -= OnMinigameCompleted;
+            if(_activeBodyPart as FrankensteinController)
+            { Debug.Log("test frank");
+                return;
+            }
+            Debug.Log("minigame Done");
+            CameraMinigameManager.Instance.ChangeTo(_activeBodyPart.GetTransitionCam());
 
+            _activeMinigame.Completed -= OnMinigameCompleted;
+            if (_activeMinigame.gameObject != null)
+            {
+
+                Destroy(_activeMinigame.gameObject);
+            }
             _activeMinigame = null;
 
+            var mini = _activeBodyPart.GetMinigame();
+            if (mini != null)
+            {
+                Debug.Log("next");
+
+                Debug.Log("nn: " + mini);
+                _activeMinigame = mini;
+                StartMinigame(mini, _activeBodyPart);
+            }
+            else
+            {
+                CameraMinigameManager.Instance.ChangeTo(_activeBodyPart.GetTransitionCam());
+
+                Debug.Log("should move");
+                MoveToTable();
+            }
+
+
+
+
+        }
+
+        private void MoveToTable()
+        {
+            _activeBodyPart.HopComponent.HopOffObject(() =>
+            {
+                _activeBodyPart.HopComponent.MoveToTarget(TableFrankenstein.Instance.transform, () =>
+                {
+                    var tr = TableFrankenstein.Instance.GetTargetOnObject(_activeBodyPart.Type);
+                    _activeBodyPart.HopComponent.HopOnObject(tr.position, () =>
+                    {
+                        CameraMinigameManager.Instance.ChangeTo(_tableCam);
+
+                        _activeBodyPart.HopComponent.AttachToTable(tr, () =>
+                        {
+                            GameManager.Instance.ChangeToDefaultReceiver();
+                            CameraMinigameManager.Instance.VictorCam();
+                        });
+
+
+
+                    });
+                }, 4f);
+                //GameManager.Instance.ChangeToDefaultReceiver();
+                //CameraMinigameManager.Instance.VictorCam();
+
+            });
         }
     }
 }

@@ -10,6 +10,8 @@ namespace Game.Minigames
     {
         [SerializeField] private SoPingPongRound _data;
         [SerializeField] private PingPongInputReceiver _inputReceiver;
+        [SerializeField] private PingPongBallController _ballController;
+        [SerializeField] private EnemyPingPongHand _enemyPingHand;
         private int _currentRound;
         private int _currentHits;
         private bool _roundFinished;
@@ -28,6 +30,7 @@ namespace Game.Minigames
 
         protected override void BuildPipeline()
         {
+            _enemyPingHand.Initialize();
             Pipeline = new MinigamePipeline();
 
             foreach (var round in _data.rounds)
@@ -37,7 +40,7 @@ namespace Game.Minigames
                     .Add(new TutorialPhase(round.instruction))
                     .Add(new ReadyPhase(2f))
                     .Add(new CountdownPhase(3))
-                    .Add(new PingPongGameplayPhase(round));
+                    .Add(new PingPongGameplayPhase(round, _ballController));
             }
             Pipeline.Add(new ResultPhase());
         }

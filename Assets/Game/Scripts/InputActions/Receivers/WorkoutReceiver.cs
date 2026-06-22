@@ -49,7 +49,7 @@ public class WorkoutReceiver : MonoBehaviour, IInputReceiver
     public void OnInject()
     {
         var god = GodInjuryDatabase.Get(EBodyRegion.Fullbody);
-        _frank.IkBlendController.InjectInjury(god.GetRandomInjury());
+       // _frank.IkBlendController.InjectInjury(god.GetRandomInjury());
         Injected?.Invoke();
     }
 

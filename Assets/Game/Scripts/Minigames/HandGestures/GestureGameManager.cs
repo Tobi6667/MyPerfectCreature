@@ -20,7 +20,6 @@ namespace Game.Minigames
                     .Add(new CountdownPhase(3))
                     .Add(new HandGestureGameplayPhase(round, _controller));
             }
-            Pipeline.Add(new ResultPhase());
         }
     }
 }

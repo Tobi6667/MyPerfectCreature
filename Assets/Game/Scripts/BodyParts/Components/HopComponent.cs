@@ -175,6 +175,8 @@ namespace Game.Body
             _arriveDistance = dist;
             _onReachedTarget = onReached;
             _isMovingToTarget = true;
+            _isHopping = true;
+            HopLoop();
         }
 
         internal void StopHopping()
@@ -222,6 +224,16 @@ namespace Game.Body
                 transform.position = hopPoint;
                 onReached?.Invoke();
             });
+        }
+
+
+        internal void AttachToTable(Transform targetTransform, Action onAttached)
+        {
+            transform.SetPositionAndRotation(
+                targetTransform.position,
+                targetTransform.rotation);
+
+            onAttached?.Invoke();
         }
 
         // Now takes an optional callback — fires AFTER landing, before ContinueHopping

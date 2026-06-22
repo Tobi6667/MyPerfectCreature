@@ -25,7 +25,14 @@ namespace Game.Minigames
         private Label _tutorialLabel;
         private Label _timerLabel;
         private Label _instructionLabel;
+
+
         private Label _injuryTitel;
+        private Label _injuryName;
+        private Label _injurySymptoms;
+        private Label _injuryDescription;
+        private Label _injuryFunfact;
+
 
         void OnEnable()
         {
@@ -42,8 +49,17 @@ namespace Game.Minigames
             _introLabel = _introPanel.Q<Label>("intro-label");
             _tutorialLabel = _tutorialPanel.Q<Label>("tutorial-label");
             _timerLabel = _hudPanel.Q<Label>("timer-label");
-            _injuryTitel = _injuryPanel.Q<Label>("injury-titel");
+
             _instructionLabel = _instructionPanel.Q<Label>("anweisung-label");
+
+
+            _injuryTitel = _injuryPanel.Q<Label>("injury-titel");
+            _injuryName = _injuryPanel.Q<Label>("injury-name");
+            _injurySymptoms = _injuryPanel.Q<Label>("injury-symptoms");
+            _injuryDescription = _injuryPanel.Q<Label>("injury-description");
+            _injuryFunfact = _injuryPanel.Q<Label>("injury-funfact");
+
+
             HideAll();
         }
 
@@ -74,13 +90,13 @@ namespace Game.Minigames
             for (int i = from; i >= 1; i--)
             {
                 _countdownLabel.text = i.ToString();
-                //   AudioMinigameManager.Instance?.PlayCountdownTick();
+                   AudioMinigameManager.Instance?.PlayCountdownTick();
                 yield return AnimateCountdownPop(_countdownLabel);
                 yield return new WaitForSeconds(0.3f);  // gap between numbers
             }
 
             _countdownLabel.text = "GO!";
-            //  AbilityGameAudioManager.Instance?.PlayCountdownGo();
+            AudioMinigameManager.Instance?.PlayCountdownGo();
             yield return AnimateCountdownPop(_countdownLabel);
             yield return new WaitForSeconds(0.4f);
 
@@ -171,6 +187,11 @@ namespace Game.Minigames
         public void ShowInjuryPanel(IInjuryData injury)
         {
             _injuryTitel.text = injury.InjuryName;
+            _injuryName.text = injury.InjuryRealName;
+            _injurySymptoms.text = injury.Symptoms;
+            _injuryDescription.text = injury.Description;
+            _injuryFunfact.text = injury.FunFact;
+
             SetVisible(_injuryPanel, true);
             AnimatePanelIn(_injuryPanel);
         }

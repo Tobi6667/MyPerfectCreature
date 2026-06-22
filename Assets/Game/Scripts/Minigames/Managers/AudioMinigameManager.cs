@@ -59,7 +59,7 @@ namespace Game.Minigames
         public void PlayCountdownGo() => PlaySfx(_countdownGoClip);
        // public void PlayRoundFail() => PlaySfx(_roundFailClip);
 
-        private void PlayMusic(AudioClip clip, bool loop)
+        public void PlayMusic(AudioClip clip, bool loop)
         {
             if (clip == null) return;
             _musicSource.loop = loop;

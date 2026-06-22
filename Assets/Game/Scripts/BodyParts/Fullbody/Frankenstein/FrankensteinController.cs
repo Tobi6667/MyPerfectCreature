@@ -18,9 +18,9 @@ public class FrankensteinController : BodyPartBase, IInteractable
     [SerializeField] private FrankensteinMovementModule _movementModule;
     [SerializeField] private Transform _testTarget;
     [SerializeField] private FrankensteinWorkoutModule _frankensteinAbilityTestsModule;
-    [SerializeField] private IKBlendControllerFullbody _ikController;
+    [SerializeField] private IKBlendController _ikController;
     public Transform Transform => transform;
-    public IKBlendControllerFullbody IkBlendController => _ikController;
+    public IKBlendController IkBlendController => _ikController;
     public FrankensteinMovementModule FrankensteinMovementModule => _movementModule;
 
     [SerializeField] private CinemachineCamera _followCam;

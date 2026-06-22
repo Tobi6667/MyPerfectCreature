@@ -7,7 +7,7 @@ namespace Game.Minigames
     public class PingPongGameplayPhase : IMinigamePhase
     {
         private readonly PingPongRoundData _round;
-
+        private readonly PingPongBallController _ballController;
         private bool _roundFinished;
         private int _currentHits;
         private bool _injuryRequested = false;
@@ -17,9 +17,10 @@ namespace Game.Minigames
         public void Pause() => IsPaused = true;
         public void Resume() => IsPaused = false;
 
-        public PingPongGameplayPhase(PingPongRoundData round)
+        public PingPongGameplayPhase(PingPongRoundData round, PingPongBallController ballController)
         {
             _round = round;
+            _ballController = ballController;
         }
 
         public IEnumerator Execute(MinigameContext context)
@@ -30,8 +31,16 @@ namespace Game.Minigames
             _roundFinished = false;
             context.Receiver.Bind(context.BodyPart);
             float timer = _round.duration;
+            AudioMinigameManager.Instance.PlayMusic(context.Minigame.GameMusic, true);
+
+
+
+
+            _ballController.Initialize(
+                this);
 
             SpawnBall(_round, context);
+
             try
             {
 
@@ -59,6 +68,8 @@ namespace Game.Minigames
                 _roundFinished = true;
                 if (!_roundFinished)
                     context.Cancelled = true;
+
+                _ballController.StopBall();
             }
             finally
             {
@@ -79,6 +90,8 @@ namespace Game.Minigames
         private void SpawnBall(PingPongRoundData round, MinigameContext context)
         {
             // TODO
+            //_ballController.SpawnBall();
+            _ballController.StartBall();
         }
     }
 }

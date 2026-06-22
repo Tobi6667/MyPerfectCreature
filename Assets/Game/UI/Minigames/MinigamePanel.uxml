@@ -15,8 +15,12 @@
     <ui:VisualElement name="intro" class="fullscreen-center">
         <ui:Label text="intro" name="intro-label" class="countdown-label"/>
     </ui:VisualElement>
-    <ui:VisualElement name="Injury" class="injury-panel">
+    <ui:VisualElement name="Injury" class="injury-panel" style="width: 600px; height: 600px; margin-left: 60px; margin-top: 60px;">
         <ui:Label text="Label" name="injury-titel"/>
+        <ui:Label text="Label" name="injury-name"/>
+        <ui:Label text="Label" name="injury-symptoms"/>
+        <ui:Label text="Label" name="injury-description"/>
+        <ui:Label text="Label" name="injury-funfact"/>
     </ui:VisualElement>
     <ui:VisualElement picking-mode="Ignore" name="anweisung" style="flex-grow: 1; position: absolute; justify-content: flex-start; align-items: center; flex-wrap: nowrap; flex-direction: column-reverse; -unity-text-align: upper-left; width: 100%; height: 100%; align-self: auto; padding-bottom: 94px;">
         <ui:Label text="anweisung" selectable="true" focusable="true" name="anweisung-label" style="font-size: 55px; -unity-text-align: upper-left;"/>

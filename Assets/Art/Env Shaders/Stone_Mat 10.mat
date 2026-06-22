@@ -44,7 +44,7 @@ Material:
     m_Floats:
     - _ColorAdd: -0.01
     - _ColorAdd2: -0.01
-    - _NormalStr2: -0.27
+    - _NormalStr2: -0.74
     - _RotationY: 0
     - _Tiling: 0.26
     - _Tiling2: 0.26

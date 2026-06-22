@@ -12,12 +12,12 @@ namespace Game.Main
 
         [SerializeField] private PlayerInputModule _inputModule;
         [SerializeField] private VictorInputReceiver _inputReceiver;
-
+        private BodyPartBase _activeBodyPart;
 
         [SerializeField] private List<BodyPartBase> _bodypartsList;
 
         public static GameManager Instance;
-
+        public BodyPartBase ActiveBodyPart => _activeBodyPart;
 
         private void Awake()
         {
@@ -31,7 +31,7 @@ namespace Game.Main
             {
                 part.Initialize();
             }
-            
+
             _victorController.Initialize((interactor) =>
             {
                 Debug.Log(interactor);
@@ -55,10 +55,11 @@ namespace Game.Main
 
         private void OnInteract(IInteractable interactor)
         {
-            if(interactor as FrankensteinController)
+            _activeBodyPart = interactor as BodyPartBase;
+            if (interactor as FrankensteinController)
             {
-               MinigameManager.Instance.StartMinigame(interactor as BodyPartBase);
-              // FrankWorkoutManager.Instance.OpenWorkoutSelection();
+                MinigameManager.Instance.StartMinigame(interactor as BodyPartBase);
+                // FrankWorkoutManager.Instance.OpenWorkoutSelection();
                 Debug.Log("dgfdfdfdfdfdAAAAA");
                 return;
             }

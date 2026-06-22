@@ -23,7 +23,6 @@ namespace Game.Minigames
                     .Add(new CountdownPhase(3))
                     .Add(new LegGameplayPhase(round, _footTarget));
             }
-            Pipeline.Add(new ResultPhase());
         }
     }
 }

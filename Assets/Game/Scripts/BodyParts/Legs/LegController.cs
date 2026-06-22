@@ -1,3 +1,4 @@
+using DG.Tweening;
 using Game.Minigames;
 using System;
 using Unity.Cinemachine;
@@ -35,7 +36,7 @@ namespace Game.Body
         [SerializeField] private float damping = 7f;
         [SerializeField] private float maxOffset = 1.5f;
         [SerializeField] private float controlResponsiveness = 1f;
-
+        public event Action FellOver;
         private Vector3 _idleOffset;
         private Vector3 _inputSmoothed;
         private bool _movetoLabObject = false;
@@ -50,7 +51,7 @@ namespace Game.Body
         [SerializeField] private Collider _collider;
 
         private bool _ikChanged = false;
-
+        private bool _hasFallen;
         [SerializeField] private float randomPushForce = 2f;
         [SerializeField] private float randomPushIntervalMin = 0.4f;
         [SerializeField] private float randomPushIntervalMax = 1.2f;
@@ -66,8 +67,6 @@ namespace Game.Body
 
         private LegInjuryInstance _activeInjury;
 
-        [SerializeField]
-        private LegGameManager _minigamePrefab;
 
 
 
@@ -158,7 +157,7 @@ namespace Game.Body
         {
             if (!_active)
                 return;
-/*
+
             float t = Time.time * 2f;
 
             float injuryFactor = _activeInjury != null
@@ -178,18 +177,21 @@ namespace Game.Body
             _idleOffset = Vector3.Lerp(_idleOffset, targetIdle, Time.deltaTime * 5f);
 
             // idle APPLY (IMPORTANT FIX: must actually influence pose)
-            hip.position += _idleOffset; */
+            hip.position += _idleOffset;
         }
 
         private void CheckFailure()
         {
-
             if (!_activeGame) return;
+            if (_hasFallen) return;
+
             float dist = Vector3.Distance(hip.position, foot.position);
 
             if (dist > failDistance)
             {
-                // _activeAbility.StopGame();
+                _hasFallen = true;
+                FellOver?.Invoke();
+                _active = false;
             }
         }
 
@@ -216,7 +218,7 @@ namespace Game.Body
                 _startRotation = transform.rotation;
             }
         }
-       
+
 
         internal void SetRoundData(LegGameRoundData data)
         {
@@ -229,38 +231,72 @@ namespace Game.Body
             randomPushIntervalMin = data.randomPushIntervalMin;
             randomPushIntervalMax = data.randomPushIntervalMax;
         }
-        
+
         internal void ResetLeg(Action onReset)
         {
+            _activeGame = false;
+            _hasFallen = false;
+
             _rb.linearVelocity = Vector3.zero;
             _rb.angularVelocity = Vector3.zero;
 
             _rb.isKinematic = true;
             _rb.useGravity = false;
 
-            _collider.isTrigger = true;
+            //_collider.isTrigger = true;
 
-            MoveToInteractionPoint(_startPosition, () =>
+
+            _musclesComp.HideMuscles(() =>
             {
-                transform.position = _startPosition;
-                transform.rotation = _startRotation;
 
-                hip.position = _startPosition;
 
-                _velocity = Vector3.zero;
-                onReset?.Invoke();
-                Activate();
-                //_idleAnim.SetRestPosition(_startPosition);
 
+
+                DG.Tweening.Sequence seq = DOTween.Sequence();
+
+                seq.Join(hip.DOLocalMove(Vector3.zero, 2f));
+
+                seq.Join(
+                    transform.DOLocalRotateQuaternion(
+                        Quaternion.identity,
+                        2f
+                    ).SetEase(Ease.InOutSine)
+                );
+
+                seq.OnComplete(() =>
+                {
+                    transform.localPosition = _startPosition;
+                    transform.localRotation = _startRotation;
+
+
+
+                    _velocity = Vector3.zero;
+                    onReset?.Invoke();
+                    Activate();
+                });
             });
+
         }
 
         internal void Activate()
         {
-
             _startPosition = transform.position;
             _startRotation = transform.rotation;
+
+            _hasFallen = false;
+            _activeGame = true;
             _active = true;
+            _ikLeg.weight = 0;
+            _gameikLeg.weight = 1;
+
+        }
+
+        internal void Deactivate()
+        {
+            _activeGame = false;
+            _active = false;
+            _ikLeg.weight = 1;
+            _gameikLeg.weight = 0;
         }
 
         private void ApplyRandomPush()
@@ -300,7 +336,9 @@ namespace Game.Body
 
         public override void OnInject(IInjuryData injury)
         {
-           
+
+            var inj = injury as LegInjuryInstance;
+            _musclesComp.ShowMuscles(inj.affectedMuscles);
         }
     }
 }

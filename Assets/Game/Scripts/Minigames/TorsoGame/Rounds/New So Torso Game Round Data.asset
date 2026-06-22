@@ -16,14 +16,17 @@ MonoBehaviour:
   - roundId: 
     instruction: ahhjhh
     showInstruction: 1
-    duration: 10
+    duration: 40
     targetScore: 44
     moveSpeedMultiplier: 1
     instabilityMultiplier: 0
-    _imagesToCollect: 10
+    dropInterval: 1
+    dropSpeed: 1
+    imagesToCollect: 10
+    imageObject: {fileID: 4268697087459164248, guid: 8c2a6fc3d503dd24e8b7e8926ee1158c, type: 3}
     difficultyMultiplier: 1
-    _maxBangAmount: 4
-    _dropSpeedMultiplier: 1
+    maxBangAmount: 3
+    dropSpeedMultiplier: 1
   audioClips:
     _playingClip: {fileID: 0}
     _roundEndClip: {fileID: 0}

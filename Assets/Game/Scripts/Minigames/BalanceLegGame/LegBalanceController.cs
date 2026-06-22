@@ -26,6 +26,7 @@ namespace Game.Body
         public void StopBalance()
         {
             _active = false;
+            _legController.Deactivate();
         }
 
         public void MoveLeg(Vector2 screenPos)

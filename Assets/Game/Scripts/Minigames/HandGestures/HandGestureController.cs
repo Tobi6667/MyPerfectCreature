@@ -110,8 +110,8 @@ namespace Game.Minigames
             if (_correctGestureCount >= _requiredCorrectGestures)
             {
                 StopGestures();
-
-                RoundCompleted?.Invoke();
+                
+                //RoundCompleted?.Invoke();
                 return;
             }
 
