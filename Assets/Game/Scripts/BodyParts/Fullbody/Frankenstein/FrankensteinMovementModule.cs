@@ -1,4 +1,5 @@
 using DG.Tweening;
+using Game.Minigames;
 using System;
 using System.Collections;
 using UnityEngine;
@@ -10,7 +11,7 @@ public class FrankensteinMovementModule : MonoBehaviour
     [SerializeField] private Transform _testTarget;
     public event System.Action OnWorkoutFinished;
     [Header("References")]
-    [SerializeField] private Animator _animator;
+    [SerializeField] private Animator _animatorIK;
     [SerializeField] private Animator _animatorFrank;
     [SerializeField] private NavMeshAgent _agent;
 
@@ -28,7 +29,6 @@ public class FrankensteinMovementModule : MonoBehaviour
     private FrankensteinWorkoutData _activeWorkout;
 
     private AnimatorOverrideController _overrideController;
-    private AnimatorOverrideController _overrideControllerFrank;
 
     private Coroutine _moveRoutine;
     private int _workoutHash;
@@ -42,13 +42,10 @@ public class FrankensteinMovementModule : MonoBehaviour
     private void Awake()
     {
         _overrideController =
-            new AnimatorOverrideController(_animator.runtimeAnimatorController);
-
-        _overrideControllerFrank =
             new AnimatorOverrideController(_animatorFrank.runtimeAnimatorController);
 
-        _animator.runtimeAnimatorController = _overrideController;
-        _animatorFrank.runtimeAnimatorController = _overrideControllerFrank;
+
+        _animatorFrank.runtimeAnimatorController = _overrideController;
 
         _workoutHash = Animator.StringToHash(_workoutStateName);
     }
@@ -134,25 +131,16 @@ public class FrankensteinMovementModule : MonoBehaviour
         _activeWorkout = workout;
 
         _overrideController[_workoutSlotName] = workout.workoutClip;
-        _overrideControllerFrank[_workoutSlotName] = workout.workoutClip;
 
-        _animator.SetBool("isWorkingout", true);
         _animatorFrank.SetBool("isWorkingout", true);
 
-        _animator.CrossFade(_workoutHash, transition);
         _animatorFrank.CrossFade(_workoutHash, transition);
 
 
         //DOVirtual.DelayedCall(transition, () => SetIK(1f));
     }
 
-    // =========================================================
-    // STATES (UNCHANGED LOGIC)
-    // =======
-    //
-    //
-    // ==================================================
-    
+
     internal void StopWorkout()
     {
         EnterIdleState();
@@ -165,9 +153,14 @@ public class FrankensteinMovementModule : MonoBehaviour
 
         _activeWorkout = null;
 
-        _animator.SetBool("isWorkingout", false);
         _animatorFrank.SetBool("isWorkingout", false);
     }
+
+    internal void SetIKAnimator(bool state)
+    {
+        _animatorIK.enabled = state;
+    }
+
 
     private void EnterWorkoutState()
     {
@@ -186,15 +179,21 @@ public class FrankensteinMovementModule : MonoBehaviour
             _agent.ResetPath();
         }
 
-        _animator.SetBool("isWalking", false);
        _animatorFrank.SetBool("isWalking", false);
+
+       // _animatorIK.enabled = true;
+
+
     }
+
+
+
 
     private void EnterIdleState()
     {
         _isMoving = false;
         _isWorking = false;
-
+        _animatorIK.enabled = false;
         if (_moveRoutine != null)
         {
             StopCoroutine(_moveRoutine);
@@ -204,9 +203,7 @@ public class FrankensteinMovementModule : MonoBehaviour
         { 
             _agent.isStopped = true;
     }
-       _animator.SetBool("isWalking", false);
         _animatorFrank.SetBool("isWalking", false);
-       _animator.SetBool("isWorkingout", false);
       _animatorFrank.SetBool("isWorkingout", false);
 
 
@@ -231,7 +228,6 @@ public class FrankensteinMovementModule : MonoBehaviour
             wobble * 6f
         );
 
-        // KEEP YOUR IK SYSTEM EXACTLY AS YOU HAD IT
         if (!_isWorking || _activeWorkout == null)
             return;
 
@@ -254,38 +250,27 @@ public class FrankensteinMovementModule : MonoBehaviour
 
             Vector3 pos = ik.localOffset + baseOffset;
 
-            ik.target.localPosition =
-                Vector3.Lerp(Vector3.zero, pos, w);
+            ik.target.localPosition = Vector3.Lerp(Vector3.zero, pos, w);
 
-            ik.target.localRotation =
-                Quaternion.Slerp(
-                    Quaternion.identity,
-                    Quaternion.Euler(ik.localRotationOffset),
-                    w
-                );
+            ik.target.localRotation = Quaternion.Slerp(Quaternion.identity, Quaternion.Euler(ik.localRotationOffset), w);
         }
     }
 
-    // =========================================================
-    // THIS IS NOW CORRECTLY PLACED (ONLY ADDITIVE VISUAL LAYER)
-    // =========================================================
     private void OnAnimatorIK(int layerIndex)
     {
         if (!_isWorking) return;
 
-        if (!_animator) return;
+        if (!_animatorFrank) return;
 
-        // IMPORTANT: base pose first
-        Vector3 basePos = _animator.bodyPosition;
 
-        // apply offset in world space directly (NO +=)
+        Vector3 basePos = _animatorFrank.bodyPosition;
+
         Vector3 worldOffset = transform.TransformVector(_pelvisOffset);
 
-        _animator.bodyPosition = basePos + worldOffset;
+        _animatorFrank.bodyPosition = basePos + worldOffset;
 
-        // spine rotation (safe multiplicative blend)
         Quaternion spineRot = Quaternion.Euler(_spineOffset);
-        _animator.bodyRotation = spineRot * _animator.bodyRotation;
+        _animatorFrank.bodyRotation = spineRot * _animatorFrank.bodyRotation;
     }
 
 

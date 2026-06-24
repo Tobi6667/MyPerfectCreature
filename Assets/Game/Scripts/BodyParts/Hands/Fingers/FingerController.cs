@@ -21,6 +21,8 @@ namespace Game.Body
         [SerializeField] private float idleCurlAmount = 0.03f;
         [SerializeField] private float idleTwistAmount = 0.03f;
         [SerializeField] private float idleSpreadAmount = 0.02f;
+        private static readonly float[] MaxFlexionAngles = { 80f, 80f, 80f }; // MCP, PIP, DIP
+        private static readonly float[] ThumbMaxFlexionAngles = { 60f, 60f, 60f }; // CMC/MCP, IP — adjust if your thumb has 3 bones
 
         private float _idleTime;
 
@@ -123,24 +125,39 @@ namespace Game.Body
             // =========================
             // BONES
             // =========================
+            /* for (int i = 0; i < finger.BoneCount; i++)
+             {
+                 float t = (i + 1f) / finger.BoneCount;
+
+                 float shape = Mathf.SmoothStep(0f, 1f, 1f - t);
+                 shape = Mathf.Pow(shape, 1.2f);
+
+                 float jointBias =
+                     (i == 0) ? 1.5f :
+                     (i == 1) ? 0.8f :
+                                0.6f;
+
+                 float angle = curl * shape * 180f * jointBias;
+
+                 finger.GetBone(i).localRotation =
+                     finger.GetRestRotation(i) *
+                     Quaternion.AngleAxis(angle, finger.curlAxis);
+             }
+             */
+
             for (int i = 0; i < finger.BoneCount; i++)
             {
-                float t = (i + 1f) / finger.BoneCount;
+                float maxAngle = finger.Type == EFingerTypes.Thumb
+                    ? ThumbMaxFlexionAngles[Mathf.Min(i, ThumbMaxFlexionAngles.Length - 1)]
+                    : MaxFlexionAngles[Mathf.Min(i, MaxFlexionAngles.Length - 1)];
 
-                float shape = Mathf.SmoothStep(0f, 1f, t);
-                shape = Mathf.Pow(shape, 1.2f);
-
-                float jointBias =
-                    (i == 0) ? 1.0f :
-                    (i == 1) ? 0.85f :
-                               0.6f;
-
-                float angle = curl * shape * 170f * jointBias;
+                float angle = curl * maxAngle;
 
                 finger.GetBone(i).localRotation =
                     finger.GetRestRotation(i) *
                     Quaternion.AngleAxis(angle, finger.curlAxis);
             }
+
         }
 
         internal void InjectInjury(HandInjuryTypes injury)

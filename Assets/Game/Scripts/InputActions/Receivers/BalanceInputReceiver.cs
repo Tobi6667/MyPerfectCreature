@@ -12,6 +12,7 @@ namespace Game.Input
        private LegController _controller;
         private bool _isActive = false;
         private BodyPartBase _activeBodypart;
+        private bool _injured = false;
         public void Initialize()
         {
 
@@ -44,7 +45,13 @@ namespace Game.Input
         public void OnLook(Vector2 input)
         {
             if (!_isActive) return;
-            
+
+            if(_injured)
+            {
+                _controller.MoveCam(input);
+
+            }
+
         }
 
         public void OnMove(Vector2 input)
@@ -55,6 +62,11 @@ namespace Game.Input
         public void OnMousePosition(Vector2 mouse)
         {
             if (!_isActive) return;
+
+            if (_injured)
+            {
+                return;
+            }
             _controller.MoveLegRoot(mouse);
         }
 
@@ -76,6 +88,21 @@ namespace Game.Input
         public void Deactivate()
         {
             _isActive = false;
+        }
+
+        internal void ChangeToInjuryInput(bool inj)
+        {
+            _injured = inj;
+        }
+
+        public void OnTwo()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void OnT()
+        {
+            throw new NotImplementedException();
         }
     }
 }

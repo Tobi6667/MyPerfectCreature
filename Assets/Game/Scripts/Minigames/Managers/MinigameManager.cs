@@ -110,6 +110,11 @@ namespace Game.Minigames
         {
             if(_activeBodyPart as FrankensteinController)
             { Debug.Log("test frank");
+
+                var frank = _activeBodyPart as FrankensteinController;
+                //frank.FrankensteinMovementModule.MoveToTarget();
+                //GameManager.Instance.ChangeToDefaultReceiver();
+                //CameraMinigameManager.Instance.VictorCam();
                 return;
             }
             Debug.Log("minigame Done");

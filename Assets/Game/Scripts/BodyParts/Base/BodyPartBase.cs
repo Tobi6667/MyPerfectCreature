@@ -23,7 +23,7 @@ namespace Game.Body
         [SerializeField] protected HopComponent _hopComponent;
         [SerializeField] private EBodyRegion _region;
         [SerializeField] private EBodyPartType _type;
-        private int _gameIndex = 0;
+        public int _gameIndex = 0;
         public HopComponent HopComponent => _hopComponent;
         public EBodyRegion Region => _region;
         public IReadOnlyList<MinigameBase> MinigamePrefabs => _minigamePrefabs;

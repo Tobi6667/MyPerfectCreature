@@ -16,17 +16,18 @@ MonoBehaviour:
   - roundId: H
     instruction: DVSYVY
     showInstruction: 1
-    duration: 5
-    targetScore: 0
-    rootMoveMultiplier: 0.87
-    randomPushForce: 0.85
+    duration: 15
+    targetScore: 3
+    rootMoveMultiplier: 11.33
+    randomPushForce: 1.03
     randomPushIntervalMin: 1.17
     randomPushIntervalMax: 2.05
+    failDistance: 1.37
     gravity: 1.86
     stiffness: 0.58
     damping: 0.44
-    maxOffset: 0.58
-    controlResponsiveness: 0.48
+    maxOffset: 7.05
+    controlResponsiveness: 3.46
   - roundId: LL
     instruction: DVSYVY
     showInstruction: 1
@@ -36,6 +37,7 @@ MonoBehaviour:
     randomPushForce: 1.22
     randomPushIntervalMin: 0.87
     randomPushIntervalMax: 0.87
+    failDistance: 1.5
     gravity: 3.28
     stiffness: 0.81
     damping: 1.62

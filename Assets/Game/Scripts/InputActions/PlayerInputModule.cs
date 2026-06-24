@@ -77,6 +77,30 @@ namespace Game.Input
             {
                 _activeInputReceiver?.OnDefault();
             };
+
+            _input.Gameplay.Two.performed += _ =>
+            {
+                _activeInputReceiver?.OnTwo();
+            };
+
+
+            _input.Gameplay.Two.canceled += _ =>
+            {
+                _activeInputReceiver?.OnDefault();
+            };
+
+            _input.Gameplay.T.performed += _ =>
+            {
+                _activeInputReceiver?.OnT();
+            };
+
+
+            _input.Gameplay.T.canceled += _ =>
+            {
+                _activeInputReceiver?.OnDefault();
+            };
+
+
             _input.Gameplay.Jump.performed += _ =>
             {
                 _activeInputReceiver?.OnJump();

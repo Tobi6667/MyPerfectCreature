@@ -11,7 +11,9 @@ namespace Game.Minigames
 
         [SerializeField] private UIDocument _document;
 
-
+        private VisualElement _feedbackPanel;
+        private Label _feedbackLabel;
+        private Coroutine _feedbackRoutine;
         private VisualElement _tutorialPanel;
         private VisualElement _introPanel;
         private VisualElement _countdownPanel;
@@ -33,6 +35,9 @@ namespace Game.Minigames
         private Label _injuryDescription;
         private Label _injuryFunfact;
 
+        private ProgressBar _fatProgress;
+        private ProgressBar _vatProgress;
+
 
         void OnEnable()
         {
@@ -51,7 +56,8 @@ namespace Game.Minigames
             _timerLabel = _hudPanel.Q<Label>("timer-label");
 
             _instructionLabel = _instructionPanel.Q<Label>("anweisung-label");
-
+            _feedbackPanel = root.Q("feedback");
+            _feedbackLabel = _feedbackPanel.Q<Label>("feedback-label");
 
             _injuryTitel = _injuryPanel.Q<Label>("injury-titel");
             _injuryName = _injuryPanel.Q<Label>("injury-name");
@@ -59,7 +65,8 @@ namespace Game.Minigames
             _injuryDescription = _injuryPanel.Q<Label>("injury-description");
             _injuryFunfact = _injuryPanel.Q<Label>("injury-funfact");
 
-
+            _fatProgress = _hudPanel.Q<ProgressBar>("progress-fat");
+            _vatProgress = _hudPanel.Q<ProgressBar>("progress-vas");
             HideAll();
         }
 
@@ -111,16 +118,17 @@ namespace Game.Minigames
             SetVisible(_tutorialPanel, false);
             SetVisible(_injuryPanel, false);
             SetVisible(_instructionPanel, false);
+            SetVisible(_feedbackPanel, false);
         }
         public void ShowTutorial(string text)
         {
             Debug.Log(text + "aha");
             HideAll();
 
-            _tutorialLabel.text = text;
+           _introLabel.text  = text;
 
-            SetVisible(_tutorialPanel, true);
-            AnimatePanelIn(_tutorialPanel);
+            SetVisible(_introPanel, true);
+            AnimatePanelIn(_introPanel);
         }
         public void ShowTimer()
         {
@@ -135,6 +143,12 @@ namespace Game.Minigames
         {
             panel.RemoveFromClassList("panel-hidden");
             panel.AddToClassList("panel-visible");
+        }
+
+        public void UpdateFatVas(int vat, int fat)
+        {
+            _fatProgress.value = fat;
+            _vatProgress.value = vat;
         }
 
 
@@ -199,6 +213,72 @@ namespace Game.Minigames
         public void HideInjuryPanel()
         {
             SetVisible(_injuryPanel, false);
+        }
+
+
+        public void ShowWrongGestureFeedback(bool tooSlow)
+        {
+            ShowFeedback(tooSlow ? "TOO SLOW!" : "WRONG!", "feedback-wrong");
+        }
+
+        public void ShowCorrectGestureFeedback()
+        {
+            ShowFeedback("NICE!", "feedback-correct");
+        }
+
+        private void ShowFeedback(string text, string styleClass)
+        {
+            if (_feedbackRoutine != null)
+                StopCoroutine(_feedbackRoutine);
+
+            _feedbackRoutine = StartCoroutine(CoShowFeedback(text, styleClass));
+        }
+
+        private IEnumerator CoShowFeedback(string text, string styleClass)
+        {
+            _feedbackLabel.text = text;
+
+            _feedbackPanel.RemoveFromClassList("feedback-wrong");
+            _feedbackPanel.RemoveFromClassList("feedback-correct");
+            _feedbackPanel.AddToClassList(styleClass);
+
+            _feedbackPanel.style.display = DisplayStyle.Flex;
+
+            const float popTime = 0.12f;
+            const float holdTime = 0.4f;
+            const float fadeTime = 0.25f;
+            const float shakeAmount = 8f;
+
+            // pop in + shake
+            float t = 0f;
+            while (t < popTime)
+            {
+                t += Time.deltaTime;
+                float s = Mathf.Lerp(0.6f, 1.1f, t / popTime);
+                float shakeX = Mathf.Sin(t * 60f) * shakeAmount * (1f - t / popTime);
+                _feedbackPanel.style.scale = new StyleScale(new Scale(new Vector2(s, s)));
+                _feedbackPanel.style.translate = new StyleTranslate(new Translate(shakeX, 0));
+                _feedbackPanel.style.opacity = Mathf.Lerp(0f, 1f, t / popTime);
+                yield return null;
+            }
+
+            _feedbackPanel.style.scale = new StyleScale(new Scale(Vector2.one));
+            _feedbackPanel.style.translate = new StyleTranslate(new Translate(0, 0));
+            _feedbackPanel.style.opacity = 1f;
+
+            yield return new WaitForSeconds(holdTime);
+
+            // fade out
+            t = 0f;
+            while (t < fadeTime)
+            {
+                t += Time.deltaTime;
+                _feedbackPanel.style.opacity = Mathf.Lerp(1f, 0f, t / fadeTime);
+                yield return null;
+            }
+
+            _feedbackPanel.style.display = DisplayStyle.None;
+            _feedbackRoutine = null;
         }
     }
 }

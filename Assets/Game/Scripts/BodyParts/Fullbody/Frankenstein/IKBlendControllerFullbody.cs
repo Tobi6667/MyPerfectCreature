@@ -210,8 +210,8 @@ public class IKBlendController : MonoBehaviour
     {
         // normalized: 0–1920 → -1..1
         float n = Mathf.InverseLerp(0f, 1920f, input) * 2f - 1f;
-        spineInputTarget = Mathf.Clamp(n, -1f, 1f) * 10f;
-        Debug.Log("inp: " + spineInputTarget);
+        spineInputTarget = Mathf.Clamp(n, -1f, 1f) * -6f;
+
     }
 
     // ─────────────────────────────

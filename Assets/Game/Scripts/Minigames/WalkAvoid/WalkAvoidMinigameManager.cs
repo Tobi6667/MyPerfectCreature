@@ -8,10 +8,12 @@ namespace Game.Minigames
     {
         [SerializeField] private SoWalkAvoidRoundData _data;
         [SerializeField] private SoWorkoutSettings _workoutSettings;
-        [SerializeField] private Transform _spawnPoint;
+        [SerializeField] private Transform _spawnSpiderPoint;
+        [SerializeField] private Transform _spawnBulletPoint;
         [SerializeField] private Transform _endPoint;
 
-        public Transform SpawnPoint => _spawnPoint;
+        public Transform SpawnSpiderPoint => _spawnSpiderPoint;
+        public Transform SpawnBulletPoint => _spawnBulletPoint;
         public Transform EndPoint => _endPoint;
 
         protected override void BuildPipeline()
@@ -27,7 +29,6 @@ namespace Game.Minigames
                     .Add(new CountdownPhase(3))
                     .Add(new WalkAvoidGameplayPhase(round, _workoutSettings, this));
             }
-            Pipeline.Add(new ResultPhase());
         }
     }
 }

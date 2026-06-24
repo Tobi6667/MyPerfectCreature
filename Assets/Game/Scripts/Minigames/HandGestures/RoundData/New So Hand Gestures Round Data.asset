@@ -14,15 +14,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SoHandGesturesRoundData
   rounds:
   - roundId: dd
-    instruction: gfhgh
+    instruction: 'MOTOR FUNCTION CALIBRATION
+
+
+      The patient claims both arms
+      belong to him.
+
+
+      Science remains unconvinced.
+
+
+      Copy the movements
+      of the healthy arm by pressing the button shown below it.
+
+
+      Miss too
+      many gestures and the arm may develop opinions of its own.'
     showInstruction: 1
     duration: 40
-    targetScore: 4
+    targetScore: 10
     handGestures: 0200000003000000
     gestureMatchThreshold: 1.5
     requiredCorrectGestures: 3
     gestureMatchTimer: 40
-    maxWrongCount: 3
+    maxWrongCount: 2
     resetTime: 4
     gestureInterval: 2
   audioClips:

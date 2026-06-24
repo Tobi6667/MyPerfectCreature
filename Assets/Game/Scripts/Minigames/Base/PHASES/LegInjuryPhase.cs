@@ -1,4 +1,5 @@
 using Game.Body;
+using Game.Input;
 using System.Collections;
 using UnityEditor;
 using UnityEngine;
@@ -15,17 +16,20 @@ namespace Game.Minigames
             IInjuryData inj = GetInjury(context.BodyPart.Region);
             context.UI.ShowInjuryPanel(inj);
             context.BodyPart.OnInject(inj);
-
+            var rec = context.Receiver as BalanceInputReceiver;
+            rec.ChangeToInjuryInput(true);
             bool confirmed = false;
 
             void OnConfirm()
             {
                 Debug.Log("conf");
+                rec.ChangeToInjuryInput(false);
+
                 var leg = context.BodyPart as LegController;
                 leg.ResetLeg(() =>
                 {
                     confirmed = true;
-
+                    CameraMinigameManager.Instance.ChangeTo(context.Minigame.GameCam);
                 });
 
             }

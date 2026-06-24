@@ -14,10 +14,14 @@ public class TorsoController : BodyPartBase, IInteractable
     private bool _expanded = false;
     public event Action OnBangHead;
 
+
     public override void Initialize()
     {
 
-       _movementModule.Initialize();
+       _movementModule.Initialize(() =>
+       {
+           OnBangHead?.Invoke();
+       });
        _hopComponent.Initialize();
 
     }
@@ -48,7 +52,7 @@ public class TorsoController : BodyPartBase, IInteractable
     internal void BangHead(bool banging)
     {
         _movementModule.BangHead(banging);
-        OnBangHead?.Invoke();
+        //OnBangHead?.Invoke();
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created

@@ -100,5 +100,17 @@ namespace Game.Input
         {
             _isActive = false;
         }
+
+        public void OnTwo()
+        {
+            _controller.ShowGesture(GestureDatabase.Instance.GetGesture(EHandGestures.TwoFinger));
+            _gestureController.PlayerDidGesture(EHandGestures.TwoFinger);
+        }
+
+        public void OnT()
+        {
+            _controller.ShowGesture(GestureDatabase.Instance.GetGesture(EHandGestures.MiddleFinger));
+            _gestureController.PlayerDidGesture(EHandGestures.MiddleFinger);
+        }
     }
 }

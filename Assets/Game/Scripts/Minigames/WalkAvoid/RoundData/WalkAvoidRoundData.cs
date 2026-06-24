@@ -22,5 +22,7 @@ namespace Game.Minigames
         [Header("Spawning")]
         public float spawnInterval = 3f;
         public SpiderController spiderPrefab;
+
+        public MovingObjectBase bulletPrefab;
     }
 }

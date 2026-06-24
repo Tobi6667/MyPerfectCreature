@@ -14,7 +14,9 @@ namespace Game.Minigames
         private bool _roundFinished;
         private int _currentHits;
         private bool _injuryRequested;
-        private Transform _spawn;
+        private Transform _spawnSpider;
+        private Transform _spawnBullet;
+
         private Transform _end;
 
         public bool IsPaused { get; private set; }
@@ -38,7 +40,8 @@ namespace Game.Minigames
             var b = context.BodyPart as FrankensteinController;
             b.IkBlendController.SetStartData(_workoutSettings);
             var t = _runner as WalkAvoidMinigameManager;
-            _spawn = t.SpawnPoint;
+            _spawnSpider = t.SpawnSpiderPoint;
+            _spawnBullet = t.SpawnBulletPoint;
             _end = t.EndPoint;
             context.Receiver.Bind(context.BodyPart);
             GameManager.Instance.ChangeReceiver(context.Receiver);
@@ -77,12 +80,13 @@ namespace Game.Minigames
 
                     yield return null;
                 }
-
+                context.Cancelled = true;
                 _roundFinished = true;
             }
             finally
             {
                 context.OnInjuryInjected -= OnInjury;
+
                 StopSpawnLoop();
                 DestroyAllSpawned();
             }
@@ -111,28 +115,28 @@ namespace Game.Minigames
             while (!_roundFinished)
             {
                 if (!IsPaused)
-                    SpawnSpider();
+                    Spawn(_round.spiderPrefab, _spawnSpider.position);
+                Spawn(_round.bulletPrefab, _spawnBullet.position);
 
                 yield return new WaitForSeconds(_round.spawnInterval);
             }
         }
-
-        private void SpawnSpider()
+        private void Spawn(MovingObjectBase prefab, Vector3 spawnP)
         {
-           // if (_round.spiderPrefab == null) return;
-           
-            float randomX = _spawn.position.x + UnityEngine.Random.Range(-4f, 4f);
+            if (prefab == null) return; // _round.objectPrefab : MovingObjectBase
+
+            float randomX = spawnP.x + UnityEngine.Random.Range(-4f, 4f);
             Vector3 spawnPoint = new Vector3(
-                randomX, _spawn.position.y, _spawn.position.z
+                randomX, spawnP.y, spawnP.z
             );
 
-            SpiderController spider = UnityEngine.Object.Instantiate(
-                _round.spiderPrefab, spawnPoint, Quaternion.identity
+            MovingObjectBase obj = UnityEngine.Object.Instantiate(
+                prefab, spawnPoint, Quaternion.identity
             );
 
-            Vector3 direction = (_end.position - spawnPoint).normalized;
+            Vector3 direction = new Vector3(0,0,-1);
 
-            spider.Initialize(
+            obj.Initialize(
                 5f * _round.difficultyMultiplier,
                 direction,
                 _end,
@@ -148,7 +152,7 @@ namespace Game.Minigames
                 }
             );
 
-            _spawnedObjects.Add(spider);
+            _spawnedObjects.Add(obj);
         }
 
         // =====================================================

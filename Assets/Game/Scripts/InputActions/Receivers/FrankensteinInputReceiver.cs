@@ -90,4 +90,14 @@ public class FrankensteinInputReceiver : MonoBehaviour, IInputReceiver
     {
         //_isActive = false;
     }
+
+    public void OnTwo()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void OnT()
+    {
+        throw new NotImplementedException();
+    }
 }

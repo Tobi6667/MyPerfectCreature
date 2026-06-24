@@ -18,6 +18,9 @@ namespace Game.Input
         void OnJump();
         void OnOne();
 
+        void OnTwo();
+        void OnT();
+
         void Deactivate();
         void OnDefault();
         void OnInteract();

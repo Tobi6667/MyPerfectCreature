@@ -1,28 +1,37 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/Game/UI/Minigames/MinigameUIStyle.uss?fileID=7433441132597879392&amp;guid=1290eaec0adbf514eb64092aa49577c3&amp;type=3#MinigameUIStyle"/>
-    <ui:VisualElement name="HUD" class="hud" style="margin-top: 0; padding-top: 32px; padding-right: 32px;">
-        <ui:Label text="Label" name="timer-label" style="font-size: 32px; -unity-font-style: bold;"/>
+    <ui:VisualElement name="HUD" class="hud" style="margin-top: 0; padding-top: 0; padding-right: 14px; color: rgb(255, 255, 255); margin-right: 0; flex-direction: row; align-items: flex-start;">
+        <ui:VisualElement style="flex-grow: 1; width: 400px;">
+            <ui:ProgressBar value="100" title="" high-value="100" name="progress-vas" class="vat-progress" style="background-image: url(&quot;project://database/Assets/Game/Sprites/vas.png?fileID=21300000&amp;guid=220addfcbde701542bf8c3467f55cbba&amp;type=3#vas&quot;); background-size: 100% 100%; background-color: rgba(255, 255, 255, 0); background-position-x: center; -unity-background-image-tint-color: rgb(255, 255, 255); flex-shrink: 0; flex-grow: 0; flex-basis: auto; flex-direction: column; width: 400px; height: 100px;"/>
+            <ui:ProgressBar value="100" title="" high-value="100" name="progress-fat" class="vat-progress" style="background-image: url(&quot;project://database/Assets/Game/Sprites/vas.png?fileID=21300000&amp;guid=220addfcbde701542bf8c3467f55cbba&amp;type=3#vas&quot;); background-size: 100% 100%; background-color: rgba(255, 255, 255, 0); background-position-x: center; -unity-background-image-tint-color: rgb(255, 255, 255); flex-shrink: 0; flex-grow: 0; flex-basis: auto; flex-direction: column; width: 400px; height: 100px;"/>
+        </ui:VisualElement>
+        <ui:Label text="0" name="timer-label" enable-rich-text="true" style="font-size: 32px; -unity-font-style: bold; background-image: url(&quot;project://database/Assets/Game/Sprites/timerUI.png?fileID=2800000&amp;guid=a80543c6970b5d844b9e4ca93dfb3bf9&amp;type=3#timerUI&quot;); padding-left: 122px; padding-right: 100px; padding-top: 70px; padding-bottom: 60px; margin-right: 0; width: 260px; -unity-text-align: upper-right;"/>
     </ui:VisualElement>
-    <ui:VisualElement name="countdown" class="fullscreen-center">
+    <ui:VisualElement name="countdown" class="fullscreen-center" style="color: rgb(255, 255, 255);">
         <ui:Label text="3" name="countdown-label" class="countdown-label"/>
     </ui:VisualElement>
-    <ui:VisualElement name="ready" class="fullscreen-center hidden ready-panel">
+    <ui:VisualElement name="ready" class="fullscreen-center hidden ready-panel" style="color: rgb(255, 255, 255);">
         <ui:Label text="READY?" name="ready-label" class="ready-label"/>
     </ui:VisualElement>
-    <ui:VisualElement name="tutorial" class="fullscreen-center hidden" style="right: 96px; opacity: 1;">
-        <ui:Label text="TUTORIAL" name="tutorial-label"/>
+    <ui:VisualElement name="tutorial" class="fullscreen-center hidden" style="right: 96px; opacity: 1; color: rgb(255, 255, 255);">
+        <ui:Label text="TUTORIAL" name="tutorial-label" style="font-size: 32px;"/>
     </ui:VisualElement>
-    <ui:VisualElement name="intro" class="fullscreen-center">
-        <ui:Label text="intro" name="intro-label" class="countdown-label"/>
+    <ui:VisualElement name="intro" class="fullscreen-center" style="color: rgb(255, 255, 255); background-image: url(&quot;project://database/Assets/Game/Sprites/introUI.png?fileID=2800000&amp;guid=e3c2e78af7bd3c946ac3ec1a14a600c8&amp;type=3#introUI&quot;); background-size: 1200px 800px;">
+        <ui:Label text="MOTOR FUNCTION CALIBRATION&#10;&#10;The patient claims both arms belong to him.&#10;&#10;Science remains unconvinced.&#10;&#10;Copy the movements of the healthy arm by pressing the button shown below it.&#10;&#10;Miss too many gestures and the arm may develop opinions of its own." name="intro-label" class="countdown-label intro-label" style="width: 748px; height: 400px; justify-content: flex-start; align-items: auto; align-self: auto; margin-top: 150px; font-size: 24px; display: flex;"/>
     </ui:VisualElement>
-    <ui:VisualElement name="Injury" class="injury-panel" style="width: 600px; height: 600px; margin-left: 60px; margin-top: 60px;">
-        <ui:Label text="Label" name="injury-titel"/>
-        <ui:Label text="Label" name="injury-name"/>
-        <ui:Label text="Label" name="injury-symptoms"/>
-        <ui:Label text="Label" name="injury-description"/>
-        <ui:Label text="Label" name="injury-funfact"/>
+    <ui:VisualElement name="Injury" picking-mode="Ignore" class="injury-panel" style="width: 809px; height: 1080px; margin-left: 78px; margin-top: 0; background-image: url(&quot;project://database/Assets/Game/Sprites/injjuryui_44.png?fileID=2800000&amp;guid=69ff25899edd0e345b8882c019226faa&amp;type=3#injjuryui_44&quot;); background-position-x: center; justify-content: flex-start; padding-left: 232px; font-size: 18px; white-space: normal; -unity-text-align: upper-left; -unity-paragraph-spacing: 0; padding-top: 369px; align-content: flex-start; align-self: auto; align-items: flex-start; flex-direction: column; background-color: rgba(0, 255, 0, 0); background-size: 100% 100%; display: flex; -unity-background-scale-mode: scale-and-crop;">
+        <ui:Label text="Label &#10;fg&#10;f" name="injury-titel" class="intro-label" style="color: rgb(255, 255, 255); margin-top: 0; margin-bottom: 12px; height: 67px; position: absolute; background-size: 100% 100%; width: 400px; font-size: 14px; padding-top: 8px;"/>
+        <ui:Label text="Label" name="injury-name" class="intro-label" style="padding-top: 0; padding-bottom: 0; -unity-text-align: upper-left; white-space: normal; width: 400px; height: 80px; color: rgb(255, 255, 255); position: absolute; top: 475px; font-size: 14px; margin-top: 8px;"/>
+        <ui:Label text="Label" name="injury-symptoms" class="intro-label" style="color: rgb(255, 255, 255); height: 80px; position: absolute; top: 581px; width: 400px; font-size: 14px;"/>
+        <ui:Label text="Label" name="injury-description" class="intro-label" style="color: rgb(255, 255, 255); height: 80px; position: absolute; top: 720px; width: 400px; font-size: 14px; margin-top: 6px;"/>
+        <ui:Label text="Label" name="injury-funfact" class="intro-label" style="padding-top: 0; margin-bottom: 0; color: rgb(255, 255, 255); min-height: 80px; position: absolute; top: 859px; width: 400px; font-size: 14px; margin-top: 6px;"/>
     </ui:VisualElement>
-    <ui:VisualElement picking-mode="Ignore" name="anweisung" style="flex-grow: 1; position: absolute; justify-content: flex-start; align-items: center; flex-wrap: nowrap; flex-direction: column-reverse; -unity-text-align: upper-left; width: 100%; height: 100%; align-self: auto; padding-bottom: 94px;">
-        <ui:Label text="anweisung" selectable="true" focusable="true" name="anweisung-label" style="font-size: 55px; -unity-text-align: upper-left;"/>
+    <ui:VisualElement picking-mode="Ignore" name="anweisung" style="flex-grow: 1; position: absolute; justify-content: flex-start; align-items: flex-start; flex-wrap: nowrap; flex-direction: column-reverse; -unity-text-align: upper-left; width: 100%; height: 100%; align-self: auto; padding-bottom: 10px; padding-top: 80px; color: rgb(255, 255, 255); padding-left: 6px;">
+        <ui:VisualElement style="flex-grow: 1; -unity-text-align: upper-left; align-items: auto; justify-content: center; width: 128px; height: 128px; align-content: flex-start; align-self: auto; flex-wrap: nowrap; flex-direction: row; background-image: url(&quot;project://database/Assets/Game/Sprites/KeyUI.png?fileID=2800000&amp;guid=26d853bf71cbfe841908eb49a7fa93cb&amp;type=3#KeyUI&quot;); background-size: 128px 128px; background-position-y: bottom 0;">
+            <ui:Label text="G" selectable="true" focusable="true" name="anweisung-label" style="font-size: 55px; -unity-text-align: upper-left; align-items: stretch; justify-content: flex-start; align-content: flex-start; align-self: auto; margin-bottom: 34px; padding-left: 7px;"/>
+        </ui:VisualElement>
+    </ui:VisualElement>
+    <ui:VisualElement name="feedback" style="flex-grow: 1; position: absolute; width: 20%; height: 20%; justify-content: center; align-self: center; align-items: center; flex-direction: column; margin-top: 30%;">
+        <ui:Label text="Label" name="feedback-label" style="font-size: 67px; color: rgb(255, 255, 255); padding-left: 12px; padding-right: 12px; padding-top: 8px; padding-bottom: 8px; width: 240px; justify-content: flex-start; -unity-text-align: upper-center;"/>
     </ui:VisualElement>
 </ui:UXML>

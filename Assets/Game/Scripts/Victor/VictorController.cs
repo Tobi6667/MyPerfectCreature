@@ -75,7 +75,7 @@ namespace Game.Input
 
         public void OnMove(Vector2 moveInput)
         {
-            Debug.Log("moveInput Fucker");
+
             Vector3 forward = _cameraReference.forward;
             Vector3 right = _cameraReference.right;
 

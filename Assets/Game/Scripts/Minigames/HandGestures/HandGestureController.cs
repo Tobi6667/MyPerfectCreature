@@ -46,7 +46,7 @@ namespace Game.Minigames
 
             if (_gestureMatchTimer >= _gestureMatchThreshold)
             {
-                HandleWrongGesture();
+                HandleWrongGesture(tooSlow: true);
             }
         }
 
@@ -91,7 +91,7 @@ namespace Game.Minigames
 
             if (gesture != _currentGesture)
             {
-                HandleWrongGesture();
+                HandleWrongGesture(tooSlow: false);
                 return;
             }
 
@@ -104,7 +104,7 @@ namespace Game.Minigames
             _waitingForGesture = false;
 
             _correctGestureCount++;
-
+            UIMinigameManager.Instance.ShowCorrectGestureFeedback();
             Debug.Log($"Correct gesture ({_correctGestureCount}/{_requiredCorrectGestures})");
 
             if (_correctGestureCount >= _requiredCorrectGestures)
@@ -118,11 +118,11 @@ namespace Game.Minigames
             RestartGestureCycle();
         }
 
-        private void HandleWrongGesture()
+        private void HandleWrongGesture(bool tooSlow)
         {
             _waitingForGesture = false;
             _wrongGestureCount++;
-
+            UIMinigameManager.Instance.ShowWrongGestureFeedback(tooSlow);
             Debug.Log($"Wrong gesture ({_wrongGestureCount}/{_maxWrongCount})");
 
             if (_wrongGestureCount >= _maxWrongCount)

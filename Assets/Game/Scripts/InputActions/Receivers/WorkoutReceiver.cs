@@ -73,21 +73,26 @@ public class WorkoutReceiver : MonoBehaviour, IInputReceiver
 
     public void OnOne()
     {
-        throw new NotImplementedException();
     }
 
     public void OnDefault()
     {
-        throw new NotImplementedException();
     }
 
     public void OnJump()
     {
-        throw new NotImplementedException();
     }
 
     public void Deactivate()
     {
         //_isActive = false;
+    }
+
+    public void OnTwo()
+    {
+    }
+
+    public void OnT()
+    {
     }
 }

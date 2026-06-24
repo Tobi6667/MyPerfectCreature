@@ -54,18 +54,21 @@ public class FrankensteinController : BodyPartBase, IInteractable
         Debug.Log("BLAAAAAAAAAAA");
         if (injury is FullbodyInjuryEntry fullbody)
         {
-            //_ikController.InjectInjury(fullbody);
+            _ikController.InjectInjury(fullbody);
             return;
         }
     }
 
     public override CinemachineCamera GetTransitionCam()
     {
+        Debug.Log(_followCam);
+
         return _followCam;
     }
 
     public void OnInteract()
     {
+        _gameIndex = 0;
         Debug.Log("fdfdffd");
     }
 }

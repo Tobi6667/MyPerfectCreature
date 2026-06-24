@@ -1,4 +1,5 @@
 using DG.Tweening;
+using System;
 using UnityEngine;
 
 public class TorsoMovementModule : MonoBehaviour
@@ -12,11 +13,15 @@ public class TorsoMovementModule : MonoBehaviour
     [SerializeField] private Transform[] spineBones;
 
     private TorsoInjuryData _currentInjury;
-
+    private Action onBang; 
     [Header("Bang")]
     [SerializeField] private float _bangAmount = 45f;
     [SerializeField] private float _bangCooldownTime = 0.3f;
-    [SerializeField] private float _bangRecoverSpeed = 5f;
+    [SerializeField] private float _bangRecoverSpeed = 0.5f;
+
+    [SerializeField] private Transform _headOrigin;
+    [SerializeField] private float _bangRadius = 5.5f;
+
 
     private float _bangCooldown;
     private float _bangCurrent;
@@ -34,11 +39,11 @@ public class TorsoMovementModule : MonoBehaviour
 
     [SerializeField] private float _impactRecoverSpeed = 6f;
 
-    internal void Initialize()
+    internal void Initialize(Action onBangWall)
     {
         _rest = new Quaternion[spineBones.Length];
         _frozenPose = new Quaternion[spineBones.Length];
-
+        onBang = onBangWall;
         for (int i = 0; i < spineBones.Length; i++)
             _rest[i] = spineBones[i].localRotation;
     }
@@ -90,14 +95,38 @@ public class TorsoMovementModule : MonoBehaviour
         )
         .SetEase(Ease.Linear);
     }
-
     internal void BangHead(bool pressed)
     {
-        if (_bangCooldown > 0f)
-            return;
+        if (_bangCooldown > 0f) return;
+        if (_isImpactLocked) return;
+        Collider[] hits = Physics.OverlapSphere(
+            _headOrigin.position,
+            _bangRadius
+        );
 
-        if (_isImpactLocked)
-            return;
+        bool hitTorso = false;
+
+        for (int i = 0; i < hits.Length; i++)
+        {
+
+            Debug.Log($"[Bang] Hit {i}: {hits[i].name} | tag: {hits[i].tag} | layer: {LayerMask.LayerToName(hits[i].gameObject.layer)}");
+
+            if (hits[i].CompareTag("image"))
+            {
+                hitTorso = true;
+                var img = hits[i].GetComponent<MoveImagesObject>();
+                img.ApplyHit();
+                break;
+            }
+        }
+
+        if (!hitTorso)
+        {
+            onBang?.Invoke();
+            Debug.Log("hit nothing");
+            
+        }
+
 
         _bangCurrent = 1f;
         _bangCooldown = _bangCooldownTime;
@@ -113,6 +142,7 @@ public class TorsoMovementModule : MonoBehaviour
         if (_isImpactLocked)
             return;
 
+        
         _isImpactLocked = true;
         _impactRecover = 0f;
 
@@ -172,7 +202,7 @@ public class TorsoMovementModule : MonoBehaviour
                 injuryRot = Quaternion.Euler(
                     _currentInjury.spineTilt,
                     _currentInjury.twistOffset,
-                    Random.Range(
+                    UnityEngine.Random.Range(
                         -_currentInjury.idleShake,
                         _currentInjury.idleShake)
                 );

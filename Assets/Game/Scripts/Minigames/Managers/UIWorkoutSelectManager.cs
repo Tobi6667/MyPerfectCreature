@@ -9,7 +9,6 @@ public class UIWorkoutSelectManager : MonoBehaviour
 
     private void Awake()
     {
-        // 🔥 prevents duplicate singletons when reloading scenes
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
@@ -32,7 +31,6 @@ public class UIWorkoutSelectManager : MonoBehaviour
 
     public void ClearAllListeners()
     {
-        // 🔥 useful when exiting minigames or re-entering selection
         OnWorkoutSelected = null;
     }
 

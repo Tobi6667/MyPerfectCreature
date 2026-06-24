@@ -87,12 +87,13 @@ namespace Game.Minigames
             {
 
                 _injuryRequested = true;
+                _bangCount = 0;
             }
         }
 
         private void SpawnImage(MinigameContext context)
         {
-            float randomZ = UnityEngine.Random.Range(-6f, 6f);
+            float randomZ = UnityEngine.Random.Range(-5f, 5f);
 
             Vector3 spawnPoint = new Vector3(
                 _spawnPos.x,
@@ -118,11 +119,13 @@ namespace Game.Minigames
                 5f * _round.difficultyMultiplier,
                 direction,
                 _endPoint,
-                null,
+                null ,
                 (MovingObjectBase movingObject) =>
                 {
                     if (_roundFinished) return;
                     Debug.Log("Hit Frankenstein");
+                    _activeImages.Remove(movingObject as MoveImagesObject);
+                    movingObject.DestroyObject();
                 }
             );
         }

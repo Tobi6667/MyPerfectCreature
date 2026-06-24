@@ -79,6 +79,16 @@ namespace Game.Input
         {
             _isActive = false;
         }
+
+        public void OnTwo()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void OnT()
+        {
+            throw new NotImplementedException();
+        }
     }
 
 }

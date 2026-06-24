@@ -219,6 +219,24 @@ namespace GameInput
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Two"",
+                    ""type"": ""Button"",
+                    ""id"": ""f02e5f56-a6ed-47db-ad9c-c631435cdc6b"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""T"",
+                    ""type"": ""Button"",
+                    ""id"": ""cc1485f2-1c23-43a1-87dc-c7707b18e844"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -648,6 +666,28 @@ namespace GameInput
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Bang"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""11765b3a-e380-4dd4-aa13-97c1d0ac1bad"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Two"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c75719d7-0a53-4da4-8486-58cc18ec48b1"",
+                    ""path"": ""<Keyboard>/t"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""T"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1249,6 +1289,8 @@ namespace GameInput
             m_Gameplay_MousePosition = m_Gameplay.FindAction("MousePosition", throwIfNotFound: true);
             m_Gameplay_One = m_Gameplay.FindAction("One", throwIfNotFound: true);
             m_Gameplay_Bang = m_Gameplay.FindAction("Bang", throwIfNotFound: true);
+            m_Gameplay_Two = m_Gameplay.FindAction("Two", throwIfNotFound: true);
+            m_Gameplay_T = m_Gameplay.FindAction("T", throwIfNotFound: true);
             // UI
             m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
             m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1356,6 +1398,8 @@ namespace GameInput
         private readonly InputAction m_Gameplay_MousePosition;
         private readonly InputAction m_Gameplay_One;
         private readonly InputAction m_Gameplay_Bang;
+        private readonly InputAction m_Gameplay_Two;
+        private readonly InputAction m_Gameplay_T;
         /// <summary>
         /// Provides access to input actions defined in input action map "Gameplay".
         /// </summary>
@@ -1424,6 +1468,14 @@ namespace GameInput
             /// </summary>
             public InputAction @Bang => m_Wrapper.m_Gameplay_Bang;
             /// <summary>
+            /// Provides access to the underlying input action "Gameplay/Two".
+            /// </summary>
+            public InputAction @Two => m_Wrapper.m_Gameplay_Two;
+            /// <summary>
+            /// Provides access to the underlying input action "Gameplay/T".
+            /// </summary>
+            public InputAction @T => m_Wrapper.m_Gameplay_T;
+            /// <summary>
             /// Provides access to the underlying input action map instance.
             /// </summary>
             public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
@@ -1491,6 +1543,12 @@ namespace GameInput
                 @Bang.started += instance.OnBang;
                 @Bang.performed += instance.OnBang;
                 @Bang.canceled += instance.OnBang;
+                @Two.started += instance.OnTwo;
+                @Two.performed += instance.OnTwo;
+                @Two.canceled += instance.OnTwo;
+                @T.started += instance.OnT;
+                @T.performed += instance.OnT;
+                @T.canceled += instance.OnT;
             }
 
             /// <summary>
@@ -1544,6 +1602,12 @@ namespace GameInput
                 @Bang.started -= instance.OnBang;
                 @Bang.performed -= instance.OnBang;
                 @Bang.canceled -= instance.OnBang;
+                @Two.started -= instance.OnTwo;
+                @Two.performed -= instance.OnTwo;
+                @Two.canceled -= instance.OnTwo;
+                @T.started -= instance.OnT;
+                @T.performed -= instance.OnT;
+                @T.canceled -= instance.OnT;
             }
 
             /// <summary>
@@ -1942,6 +2006,20 @@ namespace GameInput
             /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
             /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
             void OnBang(InputAction.CallbackContext context);
+            /// <summary>
+            /// Method invoked when associated input action "Two" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+            /// </summary>
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+            void OnTwo(InputAction.CallbackContext context);
+            /// <summary>
+            /// Method invoked when associated input action "T" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+            /// </summary>
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+            void OnT(InputAction.CallbackContext context);
         }
         /// <summary>
         /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "UI" which allows adding and removing callbacks.

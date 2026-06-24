@@ -21,10 +21,10 @@ MonoBehaviour:
     moveSpeedMultiplier: 1
     instabilityMultiplier: 0
     dropInterval: 1
-    dropSpeed: 1
+    dropSpeed: 0.3
     imagesToCollect: 10
     imageObject: {fileID: 4268697087459164248, guid: 8c2a6fc3d503dd24e8b7e8926ee1158c, type: 3}
-    difficultyMultiplier: 1
+    difficultyMultiplier: 0.24
     maxBangAmount: 3
     dropSpeedMultiplier: 1
   audioClips:

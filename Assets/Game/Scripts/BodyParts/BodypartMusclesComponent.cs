@@ -13,7 +13,8 @@ public class BodypartMusclesComponent : MonoBehaviour
     [SerializeField] private Transform _musclesParent;
     [SerializeField] private MuscleController[] _muscles;
     [SerializeField] private Animation _animator;
-
+    [SerializeField] private GameObject _boneMesh;
+    [SerializeField] private GameObject _legMainMesh;
 
     private Dictionary<ELegMuscles, MuscleController> _muscleMap =
         new Dictionary<ELegMuscles, MuscleController>();
@@ -47,7 +48,9 @@ public class BodypartMusclesComponent : MonoBehaviour
                 muscleController.ChangeVisual();
             }
         }
-
+        _boneMesh.SetActive(true);
+        _animator.gameObject.SetActive(true);
+        _legMainMesh.SetActive(false);
         _animator.Play("expand");
     }
 
@@ -56,6 +59,10 @@ public class BodypartMusclesComponent : MonoBehaviour
         _animator.Play("join");
         DOVirtual.DelayedCall(1f, () =>
         {
+            _boneMesh.SetActive(false);
+            _animator.gameObject.SetActive(false);
+
+            _legMainMesh.SetActive(true);
             onhide?.Invoke();
         });
 

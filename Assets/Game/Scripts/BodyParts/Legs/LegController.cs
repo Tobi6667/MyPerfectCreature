@@ -14,14 +14,18 @@ namespace Game.Body
 
         private BodypartMusclesComponent _musclesComp;
         [SerializeField] private CinemachineCamera _followCam;
-
-
+        [SerializeField] private CinemachineCamera _orbitcam;
+        [SerializeField] private float _orbitSpeed = 100f;
+        private CinemachineOrbitalFollow _orbitalFollow;
         public override void Initialize()
         {
             _hopComponent = GetComponent<HopComponent>();
             _musclesComp = GetComponent<BodypartMusclesComponent>();
             _musclesComp.InitializeModule();
             _hopComponent.Initialize();
+            _orbitalFollow = _orbitcam.GetComponent<CinemachineOrbitalFollow>();
+
+
         }
 
         [SerializeField] private TwoBoneIKConstraint _ikLeg;
@@ -43,7 +47,7 @@ namespace Game.Body
         [Header("References")]
         [SerializeField] private Transform hip;
         [SerializeField] private Transform foot;
-
+        [SerializeField] private CinemachineCamera _injuryCam;
         private Vector3 _startPosition;
         private Quaternion _startRotation;
         private Vector2 _idleInput;
@@ -86,7 +90,7 @@ namespace Game.Body
 
             if (Physics.Raycast(ray, out RaycastHit hit, 100f))
                 inputWorld = hit.point;
-
+            Debug.Log("input: " + inputWorld);
             // 2. Base offset
             Vector3 footPos = foot.position;
 
@@ -153,6 +157,11 @@ namespace Game.Body
             CheckFailure();
         }
 
+        internal void MoveCam(Vector2 input)
+        {
+            _orbitalFollow.HorizontalAxis.Value += input.x * _orbitSpeed * Time.deltaTime;
+        }
+
         private void Update()
         {
             if (!_active)
@@ -192,6 +201,7 @@ namespace Game.Body
                 _hasFallen = true;
                 FellOver?.Invoke();
                 _active = false;
+                CameraMinigameManager.Instance.ChangeTo(_injuryCam);
             }
         }
 
@@ -230,6 +240,7 @@ namespace Game.Body
             randomPushForce = data.randomPushForce;
             randomPushIntervalMin = data.randomPushIntervalMin;
             randomPushIntervalMax = data.randomPushIntervalMax;
+            failDistance = data.failDistance;
         }
 
         internal void ResetLeg(Action onReset)

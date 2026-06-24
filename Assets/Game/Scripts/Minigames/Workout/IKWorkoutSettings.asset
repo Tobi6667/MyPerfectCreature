@@ -12,32 +12,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 326fc63c93a029f46b108ed5404be36f, type: 3}
   m_Name: IKWorkoutSettings
   m_EditorClassIdentifier: Assembly-CSharp::SoWorkoutSettings
-  snakeHeadAmount: 8.08
-  snakePelvisAmount: 10.48
-  snakeFeetAmount: 8.47
-  snakeWaveSpeed: 6.07
+  snakeHeadAmount: 1.35
+  snakePelvisAmount: 6.87
+  snakeFeetAmount: 1.17
+  snakeWaveSpeed: 0.79
   snakeWaveOffset: 0.45
-  spineSideAmount: 0
+  spineSideAmount: 0.49
   spineInputSmooth: 1.1
-  walkSpeed: 0.54
-  hipHeightOffset: 2.56
-  hipSmooth: 30.66
+  walkSpeed: 1.12
+  hipHeightOffset: 3.11
+  hipSmooth: 9.9
   spineSmooth: 10
   spineForwardLean: 0
-  pelvisTilt: 2.67
-  pelvisReturnSpeed: -2.96
-  stanceWidth: 0.03
-  sideRootAmount: 2
-  hipLeadAmount: 0
-  swingArcHeight: 0.66
+  pelvisTilt: 0.46
+  pelvisReturnSpeed: 0.92
+  stanceWidth: 0.31
+  sideRootAmount: 1.58
+  hipLeadAmount: 0.26
+  swingArcHeight: 0.89
   strideLength: 2.17
   plantThreshold: 0.1
-  plantSmooth: 15
+  plantSmooth: 12.38
   snakeAmplitude: 0.25
   snakeFrequency: 2
   spineDelay: 0.15
   pelvisDelay: 0.3
   feetDelay: 0.19
   snakeRootAmount: 1
-  snakeRootSpeed: 1.88
+  snakeRootSpeed: 1.16
   snakeRootLag: 0.15

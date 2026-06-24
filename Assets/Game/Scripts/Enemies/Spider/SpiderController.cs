@@ -17,10 +17,14 @@ public class SpiderController: MovingObjectBase
 
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log("hit "+other);
+
+
         if (_hasHit) return;
 
         if (other.CompareTag("Frankenstein"))
         {
+            Debug.Log("frank hit ball");
             _onHitFrank?.Invoke(this);
             ApplyHit();
         }

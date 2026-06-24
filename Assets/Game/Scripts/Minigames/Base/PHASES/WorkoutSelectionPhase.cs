@@ -38,7 +38,7 @@ public class WorkoutSelectionPhase : IMinigamePhase
         var root = uiDocument.rootVisualElement;
 
         var container = root.Q<VisualElement>("workout-select-panel");
-
+        container.style.display = DisplayStyle.Flex;
         if (container == null)
         {
             Debug.LogError("workout-select-panel not found!");
@@ -49,9 +49,28 @@ public class WorkoutSelectionPhase : IMinigamePhase
 
         foreach (var workout in workouts)
         {
-            var local = workout; // IMPORTANT capture fix
+            var local = workout; // capture fix
 
-            var btn = new Button(() =>
+            TemplateContainer instance = uiPrefab.Instantiate();
+
+            var btn = instance.Q<Button>(); // or instance.Q<Button>("button-name") if your prefab has multiple elements
+            if (btn == null)
+            {
+                Debug.LogError("No Button found in workout button prefab!");
+                continue;
+            }
+
+            var name = instance.Q<Label>("workout-name");
+            name.text = local.workoutName;
+
+            var vasc = instance.Q<Label>("vas-cost");
+            vasc.text = "50";
+            var fatc = instance.Q<Label>("fat-cost");
+            fatc.text = local.fatigueCosts.ToString();
+
+
+            btn.text = local.workoutName;
+            btn.clicked += () =>
             {
                 if (hasSelected) return;
 
@@ -61,12 +80,9 @@ public class WorkoutSelectionPhase : IMinigamePhase
                 Debug.Log("SELECTED: " + local.workoutName);
                 Exit();
                 onSelected?.Invoke(local);
-            })
-            {
-                text = workout.workoutName
             };
 
-            container.Add(btn);
+            container.Add(instance);
         }
     }
 
@@ -75,6 +91,7 @@ public class WorkoutSelectionPhase : IMinigamePhase
         Enter();
 
         yield return new WaitUntil(() => hasSelected);
+        Exit();
 
         context._workoutData = selectedWorkout;
     }
@@ -85,5 +102,6 @@ public class WorkoutSelectionPhase : IMinigamePhase
         var container = root.Q<VisualElement>("workout-select-panel");
 
         container?.Clear();
+        container.style.display = DisplayStyle.None;
     }
 }
