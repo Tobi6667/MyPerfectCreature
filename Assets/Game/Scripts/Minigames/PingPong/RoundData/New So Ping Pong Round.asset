@@ -19,12 +19,12 @@ MonoBehaviour:
     duration: 10
     targetScore: 10
     requiredHits: 2
-    ballSpeed: 2
+    ballSpeed: 1.76
     ballsToSpawn: 1
     reactionSpeed: 12
     strikeOffsetZ: 0.4
     strikeDistance: 1.2
-    strikeSpeed: 10
+    strikeSpeed: 7.55
     recoilDistance: 0.6
     recoilRecoverSpeed: 5
     stunTime: 0.15

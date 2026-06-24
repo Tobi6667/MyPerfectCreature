@@ -18,12 +18,12 @@ MonoBehaviour:
     showInstruction: 1
     duration: 0
     targetScore: 0
-    roundDuration: 20
+    roundDuration: 40
     moveSpeedMultiplier: 1
     instabilityMultiplier: 0
-    cangetHits: 0
+    cangetHits: 20
     difficultyMultiplier: 1
     floorTargets: 0
-    spawnInterval: 3
+    spawnInterval: 1.52
     spiderPrefab: {fileID: 7748055232199553567, guid: 6939ae9fce477cc4f8abe67076df7059, type: 3}
     bulletPrefab: {fileID: 6415753512613415255, guid: e0a9ed9e48f6d6949a3e975051ff5cf9, type: 3}
