@@ -8,7 +8,7 @@ public class EnemyPingPongHand : BodyPartBase
 {
     [SerializeField] private FingerController _fingerController;
 
-    [Header("Lane (Local Z)")]
+    [Header("Lane (Local X)")]
     [SerializeField] private Transform minX;
     [SerializeField] private Transform maxX;
 
@@ -30,7 +30,7 @@ public class EnemyPingPongHand : BodyPartBase
 
     [Header("Visual Punch")]
     [SerializeField] private float strikePushDistance = 0.25f;
-    [SerializeField] private float strikeReturnSpeed = 18f;
+    [SerializeField] private float strikeReturnSpeed = 12f;
 
     // Cached starting position (local space) so visual punch always has a stable origin
     private Vector3 _originalLocalPos;
@@ -42,8 +42,6 @@ public class EnemyPingPongHand : BodyPartBase
     private bool _hasStruck;
 
     private Transform _ball;
-
-    // BodyPartBase requires this — return a sensible default or wire up properly
 
     public override void Initialize()
     {
@@ -73,7 +71,7 @@ public class EnemyPingPongHand : BodyPartBase
     }
 
     // -------------------------------------------------------------------------
-    // Movement
+    // Movement — lane-follow drives X only, never touches Z (punch owns Z)
     // -------------------------------------------------------------------------
 
     private void FollowBall()
@@ -81,15 +79,15 @@ public class EnemyPingPongHand : BodyPartBase
         Transform parent = transform.parent;
         Vector3 localBall = parent.InverseTransformPoint(_ball.position);
 
-        float targetZ = Mathf.Clamp(
+        float targetX = Mathf.Clamp(
             localBall.x,
             minX.localPosition.x,
             maxX.localPosition.x
         );
 
-        // Only adjust Z — visual punch drives X, so we never touch it here
+        // Only adjust X — visual punch drives Z, so we never touch it here
         Vector3 lp = transform.localPosition;
-        lp.x = Mathf.Lerp(lp.x, targetZ, Time.deltaTime * reactionSpeed);
+        lp.x = Mathf.Lerp(lp.x, targetX, Time.deltaTime * reactionSpeed);
         transform.localPosition = lp;
     }
 
@@ -99,7 +97,8 @@ public class EnemyPingPongHand : BodyPartBase
 
     private void CheckStrike()
     {
-        float dist = Mathf.Abs(transform.position.z - _ball.position.z);
+        Vector3 localBall = transform.parent.InverseTransformPoint(_ball.position);
+        float dist = Mathf.Abs(transform.localPosition.z - localBall.z);
 
         if (dist > strikeDistance)
         {
@@ -143,31 +142,29 @@ public class EnemyPingPongHand : BodyPartBase
         Vector3 dir = (toTarget.normalized + Vector3.up * strikeArcHeight).normalized;
 
         rb.linearVelocity = dir * strikePower;
-
     }
 
     // -------------------------------------------------------------------------
-    // Visual punch — operates only on the X axis (local forward of the hand)
-    // so it never interferes with the Z lane-follow above.
+    // Visual punch — operates only on the Z axis (local forward of the hand)
+    // so it never interferes with the X lane-follow above.
     // -------------------------------------------------------------------------
 
     private void UpdateVisualPunch()
     {
-        // Compute the punch target in local space using localRight so rotation is respected
-        float currentX = transform.localPosition.x;
-        float targetX = _isPushing
-            ? _originalLocalPos.x + strikePushDistance
-            : _originalLocalPos.x;
+        float currentZ = transform.localPosition.z;
+        float targetZ = _isPushing
+            ? _originalLocalPos.z + strikePushDistance
+            : _originalLocalPos.z;
 
         float speed = _isPushing ? 25f : strikeReturnSpeed;
-        float newX = Mathf.Lerp(currentX, targetX, Time.deltaTime * speed);
+        float newZ = Mathf.Lerp(currentZ, targetZ, Time.deltaTime * speed);
 
-        // Write back only the X axis — leave Y and Z as they are
+        // Write back only the Z axis — leave X and Y as they are
         Vector3 lp = transform.localPosition;
-        lp.x = newX;
+        lp.z = newZ;
         transform.localPosition = lp;
 
-        if (_isPushing && Mathf.Abs(newX - targetX) < 0.02f)
+        if (_isPushing && Mathf.Abs(newZ - targetZ) < 0.02f)
             _isPushing = false;
     }
 
@@ -206,6 +203,4 @@ public class EnemyPingPongHand : BodyPartBase
     // -------------------------------------------------------------------------
     // BodyPartBase stubs — implement or leave as no-ops; never throw.
     // -------------------------------------------------------------------------
-
-
 }

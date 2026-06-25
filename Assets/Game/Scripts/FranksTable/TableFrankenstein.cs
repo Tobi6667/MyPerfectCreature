@@ -1,4 +1,5 @@
 using Game.Body;
+using Game.Main;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,7 +13,7 @@ public class TableFrankenstein : LabObjectBase
 
     public Action<EBodyPartType> _onBodypartAttached;
     private HashSet<EBodyPartType> _attachedParts = new();
-
+    private int _bodyCounter = 0;
 
     private void Awake()
     {
@@ -36,28 +37,28 @@ public class TableFrankenstein : LabObjectBase
 
     private void CheckAllBodyPartsAttached()
     {
-        int requiredCount =
-            Enum.GetValues(typeof(EBodyPartType)).Length;
+        int requiredCount = Enum.GetValues(typeof(EBodyPartType)).Length;
 
-        if (_attachedParts.Count >= 1)
+        if (_bodyCounter >= 3)
         {
-            OnAllBodyPartsAttached();
+            GameManager.Instance.FrankReady();
         }
     }
 
 
-    private void OnAllBodyPartsAttached()
+
+    public void BodyPartAttached()
     {
-        Debug.Log("ALL BODY PARTS ATTACHED — FRANKENSTEIN COMPLETE");
-
-
-
+        _bodyCounter++;
+        CheckAllBodyPartsAttached();
     }
 
     public override Transform GetTargetOnObject(EBodyPartType type)
     {
         if (_bodyParts.TryGetValue(type, out var t))
+        {
             return t;
+        }
 
         Debug.LogError($"No slot found for type: {type}");
         return null;

@@ -38,7 +38,7 @@ public class FrankensteinController : BodyPartBase, IInteractable
     public override void Initialize()
     {
         //_movementModule.InitializeModule();
-        _movementModule.MoveToTarget(_testTarget, null);
+        //_movementModule.MoveToTarget(_testTarget, null);
        // _frankensteinAbilityTestsModule.InitializeModule();
         _ikController.Initialize();
     }

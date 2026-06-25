@@ -3,16 +3,21 @@ using Game.Input;
 using Game.Body;
 using Game.Minigames;
 using System.Collections.Generic;
+using UnityEditor.Timeline;
+using UnityEngine.Playables;
+using DG.Tweening;
+using System.Collections;
 
 namespace Game.Main
 {
     public class GameManager : MonoBehaviour
     {
         [SerializeField] private VictorController _victorController;
-
+        [SerializeField] private FrankensteinController _frank;
         [SerializeField] private PlayerInputModule _inputModule;
         [SerializeField] private VictorInputReceiver _inputReceiver;
         private BodyPartBase _activeBodyPart;
+        [SerializeField] private PlayableDirector _awakeTimeline;
 
         [SerializeField] private List<BodyPartBase> _bodypartsList;
 
@@ -39,6 +44,20 @@ namespace Game.Main
             });
             _inputModule.SetReceiver(_inputReceiver);
 
+        }
+
+        public void FrankReady()
+        {
+            _awakeTimeline.Play();
+
+            StartCoroutine(CoWait());
+        }
+
+        private IEnumerator CoWait()
+        {
+            yield return new WaitForSeconds(10f);
+            _frank.gameObject.SetActive(true);
+            _frank.Initialize();
         }
 
         public void ChangeReceiver(IInputReceiver inputReceiver)

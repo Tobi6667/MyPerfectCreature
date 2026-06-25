@@ -163,6 +163,7 @@ namespace Game.Minigames
 
                         _activeBodyPart.HopComponent.AttachToTable(tr, () =>
                         {
+                            TableFrankenstein.Instance.BodyPartAttached();
                             GameManager.Instance.ChangeToDefaultReceiver();
                             CameraMinigameManager.Instance.VictorCam();
                         });
@@ -170,7 +171,7 @@ namespace Game.Minigames
 
 
                     });
-                }, 4f);
+                }, 6f);
                 //GameManager.Instance.ChangeToDefaultReceiver();
                 //CameraMinigameManager.Instance.VictorCam();
 
