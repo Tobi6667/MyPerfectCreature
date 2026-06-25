@@ -82,6 +82,7 @@ public class EnemyHandController : BodyPartBase
 
     public override void Initialize()
     {
+        Debug.Log("init enemy??");
         _originalLocalPos = transform.localPosition;
         _fingerController.Initialize(null);
     }

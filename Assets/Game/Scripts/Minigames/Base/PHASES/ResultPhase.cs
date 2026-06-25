@@ -16,7 +16,7 @@ namespace Game.Minigames
             context.Minigame.Complete();
             //context.BodyPart.MoveT
 
-
+            AudioMinigameManager.Instance.StopMusic();
 
 
 

@@ -67,7 +67,7 @@ namespace Game.Minigames
             _musicSource.Play();
         }
 
-        private void StopMusic() => _musicSource.Stop();
+        public void StopMusic() => _musicSource.Stop();
 
         private void PlaySfx(AudioClip clip)
         {

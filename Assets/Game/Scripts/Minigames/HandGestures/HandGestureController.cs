@@ -130,6 +130,7 @@ namespace Game.Minigames
                 StopGestures();
 
                 RoundFailed?.Invoke();
+                _wrongGestureCount = 0;
                 return;
             }
 

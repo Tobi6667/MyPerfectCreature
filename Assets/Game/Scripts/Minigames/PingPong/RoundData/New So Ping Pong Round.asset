@@ -14,20 +14,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SoPingPongRound
   rounds:
   - roundId: g
-    instruction: ghf
+    instruction: "HAND-EYE COORDINATION TEST #07\n\nDr. Victor needs a volunteer.\n\nUsing
+      only this freshly assembled hand, keep the ball in play for as long as possible.
+      The hand may be slightly used, but it should still function... probably.\n\nControls:\n\U0001F5B1
+      Move the mouse to control the hand.\n\U0001F3D3 Don't let the ball escape."
     showInstruction: 1
-    duration: 10
+    duration: 40
     targetScore: 10
     requiredHits: 2
     ballSpeed: 4.36
     ballsToSpawn: 1
-    reactionSpeed: 11.8
-    strikeOffsetZ: 0.4
-    strikeDistance: 1.2
-    strikeSpeed: 7.55
-    recoilDistance: 0.6
+    reactionSpeed: 7.1
+    strikeOffsetZ: 0.94
+    strikeDistance: 1.45
+    strikeSpeed: 8.96
+    recoilDistance: 0.75
     recoilRecoverSpeed: 5
-    stunTime: 0.15
+    stunTime: 0.34
     _pushVelocity: 0.16
     _pushOffset: 0.48
   audioClips:

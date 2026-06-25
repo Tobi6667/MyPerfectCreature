@@ -14,7 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SoLegGameRounds
   rounds:
   - roundId: H
-    instruction: DVSYVY
+    instruction: "POST-ASSEMBLY CALIBRATION\n\nYour newly acquired leg has passed
+      all visual inspections.\n\nUnfortunately, nobody checked whether it can stand.\n\nKeep
+      the leg balanced while the laboratory's highly scientific \"Push Machine\"
+      delivers random impacts.\n\nControls:\n\U0001F5B1 Move the mouse to maintain
+      balance.\n\U0001F4A5 Recover from sudden pushes."
     showInstruction: 1
     duration: 15
     targetScore: 3
@@ -26,10 +30,10 @@ MonoBehaviour:
     gravity: 1.86
     stiffness: 0.58
     damping: 0.44
-    maxOffset: 7.05
-    controlResponsiveness: 3.46
+    maxOffset: 7.64
+    controlResponsiveness: 1.33
   - roundId: LL
-    instruction: DVSYVY
+    instruction: Ready for Round 2?!
     showInstruction: 1
     duration: 5
     targetScore: 5
