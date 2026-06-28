@@ -14,14 +14,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SoWalkAvoidRoundData
   rounds:
   - roundId: 
-    instruction: ahhhhhhhhhhh
+    instruction: "THE MONSTER BALLET\nA perfect creature requires perfect grace.\nGuide
+      Frank's magnificent body through the laboratory obstacle course. Avoid the
+      spiked death-balls, leap over the spiders, and demonstrate that true elegance
+      can be stitched together.\nControls:\n\U0001F5B1\uFE0F Mouse \u2013 Move left
+      and right\n\U0001FA70 SPACEBAR \u2013 Perform a dramatic Grand Jet\xE9\n\nDodge
+      the spikes.\nJump the spiders."
     showInstruction: 1
     duration: 0
     targetScore: 0
     roundDuration: 40
     moveSpeedMultiplier: 1
     instabilityMultiplier: 0
-    cangetHits: 20
+    cangetHits: 4
     difficultyMultiplier: 1
     floorTargets: 0
     spawnInterval: 1.52

@@ -26,10 +26,11 @@ namespace Game.Minigames
                 rec.ChangeToInjuryInput(false);
 
                 var leg = context.BodyPart as LegController;
+                CameraMinigameManager.Instance.ChangeTo(context.Minigame.GameCam);
+
                 leg.ResetLeg(() =>
                 {
                     confirmed = true;
-                    CameraMinigameManager.Instance.ChangeTo(context.Minigame.GameCam);
                 });
 
             }

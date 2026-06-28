@@ -33,6 +33,7 @@ namespace Game.Minigames
 
             _leg.Activate();
             _leg.FellOver += OnFellOver;
+            AudioMinigameManager.Instance.PlayMusic(context.Minigame.GameMusic, true);
 
             try
             {

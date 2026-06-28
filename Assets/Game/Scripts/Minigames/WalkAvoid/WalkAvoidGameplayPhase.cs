@@ -47,6 +47,7 @@ namespace Game.Minigames
             GameManager.Instance.ChangeReceiver(context.Receiver);
             context.State = EMinigameState.Playing;
             context.OnInjuryInjected += OnInjury;
+            AudioMinigameManager.Instance.PlayMusic(context.Minigame.GameMusic, true);
 
             _currentHits = 0;
             _roundFinished = false;
@@ -137,7 +138,7 @@ namespace Game.Minigames
             Vector3 direction = new Vector3(0,0,-1);
 
             obj.Initialize(
-                5f * _round.difficultyMultiplier,
+                 Random.Range(3f, 8f) * _round.difficultyMultiplier,
                 direction,
                 _end,
                 null,

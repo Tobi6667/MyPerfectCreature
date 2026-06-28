@@ -33,13 +33,13 @@ MonoBehaviour:
     showInstruction: 1
     duration: 40
     targetScore: 10
-    handGestures: 0200000003000000
-    gestureMatchThreshold: 1.5
-    requiredCorrectGestures: 3
+    handGestures: 020000000300000004000000
+    gestureMatchThreshold: 0.74
+    requiredCorrectGestures: 19
     gestureMatchTimer: 40
-    maxWrongCount: 2
-    resetTime: 4
-    gestureInterval: 2
+    maxWrongCount: 4
+    resetTime: 1
+    gestureInterval: 0.8
   audioClips:
     _playingClip: {fileID: 0}
     _roundEndClip: {fileID: 0}

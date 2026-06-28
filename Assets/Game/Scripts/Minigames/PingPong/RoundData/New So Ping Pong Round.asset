@@ -24,10 +24,10 @@ MonoBehaviour:
     requiredHits: 2
     ballSpeed: 4.36
     ballsToSpawn: 1
-    reactionSpeed: 7.1
+    reactionSpeed: 6.06
     strikeOffsetZ: 0.94
     strikeDistance: 1.45
-    strikeSpeed: 8.96
+    strikeSpeed: 7.84
     recoilDistance: 0.75
     recoilRecoverSpeed: 5
     stunTime: 0.34

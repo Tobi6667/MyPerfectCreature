@@ -14,7 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SoTorsoGameRoundData
   rounds:
   - roundId: 
-    instruction: ahhjhh
+    instruction: "MEMORY MATCH: FRANK'S BELOVED\n\nThe good doctor misses his wife
+      dearly. Unfortunately, all the photographs got scattered...\n\nHelp Frank recover
+      the memories before they disappear forever!\n\nControls:\n\u2B05\uFE0F A \u2013
+      Move Left\n\u27A1\uFE0F D \u2013 Move Right\n\U0001F4A5 SPACE \u2013 Bang your
+      head to catch falling photos"
     showInstruction: 1
     duration: 40
     targetScore: 44
@@ -25,7 +29,7 @@ MonoBehaviour:
     imagesToCollect: 10
     imageObject: {fileID: 4268697087459164248, guid: 8c2a6fc3d503dd24e8b7e8926ee1158c, type: 3}
     difficultyMultiplier: 0.24
-    maxBangAmount: 3
+    maxBangAmount: 4
     dropSpeedMultiplier: 1
   audioClips:
     _playingClip: {fileID: 0}

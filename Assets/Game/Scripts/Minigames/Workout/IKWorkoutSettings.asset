@@ -20,7 +20,7 @@ MonoBehaviour:
   spineSideAmount: 4.81
   spineInputSmooth: 3.51
   walkSpeed: 1.12
-  hipHeightOffset: 8.1
+  hipHeightOffset: 6.42
   hipSmooth: 9.9
   spineSmooth: 10
   spineForwardLean: 0
