@@ -72,17 +72,14 @@ namespace Game.Input
 
         public void OnOne()
         {
-            throw new NotImplementedException();
         }
 
         public void OnDefault()
         {
-            throw new NotImplementedException();
         }
 
         public void OnJump()
         {
-            throw new NotImplementedException();
         }
 
         public void Deactivate()

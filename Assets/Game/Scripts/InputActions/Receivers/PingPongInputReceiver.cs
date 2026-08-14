@@ -82,12 +82,10 @@ namespace Game.Input
 
         public void OnTwo()
         {
-            throw new NotImplementedException();
         }
 
         public void OnT()
         {
-            throw new NotImplementedException();
         }
     }
 
