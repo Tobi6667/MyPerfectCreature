@@ -42,7 +42,7 @@ namespace Game.Minigames
                     .Add(new CountdownPhase(3))
                     .Add(new PingPongGameplayPhase(round, _ballController));
             }
-            Pipeline.Add(new ResultPhase());
+           // Pipeline.Add(new ResultPhase());
         }
     }
 }

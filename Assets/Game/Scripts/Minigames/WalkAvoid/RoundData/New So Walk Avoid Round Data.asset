@@ -23,7 +23,7 @@ MonoBehaviour:
     showInstruction: 1
     duration: 0
     targetScore: 0
-    roundDuration: 40
+    roundDuration: 4
     moveSpeedMultiplier: 1
     instabilityMultiplier: 0
     cangetHits: 4

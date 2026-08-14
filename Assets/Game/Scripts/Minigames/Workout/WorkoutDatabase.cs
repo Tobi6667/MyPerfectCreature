@@ -46,6 +46,14 @@ public class WorkoutDatabase : MonoBehaviour
         //animator.enabled = true;
     }
 
+    public void ResetIK()
+    {
+        foreach (var ik in iks)
+        {
+            TweenIKWeight(ik, 0f);
+        }
+    }
+
     private void TweenIKWeight(IKTarget ikTarget, float targetWeight)
     {
         ikTarget.tween?.Kill();

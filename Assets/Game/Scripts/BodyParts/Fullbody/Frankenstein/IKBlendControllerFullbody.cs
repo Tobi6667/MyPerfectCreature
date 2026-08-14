@@ -498,7 +498,7 @@ public class IKBlendController : MonoBehaviour
 
 
 
-    public void TriggerJump(float jumpWidth = 3f, float jumpDuration = 0.15f)
+    public void TriggerJump(float jumpWidth = 3.6f, float jumpDuration = 0.15f)
     {
         Debug.Log("juuuump");
         if (_jumpRoutine != null)

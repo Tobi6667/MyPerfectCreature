@@ -90,6 +90,11 @@ namespace Game.Minigames
 
                 StopSpawnLoop();
                 DestroyAllSpawned();
+                b.IkBlendController.DeactivateIK();
+                WorkoutDatabase.Instance.ResetIK();
+                GameManager.Instance.ChangeToDefaultReceiver();
+                CameraMinigameManager.Instance.VictorCam();
+
             }
         }
 
