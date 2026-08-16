@@ -180,14 +180,19 @@ public class FrankensteinMovementModule : MonoBehaviour
         }
 
        _animatorFrank.SetBool("isWalking", false);
-
+        StartCoroutine(CoDelay());
        // _animatorIK.enabled = true;
 
 
     }
 
 
-
+    private IEnumerator CoDelay()
+    {
+        yield return new WaitForSeconds(2);
+        SetIKAnimator(true);
+        
+    }
 
     private void EnterIdleState()
     {

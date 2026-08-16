@@ -20,7 +20,8 @@ public class EnemyPingPongHand : BodyPartBase
     [Header("Strike")]
     [SerializeField] private float strikeDistance = 1.2f;
     [SerializeField] private float strikePower = 10f;
-    [SerializeField] private float strikeArcHeight = 4f; // upward angle component so ball arcs over net
+    [SerializeField] private float strikeArcHeight = 2f;
+    [SerializeField] private float strikeReachX = 0.6f;
 
     [Header("AI")]
     [SerializeField] private Transform opponentTarget;
@@ -33,6 +34,12 @@ public class EnemyPingPongHand : BodyPartBase
     [SerializeField] private float strikeReturnSpeed = 12f;
 
     // Cached starting position (local space) so visual punch always has a stable origin
+
+    private PingPongBallController _ballController;
+
+    internal void SetBallController(PingPongBallController controller) => _ballController = controller;
+
+
     private Vector3 _originalLocalPos;
 
     // Visual punch state — tracked independently of lane-follow so they don't fight
@@ -98,9 +105,11 @@ public class EnemyPingPongHand : BodyPartBase
     private void CheckStrike()
     {
         Vector3 localBall = transform.parent.InverseTransformPoint(_ball.position);
-        float dist = Mathf.Abs(transform.localPosition.z - localBall.z);
 
-        if (dist > strikeDistance)
+        float distZ = Mathf.Abs(transform.localPosition.z - localBall.z);
+        float distX = Mathf.Abs(transform.localPosition.x - localBall.x);
+
+        if (distZ > strikeDistance || distX > strikeReachX)
         {
             _hasStruck = false;
             return;
@@ -142,6 +151,8 @@ public class EnemyPingPongHand : BodyPartBase
         Vector3 dir = (toTarget.normalized + Vector3.up * strikeArcHeight).normalized;
 
         rb.linearVelocity = dir * strikePower;
+        _ballController?.EnemyHitBall(); // <-- add this
+
     }
 
     // -------------------------------------------------------------------------
@@ -187,17 +198,15 @@ public class EnemyPingPongHand : BodyPartBase
 
     public override void MoveToObject(Transform target, Action onReached, float speed = 4, float arriveDistance = 0)
     {
-        throw new NotImplementedException();
     }
 
     public override void OnInject(IInjuryData injury)
     {
-        throw new NotImplementedException();
     }
 
     public override CinemachineCamera GetTransitionCam()
     {
-        throw new NotImplementedException();
+        return null;
     }
 
     // -------------------------------------------------------------------------

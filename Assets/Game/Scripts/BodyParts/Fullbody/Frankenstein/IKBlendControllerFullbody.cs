@@ -9,6 +9,8 @@ public class IKBlendController : MonoBehaviour
 
     [Header("REFERENCES")]
     [SerializeField] private Animator animator;
+    [SerializeField] private Animator animatorIK;
+
     [SerializeField] private Transform rootReference;
 
     [SerializeField] private Transform leftFootTarget;

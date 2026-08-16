@@ -23,12 +23,14 @@ namespace Game.Main
         public static GameManager Instance;
         public BodyPartBase ActiveBodyPart => _activeBodyPart;
 
+        public List<BodyPartBase>  BodypartsList => _bodypartsList;
+
         private void Awake()
         {
             Instance = this;
         }
 
-        void Start()
+        public void StartGame()
         {
 
             foreach (var part in _bodypartsList)

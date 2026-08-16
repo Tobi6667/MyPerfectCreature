@@ -41,7 +41,7 @@ MonoBehaviour:
     resetTime: 1
     gestureInterval: 0.8
   audioClips:
-    _playingClip: {fileID: 0}
+    _playingClip: {fileID: 8300000, guid: c2e1647427f842f42b14c26ce2997239, type: 3}
     _roundEndClip: {fileID: 0}
     _roundFailClip: {fileID: 0}
     _finishedClip: {fileID: 0}

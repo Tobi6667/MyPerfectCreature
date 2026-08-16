@@ -1,6 +1,9 @@
+using DG.Tweening;
 using Game.Main;
 using System;
+using System.Collections;
 using UnityEngine;
+using UnityEngine.AI;
 
 
 namespace Game.Input
@@ -8,10 +11,13 @@ namespace Game.Input
     [RequireComponent(typeof(CharacterController))]
     public class VictorController : MonoBehaviour, IInteractable
     {
-
+        [SerializeField] private NavMeshAgent _navMeshAgent;
+        [SerializeField] private float _rotationSpeed = 720f;
+        [SerializeField] private Transform _defaultPosition;
         [SerializeField] private Transform _cameraReference;
         [SerializeField] private PlayerCameraModule _playerCameraModule;
-
+        [SerializeField] private CharacterController _characterController;
+        [SerializeField] private float _moveSpeed = 2f;
         [SerializeField] private float _speed = 5f; 
         [SerializeField] private PlayerInputModule _inputModule;
         private Action<IInteractable> onInteract;
@@ -59,9 +65,9 @@ namespace Game.Input
 
                 if (hit.TryGetComponent(out IInteractable interactable))
                 {
-                    Debug.Log("WTTTFFF");
                     Debug.Log(interactable);
                     onInteract?.Invoke(interactable);
+                    //_animator.SetBool("isWalking", false);
                     break;
                 }
             }
@@ -102,9 +108,46 @@ namespace Game.Input
             _animator.SetBool("isWalking",dir.sqrMagnitude > 0.001f);
         }
 
+
+        public void MoveToDefault()
+        {
+            _navMeshAgent.enabled = true;
+            _animator.SetBool("isWalking", true);
+
+            _navMeshAgent.SetDestination(_defaultPosition.position);
+            StartCoroutine(WaitUntilDestinationReached());
+        }
+
+        private IEnumerator WaitUntilDestinationReached()
+        {
+            while (_navMeshAgent.pathPending)
+                yield return null;
+
+            while (_navMeshAgent.remainingDistance > _navMeshAgent.stoppingDistance)
+            {
+                Vector3 direction = _navMeshAgent.desiredVelocity;
+
+                direction.y = 0f;
+
+                if (direction.sqrMagnitude > 0.01f)
+                {
+                    Quaternion targetRotation = Quaternion.LookRotation(direction);
+
+                    transform.rotation = Quaternion.RotateTowards(
+                        transform.rotation,
+                        targetRotation,
+                        _rotationSpeed * Time.deltaTime
+                    );
+                }
+
+                yield return null;
+            }
+            _navMeshAgent.enabled=false;
+            _animator.SetBool("isWalking", false);
+        }
+
         public void OnSecondary()
         {
-            throw new System.NotImplementedException();
         }
     }
 }

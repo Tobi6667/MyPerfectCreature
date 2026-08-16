@@ -16,7 +16,10 @@ namespace Game.Minigames
         private MinigameBase _activeMinigame;
         private BodyPartBase _activeBodyPart;
 
+        [SerializeField] private AudioClip _defaultAudio;
+
         [SerializeField] private CinemachineCamera _tableCam;
+        [SerializeField] private VictorController _player;
 
         private void Awake()
         {
@@ -55,6 +58,7 @@ namespace Game.Minigames
                 Audio = AudioMinigameManager.Instance,
                 BodyPart = bodyPart,
                 Receiver = receiver,
+                Player = _player,
                 StartTransform = instance.GetStartTrans(),
 
             };
@@ -69,7 +73,7 @@ namespace Game.Minigames
 
             Debug.Log("[Minigame] Initializing instance...");
             instance.Initialize(context);
-
+            _player.MoveToDefault();
             Debug.Log("[Minigame] Starting minigame...");
             instance.StartMinigame();
 
@@ -101,6 +105,12 @@ namespace Game.Minigames
             };
 
             GameManager.Instance.ChangeReceiver(receiver);
+
+            if (bodyPart is not FrankensteinController)
+            {
+                _player.MoveToDefault();
+            }
+
 
             instance.Initialize(context);
             instance.StartMinigame();
@@ -140,8 +150,9 @@ namespace Game.Minigames
             else
             {
                 CameraMinigameManager.Instance.ChangeTo(_activeBodyPart.GetTransitionCam());
-
+                AudioMinigameManager.Instance.PlayMusic(_defaultAudio, true);
                 Debug.Log("should move");
+
                 MoveToTable();
             }
 

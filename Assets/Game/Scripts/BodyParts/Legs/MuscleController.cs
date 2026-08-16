@@ -16,7 +16,7 @@ namespace Game.Body
 
         public ELegMuscles MuscleName => _muscleName;
 
-        private void Start()
+        private void Awake()
         {
             _renderer = GetComponent<Renderer>();
         }
@@ -86,5 +86,15 @@ namespace Game.Body
                 Debug.LogError($"Renderer access failed on {name}: {e}");
             }
         }
+
+        public void ResetVisual()
+        {
+            Renderer r = _renderer;
+            Material mat = r.material;
+            mat.SetColor("_GlowColor", new UnityEngine.Color(1f, 0f, 16f / 255f, 1f));
+        }
     }
+
+
+
 }

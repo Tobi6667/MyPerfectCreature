@@ -1,3 +1,4 @@
+using Game.Body;
 using System;
 using System.Collections;
 using UnityEngine;
@@ -10,6 +11,12 @@ namespace Game.Minigames
         private readonly PingPongBallController _ballController;
         private bool _roundFinished;
         private int _currentHits;
+
+        private int _playerScore;
+        private int _enemyScore;
+
+        private int _scoreSinceLast;
+
         private bool _injuryRequested = false;
         private bool _success = false;
         public bool IsPaused { get; private set; }
@@ -34,10 +41,10 @@ namespace Game.Minigames
             AudioMinigameManager.Instance.PlayMusic(context.Minigame.GameMusic, true);
 
 
+            HandController hand = context.BodyPart as HandController;
+            hand.PingPongHandComponent.SetBallController(_ballController);
 
-
-            _ballController.Initialize(
-                this);
+            _ballController.Initialize(this);
 
             SpawnBall(_round, context);
 
@@ -49,8 +56,10 @@ namespace Game.Minigames
                     if (_injuryRequested)
                     {
                         _injuryRequested = false;
+                        _ballController.StopBall();
 
                         yield return context.RunPhase(new InjuryPhase());
+                        _ballController.StartBall();
                     }
 
                     timer -= Time.deltaTime;
@@ -63,6 +72,7 @@ namespace Game.Minigames
                         break;
                     }
 
+
                     yield return null;
                 }
                 _roundFinished = true;
@@ -74,6 +84,9 @@ namespace Game.Minigames
             finally
             {
                 context.Receiver.Injected -= OnInjury;
+                UIMinigameManager.Instance.HideScorePanel();
+                _ballController.StopBall();
+                            
             }
         }
 
@@ -82,11 +95,26 @@ namespace Game.Minigames
             _injuryRequested = true;
         }
 
-        public void RegisterHit()
-        {
-            _currentHits++;
-        }
 
+        public bool RegisterPoint(bool isPlayer)
+        {
+            if (isPlayer) _playerScore++;
+            else
+            {
+                _enemyScore++;
+                _scoreSinceLast++;
+            }
+
+            UIMinigameManager.Instance.UpdateScores(_enemyScore, _playerScore);
+
+            if (_scoreSinceLast>=3)
+            {
+                    OnInjury();
+                    _scoreSinceLast = 0;
+                return false;
+            }
+            return true;
+        }
         private void SpawnBall(PingPongRoundData round, MinigameContext context)
         {
             // TODO

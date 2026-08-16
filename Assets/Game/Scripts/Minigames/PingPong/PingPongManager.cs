@@ -32,7 +32,8 @@ namespace Game.Minigames
         {
             _enemyPingHand.Initialize();
             Pipeline = new MinigamePipeline();
-
+            UIMinigameManager.Instance.UpdateScores(0, 0);
+            UIMinigameManager.Instance.ShowScorePanel();
             foreach (var round in _data.rounds)
             {
                 Pipeline

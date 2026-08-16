@@ -5,6 +5,8 @@ public class BulletController : MonoBehaviour
     private Rigidbody _rigidbody;
 
 
+    internal void SetVelocity(Vector3 velocity) => _rigidbody.linearVelocity = velocity;
+
     internal void Initialize(Vector3 targetPosition, float initialSpeed)
     {
         _rigidbody = GetComponent<Rigidbody>();

@@ -20,6 +20,13 @@
     flex-wrap: wrap;
 }
 
+.start-btn {
+    width: 200px;
+    background-color: rgba(40,200,20,1);
+    font-size: 28px;
+    font-weight: 600;
+}
+
 .feedback-wrong {
     background-color: rgba(200, 40, 40, 0.85);
 }

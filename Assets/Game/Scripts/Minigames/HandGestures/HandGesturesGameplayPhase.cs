@@ -33,6 +33,7 @@ namespace Game.Minigames
             _gestureController.StartRound(_round);
             context.Receiver.Bind(context.BodyPart);
             context.Receiver.Injected += OnInjury;
+            AudioMinigameManager.Instance.PlayMusic(context.Minigame.GameMusic, true);
 
             try
             {

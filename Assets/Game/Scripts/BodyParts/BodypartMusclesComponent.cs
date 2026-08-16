@@ -41,6 +41,8 @@ public class BodypartMusclesComponent : MonoBehaviour
     //
     internal void ShowMuscles(List<ELegMuscles> muscles)
     {
+        _boneMesh.SetActive(true);
+        _animator.gameObject.SetActive(true);
         foreach (var muscleType in muscles)
         {
             if (_muscleMap.TryGetValue(muscleType, out var muscleController))
@@ -48,8 +50,7 @@ public class BodypartMusclesComponent : MonoBehaviour
                 muscleController.ChangeVisual();
             }
         }
-        _boneMesh.SetActive(true);
-        _animator.gameObject.SetActive(true);
+
         _legMainMesh.SetActive(false);
         _animator.Play("expand");
     }
@@ -65,6 +66,11 @@ public class BodypartMusclesComponent : MonoBehaviour
             _legMainMesh.SetActive(true);
             onhide?.Invoke();
         });
+
+        foreach (var muscle in _muscles)
+        {
+            muscle.ResetVisual();
+        }
 
     }
 

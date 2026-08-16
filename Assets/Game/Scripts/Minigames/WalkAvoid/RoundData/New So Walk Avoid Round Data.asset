@@ -21,7 +21,7 @@ MonoBehaviour:
       and right\n\U0001FA70 SPACEBAR \u2013 Perform a dramatic Grand Jet\xE9\n\nDodge
       the spikes.\nJump the spiders."
     showInstruction: 1
-    duration: 0
+    duration: 40
     targetScore: 0
     roundDuration: 4
     moveSpeedMultiplier: 1

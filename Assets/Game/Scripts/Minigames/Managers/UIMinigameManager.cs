@@ -1,3 +1,5 @@
+using Game.Main;
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -21,6 +23,9 @@ namespace Game.Minigames
         private VisualElement _readyPanel;
         private VisualElement _instructionPanel;
 
+        private VisualElement _startPanel;
+
+        private VisualElement _scorePanel;
         private VisualElement _injuryPanel;
         private Label _countdownLabel;
         private Label _introLabel;
@@ -35,8 +40,13 @@ namespace Game.Minigames
         private Label _injuryDescription;
         private Label _injuryFunfact;
 
+        private Label _playerScore;
+        private Label _enemyScore;
+
         private ProgressBar _fatProgress;
         private ProgressBar _vatProgress;
+
+        private Button _startBtn;
 
 
         void OnEnable()
@@ -54,20 +64,42 @@ namespace Game.Minigames
             _introLabel = _introPanel.Q<Label>("intro-label");
             _tutorialLabel = _tutorialPanel.Q<Label>("tutorial-label");
             _timerLabel = _hudPanel.Q<Label>("timer-label");
-
+            _startPanel = root.Q("StartScreen");
             _instructionLabel = _instructionPanel.Q<Label>("anweisung-label");
             _feedbackPanel = root.Q("feedback");
             _feedbackLabel = _feedbackPanel.Q<Label>("feedback-label");
+            _scorePanel = root.Q("score-panel");
+
+            _enemyScore = _scorePanel.Q<Label>("enemy-score");
+            _playerScore = _scorePanel.Q<Label>("player-score");
 
             _injuryTitel = _injuryPanel.Q<Label>("injury-titel");
             _injuryName = _injuryPanel.Q<Label>("injury-name");
             _injurySymptoms = _injuryPanel.Q<Label>("injury-symptoms");
             _injuryDescription = _injuryPanel.Q<Label>("injury-description");
             _injuryFunfact = _injuryPanel.Q<Label>("injury-funfact");
-
+            _startBtn = _startPanel.Q<Button>("start-btn");
             _fatProgress = _hudPanel.Q<ProgressBar>("progress-fat");
             _vatProgress = _hudPanel.Q<ProgressBar>("progress-vas");
+
+            _startBtn.clicked += OnStartClicked;
+
             HideAll();
+            HideScorePanel();
+        }
+
+        private void OnStartClicked()
+        {
+            GameManager.Instance.StartGame();
+            SetVisible(_startPanel, false);
+
+
+        }
+
+        public void UpdateScores(int enemy, int player)
+        {
+            _enemyScore.text = enemy.ToString();
+            _playerScore.text = player.ToString();
         }
 
         private void Awake()
@@ -80,6 +112,7 @@ namespace Game.Minigames
             {
                 Instance = this;
             }
+            
         }
 
 
@@ -119,6 +152,7 @@ namespace Game.Minigames
             SetVisible(_injuryPanel, false);
             SetVisible(_instructionPanel, false);
             SetVisible(_feedbackPanel, false);
+
         }
         public void ShowTutorial(string text)
         {
@@ -215,6 +249,17 @@ namespace Game.Minigames
             SetVisible(_injuryPanel, false);
         }
 
+        public void ShowScorePanel()
+        {
+            Debug.Log("show score");
+            SetVisible(_scorePanel, true);
+
+        }
+
+        public void HideScorePanel()
+        {
+            SetVisible(_scorePanel, false);
+        }
 
         public void ShowWrongGestureFeedback(bool tooSlow)
         {

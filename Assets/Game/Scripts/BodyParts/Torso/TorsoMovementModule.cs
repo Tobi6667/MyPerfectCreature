@@ -15,20 +15,23 @@ public class TorsoMovementModule : MonoBehaviour
     private TorsoInjuryData _currentInjury;
     private Action onBang; 
     [Header("Bang")]
+
+    [SerializeField] private float minZ = -4.5f;
+    [SerializeField] private float maxZ = 5f;
     [SerializeField] private float _bangAmount = 45f;
     [SerializeField] private float _bangCooldownTime = 0.3f;
     [SerializeField] private float _bangRecoverSpeed = 0.5f;
 
     [SerializeField] private Transform _headOrigin;
-    [SerializeField] private float _bangRadius = 5.5f;
+    [SerializeField] private float _bangRadius = 3f;
 
-
+    private bool _isActive = false;
     private float _bangCooldown;
     private float _bangCurrent;
 
     private Quaternion[] _rest;
     private Quaternion[] _frozenPose;
-
+    [SerializeField] private float _startZ;
     private float _hopHeight = 1f;
     private float _hopDuration = 1f;
 
@@ -46,6 +49,8 @@ public class TorsoMovementModule : MonoBehaviour
         onBang = onBangWall;
         for (int i = 0; i < spineBones.Length; i++)
             _rest[i] = spineBones[i].localRotation;
+
+        _isActive = true;
     }
 
     internal void Idle()
@@ -71,7 +76,9 @@ public class TorsoMovementModule : MonoBehaviour
         right.y = 0f;
         right.Normalize();
 
-        transform.position += right * input.x * 6f * Time.deltaTime;
+        Vector3 pos = transform.position + right * input.x * 6f * Time.deltaTime;
+        pos.z = Mathf.Clamp(pos.z, _startZ + minZ, _startZ + maxZ);
+        transform.position = pos;
     }
 
     internal void HopInput(Vector3 target)
@@ -152,6 +159,8 @@ public class TorsoMovementModule : MonoBehaviour
 
     private void LateUpdate()
     {
+
+        if (!_isActive) return;
         if (_bangCooldown > 0f)
             _bangCooldown -= Time.deltaTime;
 
@@ -174,7 +183,7 @@ public class TorsoMovementModule : MonoBehaviour
             return;
         }
 
-        // automatic bang recovery
+
         _bangCurrent = Mathf.MoveTowards(
             _bangCurrent,
             0f,

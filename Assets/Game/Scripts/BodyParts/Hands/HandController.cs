@@ -9,6 +9,8 @@ namespace Game.Body
     {
         public Action OnFailed;
 
+        public PingPongHandComponent PingPongHandComponent => _pingPongHandComponent;
+
         [SerializeField] private FingerController _fingerController;
         [SerializeField] private PingPongHandComponent _pingPongHandComponent;
         [SerializeField] private CinemachineCamera _camera;

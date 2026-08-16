@@ -12,6 +12,7 @@ public class MinigameContext
     public IInputReceiver Receiver;
     public BodyPartBase BodyPart;
 
+    public VictorController Player;
     public int CountdownTime;
     public float ReadyTime;
     public Transform StartTransform;

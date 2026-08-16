@@ -39,7 +39,7 @@ public class TableFrankenstein : LabObjectBase
     {
         int requiredCount = Enum.GetValues(typeof(EBodyPartType)).Length;
 
-        if (_bodyCounter >= 3)
+        if (_bodyCounter >= 4)
         {
             GameManager.Instance.FrankReady();
         }

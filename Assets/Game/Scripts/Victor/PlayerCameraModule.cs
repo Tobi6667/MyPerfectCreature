@@ -12,8 +12,8 @@ public class PlayerCameraModule : MonoBehaviour
     [SerializeField] private float examinSpeed = 2f;
     [SerializeField] private float smoothTime = 0.08f; // lower = snappier
 
-    [SerializeField] private float pitchMin = -10f;
-    [SerializeField] private float pitchMax = 10f;
+    [SerializeField] private float pitchMin = -4f;
+    [SerializeField] private float pitchMax = 4f;
 
     private PlayerInputModule input;
     private CameraMode mode;
@@ -69,7 +69,7 @@ public class PlayerCameraModule : MonoBehaviour
 
         // Apply — body yaw on the player transform, pitch only on the camera target
         transform.rotation = Quaternion.Euler(0f, smoothYaw, 0f);
-        cameraTarget.localRotation = Quaternion.Euler(smoothPitch, 0f, 0f);
+        //cameraTarget.localRotation = Quaternion.Euler(smoothPitch, 0f, 0f);
     }
 
     private void CinemachineLook()

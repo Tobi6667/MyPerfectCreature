@@ -2,6 +2,9 @@ using UnityEngine;
 
 public class PingPongHandComponent : MonoBehaviour
 {
+    [Header("Hit")]
+    [SerializeField] private float _hitSpeed = 12f;
+    [SerializeField] private float _maxBounceAngle = 60f; // degrees off straight-back
 
     private Camera _cam;
     [SerializeField] Transform _minBounds;
@@ -14,6 +17,10 @@ public class PingPongHandComponent : MonoBehaviour
         _smoothedPos = transform.position;
         _cam = Camera.main;
     }
+
+    private PingPongBallController _ballController;
+
+    internal void SetBallController(PingPongBallController controller) => _ballController = controller;
 
 
     internal void Slide(Vector2 screenPos)
@@ -42,5 +49,18 @@ public class PingPongHandComponent : MonoBehaviour
             _smoothedPos.z
         );
     }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (!collision.collider.CompareTag("Ball")) return;
+        if (!collision.collider.TryGetComponent<BulletController>(out var ball)) return;
+        _ballController?.PlayerHitBall();
+        float width = _maxBounds.position.x - _minBounds.position.x;
+        float xOffset = Mathf.Clamp((transform.position.x - _minBounds.position.x) / width * 2f - 1f, -1f, 1f);
 
+        float angle = xOffset * _maxBounceAngle * Mathf.Deg2Rad;
+        Vector3 dir = new Vector3(Mathf.Sin(angle), 0f, -1f).normalized; // -Z = back toward enemy
+
+        ball.SetVelocity(dir * _hitSpeed);
+
+    }
 }
