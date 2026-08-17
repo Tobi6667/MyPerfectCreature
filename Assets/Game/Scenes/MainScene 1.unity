@@ -4517,6 +4517,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Game.Body.IKBlendControllerFullbody
   animator: {fileID: 3255374717197524449}
+  animatorIK: {fileID: 0}
   rootReference: {fileID: 271123411}
   leftFootTarget: {fileID: 8762776069197726785}
   rightFootTarget: {fileID: 7708994831974910356}
@@ -6470,6 +6471,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Game.Body.IKBlendControllerFullbody
   animator: {fileID: 493674537}
+  animatorIK: {fileID: 0}
   rootReference: {fileID: 419040507}
   leftFootTarget: {fileID: 2039023791}
   rightFootTarget: {fileID: 230624767}
@@ -19285,8 +19287,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 817569ce00b8d3f438bf1b0f677ee151, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  _navMeshAgent: {fileID: 0}
+  _rotationSpeed: 720
+  _defaultPosition: {fileID: 0}
   _cameraReference: {fileID: 543450653374017581}
   _playerCameraModule: {fileID: 1053163617}
+  _characterController: {fileID: 0}
+  _moveSpeed: 2
   _speed: 5
   _inputModule: {fileID: 1639471628}
   _animator: {fileID: 5866666021681769047}
@@ -64226,6 +64233,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 543e49e852637a942b62d0771b4cb7df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PingPongHandComponent
+  _hitSpeed: 12
+  _maxBounceAngle: 60
   _minBounds: {fileID: 1991496766}
   _maxBounds: {fileID: 495111226}
   _smoothSpeed: 5
@@ -67083,7 +67092,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6780ec2b15ef48449ffcf750b16fe5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Game.Minigames.MinigameManager
+  _defaultAudio: {fileID: 0}
   _tableCam: {fileID: 1074287436}
+  _player: {fileID: 0}
 --- !u!1 &2031061734
 GameObject:
   m_ObjectHideFlags: 0
@@ -340618,11 +340629,14 @@ MonoBehaviour:
   - {fileID: 2078298577556618798}
   - {fileID: 4404520131796473782}
   - {fileID: 8785268827278212306}
+  minZ: -4.5
+  maxZ: 5
   _bangAmount: 30
   _bangCooldownTime: 0.3
   _bangRecoverSpeed: 5
   _headOrigin: {fileID: 5738339483707526448}
   _bangRadius: 0.5
+  _startZ: 0
   _impactRecoverSpeed: 6
 --- !u!4 &5735124670317563505
 Transform:
@@ -356445,6 +356459,34 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3704223762166478688, guid: c9ef19fcd34120e468799e6914b3a93f, type: 3}
+      propertyPath: m_SceneBindings.Array.size
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 3704223762166478688, guid: c9ef19fcd34120e468799e6914b3a93f, type: 3}
+      propertyPath: m_SceneBindings.Array.data[10].key
+      value: 
+      objectReference: {fileID: -7280175819508941997, guid: ab01c296eb2c8194d86c6e2d31edbaf9, type: 2}
+    - target: {fileID: 3704223762166478688, guid: c9ef19fcd34120e468799e6914b3a93f, type: 3}
+      propertyPath: m_SceneBindings.Array.data[11].key
+      value: 
+      objectReference: {fileID: -8329210175382676554, guid: ab01c296eb2c8194d86c6e2d31edbaf9, type: 2}
+    - target: {fileID: 3704223762166478688, guid: c9ef19fcd34120e468799e6914b3a93f, type: 3}
+      propertyPath: m_SceneBindings.Array.data[12].key
+      value: 
+      objectReference: {fileID: -4404886138048151304, guid: ab01c296eb2c8194d86c6e2d31edbaf9, type: 2}
+    - target: {fileID: 3704223762166478688, guid: c9ef19fcd34120e468799e6914b3a93f, type: 3}
+      propertyPath: m_SceneBindings.Array.data[13].key
+      value: 
+      objectReference: {fileID: 2716428045359028895, guid: ab01c296eb2c8194d86c6e2d31edbaf9, type: 2}
+    - target: {fileID: 3704223762166478688, guid: c9ef19fcd34120e468799e6914b3a93f, type: 3}
+      propertyPath: m_SceneBindings.Array.data[14].key
+      value: 
+      objectReference: {fileID: -1059886071817932740, guid: ab01c296eb2c8194d86c6e2d31edbaf9, type: 2}
+    - target: {fileID: 3704223762166478688, guid: c9ef19fcd34120e468799e6914b3a93f, type: 3}
+      propertyPath: m_SceneBindings.Array.data[15].key
+      value: 
+      objectReference: {fileID: 1437789735912503868, guid: ab01c296eb2c8194d86c6e2d31edbaf9, type: 2}
     - target: {fileID: 3704223762166478688, guid: c9ef19fcd34120e468799e6914b3a93f, type: 3}
       propertyPath: m_SceneBindings.Array.data[0].value
       value: 
@@ -441930,6 +441972,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 543e49e852637a942b62d0771b4cb7df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PingPongHandComponent
+  _hitSpeed: 12
+  _maxBounceAngle: 60
   _minBounds: {fileID: 1991496766}
   _maxBounds: {fileID: 495111226}
   _smoothSpeed: 5
