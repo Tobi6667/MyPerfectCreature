@@ -7,11 +7,13 @@ using UnityEngine;
 public class FinalGameGameplayPhase : IMinigamePhase
 {
 
-    [SerializeField] private FinalGameQuizController _quizController;
 
+ 
     private readonly FinalGameRoundData _round;
+
+    private FinalGameQuizController _finalGameQuizController;
+
     public bool IsPaused { get; private set; }
-    private bool _injuryRequested = false;
 
     private bool _roundFinished;
 
@@ -19,54 +21,56 @@ public class FinalGameGameplayPhase : IMinigamePhase
     public void Resume() => IsPaused = false;
 
 
+    private bool _questionAsked = false;
 
-    public FinalGameGameplayPhase(FinalGameRoundData round)
+
+    public FinalGameGameplayPhase(FinalGameRoundData round, FinalGameQuizController quiz)
     {
         _round = round;
-        _quizController.Initialize();
+        _finalGameQuizController = quiz;
+        quiz.Initialize();
     }
+
 
     public IEnumerator Execute(MinigameContext context)
     {
 
-        context.Receiver.Injected += OnInjury;
+
         float timer = _round.duration;
 
         try
         {
 
-            while (!_roundFinished && timer > 0f)
+            while (!_roundFinished)
             {
-                if (_injuryRequested)
+                if (!_questionAsked)
                 {
-                    _injuryRequested = false;
-
-                    yield return context.RunPhase(new InjuryPhase());
+                    _questionAsked = true;
+                    if (_finalGameQuizController.QuestionsLeft())
+                    {
+                        yield return context.RunPhase(new QuestionPhase(_finalGameQuizController));
+                        _questionAsked = false;
+                    }
+                    else
+                    {
+                       // _roundFinished = true;
+                        _finalGameQuizController.ShowScore();
+                        Debug.Log("quiz finished");
+                    }
                 }
-
-                timer -= Time.deltaTime;
-
-                context.UI.UpdateTimer(timer);
 
 
                 yield return null;
+
             }
-            _roundFinished = true;
-            if (!_roundFinished)
-                context.Cancelled = true;
 
 
         }
         finally
         {
-            context.Receiver.Injected -= OnInjury;
-            UIMinigameManager.Instance.HideScorePanel();
+
 
         }
     }
 
-    private void OnInjury()
-    {
-        _injuryRequested = true;
-    }
 }

@@ -20,6 +20,9 @@ namespace Game.Body
         [SerializeField] private NavMeshAgent _agent;
         [SerializeField] private Vector3 _offsetAtTarget;
         [SerializeField] private Vector3 _offsetRotationAtTarget;
+        [SerializeField] private Vector3 _offsetRotationAtFinal;
+
+        [SerializeField] private Vector3 _offsetPositionAtFinal;
         [SerializeField] protected HopComponent _hopComponent;
         [SerializeField] private EBodyRegion _region;
         [SerializeField] private EBodyPartType _type;
@@ -27,6 +30,10 @@ namespace Game.Body
         public HopComponent HopComponent => _hopComponent;
         public EBodyRegion Region => _region;
         public IReadOnlyList<MinigameBase> MinigamePrefabs => _minigamePrefabs;
+
+        public Vector3 OffsetAtFinal => _offsetRotationAtFinal;
+
+        public Vector3 OffsetPositionAtFinal => _offsetPositionAtFinal;
 
         public EBodyPartType Type => _type;
         public MinigameBase GetMinigame(int index = 0)

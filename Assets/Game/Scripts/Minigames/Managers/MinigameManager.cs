@@ -21,6 +21,8 @@ namespace Game.Minigames
         [SerializeField] private CinemachineCamera _tableCam;
         [SerializeField] private VictorController _player;
 
+        
+
         private void Awake()
         {
             Instance = this;
@@ -118,7 +120,7 @@ namespace Game.Minigames
 
         private void OnMinigameCompleted()
         {
-            if(_activeBodyPart as FrankensteinController)
+            if (_activeBodyPart as FrankensteinController)
             { Debug.Log("test frank");
 
                 var frank = _activeBodyPart as FrankensteinController;
@@ -128,7 +130,10 @@ namespace Game.Minigames
                 return;
             }
             Debug.Log("minigame Done");
-            CameraMinigameManager.Instance.ChangeTo(_activeBodyPart.GetTransitionCam());
+            if (_activeBodyPart.GetTransitionCam() != null)
+            { 
+                CameraMinigameManager.Instance.ChangeTo(_activeBodyPart.GetTransitionCam());
+            }
 
             _activeMinigame.Completed -= OnMinigameCompleted;
             if (_activeMinigame.gameObject != null)

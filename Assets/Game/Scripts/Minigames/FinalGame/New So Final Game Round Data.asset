@@ -12,4 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d3cc40ef57b1a240a0618f1d182dd78, type: 3}
   m_Name: New So Final Game Round Data
   m_EditorClassIdentifier: Assembly-CSharp::Game.Minigames.SoFinalGameRoundData
-  rounds: []
+  rounds:
+  - roundId: j
+    instruction: huhu
+    showInstruction: 1
+    duration: 40
+    targetScore: 0

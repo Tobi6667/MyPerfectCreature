@@ -11,6 +11,8 @@ namespace Game.Main
 {
     public class GameManager : MonoBehaviour
     {
+        [SerializeField] private FinalGameManager _final;
+
         [SerializeField] private VictorController _victorController;
         [SerializeField] private FrankensteinController _frank;
         [SerializeField] private PlayerInputModule _inputModule;
@@ -44,7 +46,6 @@ namespace Game.Main
                 OnInteract(interactor);
             });
             _inputModule.SetReceiver(_inputReceiver);
-
         }
 
         public void FrankReady()
@@ -78,7 +79,8 @@ namespace Game.Main
             _activeBodyPart = interactor as BodyPartBase;
             if (interactor as FrankensteinController)
             {
-                MinigameManager.Instance.StartMinigame(interactor as BodyPartBase);
+                var inter = interactor as FrankensteinController;
+                MinigameManager.Instance.StartMinigame(inter.GetMinigame());
                 // FrankWorkoutManager.Instance.OpenWorkoutSelection();
                 Debug.Log("dgfdfdfdfdfdAAAAA");
                 return;

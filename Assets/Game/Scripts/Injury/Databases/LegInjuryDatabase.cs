@@ -18,6 +18,7 @@ public class LegInjuryDatabase : IDatabaseBase
 {
 
     private static List<LegInjuryInstance> _cache;
+    private List<LegInjuryInstance> _shownInjuries = new List<LegInjuryInstance>();
 
     public List<LegInjuryInstance> GetAll()
     {
@@ -34,7 +35,10 @@ public class LegInjuryDatabase : IDatabaseBase
         if (list.Count == 0)
             return null;
 
-        return list[Random.Range(0, list.Count)];
+        var inj = list[Random.Range(0, list.Count)];
+
+        _shownInjuries.Add(inj);
+        return inj;
     }
 
     public IInjuryData GetRandomInjury()
@@ -50,8 +54,7 @@ public class LegInjuryDatabase : IDatabaseBase
 
     public List<IInjuryData> GetShownInjuries()
     {
-        return GetAll()
-            .ConvertAll<IInjuryData>(x => x);
+        return _shownInjuries.ConvertAll(x => (IInjuryData)x);
     }
 
 
@@ -96,7 +99,8 @@ private List<LegInjuryInstance> BuildDatabase()
                     ELegMuscles.BicepsFemoris_LongHead,
                     ELegMuscles.Semitendinosus,
                     ELegMuscles.Semimembranosus
-                }
+                },
+                region = EBodyRegion.Leg,
             },
 
             // =====================================================
@@ -133,7 +137,9 @@ private List<LegInjuryInstance> BuildDatabase()
                     ELegMuscles.VastusMedialis,
                     ELegMuscles.BicepsFemoris_LongHead,
                     ELegMuscles.Gastrocnemius_MedialHead
-                }
+                },
+                region = EBodyRegion.Leg,
+
             },
 
             // =====================================================
@@ -168,7 +174,8 @@ private List<LegInjuryInstance> BuildDatabase()
                     ELegMuscles.Gastrocnemius_MedialHead,
                     ELegMuscles.Gastrocnemius_LateralHead,
                     ELegMuscles.Soleus
-                }
+                },
+                region = EBodyRegion.Leg,
             },
 
             // =====================================================
@@ -204,7 +211,8 @@ private List<LegInjuryInstance> BuildDatabase()
                     ELegMuscles.VastusLateralis,
                     ELegMuscles.VastusMedialis,
                     ELegMuscles.TibialisAnterior
-                }
+                },
+                region = EBodyRegion.Leg,
             },
 
             // =====================================================
@@ -239,7 +247,8 @@ private List<LegInjuryInstance> BuildDatabase()
                     ELegMuscles.TibialisAnterior,
                     ELegMuscles.PeroneusLongus,
                     ELegMuscles.Gastrocnemius_LateralHead
-                }
+                },
+                region = EBodyRegion.Leg,
             },
 
             // =====================================================
@@ -275,7 +284,8 @@ private List<LegInjuryInstance> BuildDatabase()
                     ELegMuscles.VastusLateralis,
                     ELegMuscles.VastusMedialis,
                     ELegMuscles.VastusIntermedius
-                }
+                },
+                region = EBodyRegion.Leg,
             },
 
             // =====================================================
@@ -310,7 +320,8 @@ private List<LegInjuryInstance> BuildDatabase()
                     ELegMuscles.BicepsFemoris_LongHead,
                     ELegMuscles.Gastrocnemius_MedialHead,
                     ELegMuscles.TibialisAnterior
-                }
+                },
+                region = EBodyRegion.Leg,
             },
 
             // =====================================================
@@ -345,7 +356,8 @@ private List<LegInjuryInstance> BuildDatabase()
                     ELegMuscles.RectusFemoris,
                     ELegMuscles.VastusIntermedius,
                     ELegMuscles.VastusLateralis
-                }
+                },
+                region = EBodyRegion.Leg,
             },
         };
     }

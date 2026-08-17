@@ -16,6 +16,7 @@ public enum ETorsoInjury
 public class TorsoInjuryDatabase : IDatabaseBase
 {
     private static List<TorsoInjuryData> _cache;
+    private List<TorsoInjuryData> _shownInjuries = new List<TorsoInjuryData>();
 
     private List<TorsoInjuryData> GetAll()
     {
@@ -32,7 +33,10 @@ public class TorsoInjuryDatabase : IDatabaseBase
         if (list.Count == 0)
             return null;
 
-        return list[Random.Range(0, list.Count)];
+        var inj = list[Random.Range(0, list.Count)];
+
+        _shownInjuries.Add(inj);
+        return inj;
     }
 
     public List<IInjuryData> GetAllInjuries()
@@ -43,8 +47,7 @@ public class TorsoInjuryDatabase : IDatabaseBase
 
     public List<IInjuryData> GetShownInjuries()
     {
-        return GetAll()
-            .ConvertAll(x => (IInjuryData)x);
+        return _shownInjuries.ConvertAll(x => (IInjuryData)x);
     }
 
     // =========================================================
@@ -82,7 +85,8 @@ public class TorsoInjuryDatabase : IDatabaseBase
 
                 spineTilt = 0.6f,
                 twistOffset = 0.4f,
-                idleShake = 0.3f
+                idleShake = 0.3f,
+                region = EBodyRegion.Torso
             },
 
             // =====================================================
@@ -114,7 +118,8 @@ public class TorsoInjuryDatabase : IDatabaseBase
 
                 spineTilt = 0.2f,
                 twistOffset = 0.3f,
-                idleShake = 0.5f
+                idleShake = 0.5f,
+                region = EBodyRegion.Torso
             },
 
             // =====================================================
@@ -145,7 +150,8 @@ public class TorsoInjuryDatabase : IDatabaseBase
 
                 spineTilt = 0.1f,
                 twistOffset = 0.1f,
-                idleShake = 0.7f
+                idleShake = 0.7f,
+                region = EBodyRegion.Torso
             },
 
             // =====================================================
@@ -174,7 +180,8 @@ public class TorsoInjuryDatabase : IDatabaseBase
 
                 spineTilt = 0.8f,
                 twistOffset = 0.6f,
-                idleShake = 0.2f
+                idleShake = 0.2f,
+                region = EBodyRegion.Torso
             },
 
             // =====================================================
@@ -203,7 +210,8 @@ public class TorsoInjuryDatabase : IDatabaseBase
 
                 spineTilt = 0.05f,
                 twistOffset = 0.0f,
-                idleShake = 0.1f
+                idleShake = 0.1f,
+                region = EBodyRegion.Torso
             },
 
             // =====================================================
@@ -232,7 +240,8 @@ public class TorsoInjuryDatabase : IDatabaseBase
 
                 spineTilt = 0.4f,
                 twistOffset = 0.2f,
-                idleShake = 0.4f
+                idleShake = 0.4f,
+                region = EBodyRegion.Torso
             },
 
             // =====================================================
@@ -261,7 +270,8 @@ public class TorsoInjuryDatabase : IDatabaseBase
 
                 spineTilt = 0.9f,
                 twistOffset = 0.8f,
-                idleShake = 0.8f
+                idleShake = 0.8f,
+                region = EBodyRegion.Torso
             },
         };
     }

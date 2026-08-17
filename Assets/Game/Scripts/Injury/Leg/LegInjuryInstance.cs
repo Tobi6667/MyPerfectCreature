@@ -31,10 +31,11 @@ public class LegInjuryInstance : IInjuryData
 
     public string Description => description;
 
-    public EBodyRegion BodyRegion => _bodyRegion;
+    public EBodyRegion region;
 
     string IInjuryData.FunFact => funFact;
 
 
-    EBodyPartType IInjuryData.BodyPartType => throw new System.NotImplementedException();
+
+    public EBodyRegion Region => region;
 }

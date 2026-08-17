@@ -13,8 +13,7 @@ public enum EQuizType
 public class QuizState
 {
 
-        public EQuizType Type;
-        public string Question;
-        public List<string> Options;
-        //public EBodyInjuryType? VisualBodyPartType; // non-null = show body part visually
+    public EQuizType Type;
+    public string Question;
+    public List<string> Options;
 }

@@ -57,6 +57,11 @@ public class FrankensteinMovementModule : MonoBehaviour
       //  if (_testTarget != null)          //  MoveToTarget(_testTarget, null);
     }
 
+    public void SetIdle()
+    {
+        EnterIdleState();
+    }
+
     // =========================================================
     // MOVE (UNCHANGED BEHAVIOR)
     // =========================================================
@@ -261,22 +266,6 @@ public class FrankensteinMovementModule : MonoBehaviour
         }
     }
 
-    private void OnAnimatorIK(int layerIndex)
-    {
-        if (!_isWorking) return;
-
-        if (!_animatorFrank) return;
-
-
-        Vector3 basePos = _animatorFrank.bodyPosition;
-
-        Vector3 worldOffset = transform.TransformVector(_pelvisOffset);
-
-        _animatorFrank.bodyPosition = basePos + worldOffset;
-
-        Quaternion spineRot = Quaternion.Euler(_spineOffset);
-        _animatorFrank.bodyRotation = spineRot * _animatorFrank.bodyRotation;
-    }
 
 
 

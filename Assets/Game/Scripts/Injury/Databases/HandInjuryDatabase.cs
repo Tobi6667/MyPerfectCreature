@@ -59,6 +59,7 @@ public class HandInjuryDatabase : IDatabaseBase
             middle = new SingleFingerInjuryData { finger = EFingerTypes.Middle },
             ring = new SingleFingerInjuryData { finger = EFingerTypes.Ring },
             pinky = new SingleFingerInjuryData { finger = EFingerTypes.Pinky },
+            region = EBodyRegion.Hand
         },
 
         // =====================================================
@@ -90,6 +91,8 @@ public class HandInjuryDatabase : IDatabaseBase
             index = new SingleFingerInjuryData { finger = EFingerTypes.Index },
             ring = new SingleFingerInjuryData { finger = EFingerTypes.Ring },
             pinky = new SingleFingerInjuryData { finger = EFingerTypes.Pinky },
+                        region = EBodyRegion.Hand
+
         },
 
         // =====================================================
@@ -105,6 +108,7 @@ public class HandInjuryDatabase : IDatabaseBase
             funfact = "The name comes from the French word for buttonhole.",
           //  bodyPartType = BodyPartType.RightArm,
           //  _bodyinjuryType = EBodyInjuryType.Arm,
+                      region = EBodyRegion.Hand,
 
             ring = new SingleFingerInjuryData
             {
@@ -184,6 +188,9 @@ public class HandInjuryDatabase : IDatabaseBase
             {
                 finger = EFingerTypes.Pinky
             },
+
+                        region = EBodyRegion.Hand
+
         },
 
         // =====================================================
@@ -256,6 +263,8 @@ public class HandInjuryDatabase : IDatabaseBase
             middle = new SingleFingerInjuryData { finger = EFingerTypes.Middle },
             ring = new SingleFingerInjuryData { finger = EFingerTypes.Ring },
             pinky = new SingleFingerInjuryData { finger = EFingerTypes.Pinky },
+                        region = EBodyRegion.Hand
+
         },
 
         // =====================================================
@@ -297,6 +306,8 @@ public class HandInjuryDatabase : IDatabaseBase
             thumb = new SingleFingerInjuryData { finger = EFingerTypes.Thumb },
             index = new SingleFingerInjuryData { finger = EFingerTypes.Index },
             middle = new SingleFingerInjuryData { finger = EFingerTypes.Middle },
+                        region = EBodyRegion.Hand
+
         },
 
         // =====================================================
@@ -338,6 +349,8 @@ public class HandInjuryDatabase : IDatabaseBase
             thumb = new SingleFingerInjuryData { finger = EFingerTypes.Thumb },
             index = new SingleFingerInjuryData { finger = EFingerTypes.Index },
             middle = new SingleFingerInjuryData { finger = EFingerTypes.Middle },
+                        region = EBodyRegion.Hand
+
         },
 
         // =====================================================
@@ -377,6 +390,8 @@ public class HandInjuryDatabase : IDatabaseBase
             thumb = new SingleFingerInjuryData { finger = EFingerTypes.Thumb },
             ring = new SingleFingerInjuryData { finger = EFingerTypes.Ring },
             pinky = new SingleFingerInjuryData { finger = EFingerTypes.Pinky },
+                        region = EBodyRegion.Hand
+
         },
     };
 

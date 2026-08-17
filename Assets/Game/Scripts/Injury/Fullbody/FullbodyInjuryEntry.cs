@@ -23,11 +23,14 @@ public class FullbodyInjuryEntry : IInjuryData
 
     public string Description => description;
 
+    public EBodyRegion region;
+
   //  public BodyPartType BodyPartType => bodyPartType;
 
     public string FunFact => funFact;
 
-  //  public EBodyInjuryType EBodyInjuryType => _bodyinjuryType;
+    public EBodyRegion Region => region;
 
-    EBodyPartType IInjuryData.BodyPartType => throw new System.NotImplementedException();
+    //  public EBodyInjuryType EBodyInjuryType => _bodyinjuryType;
+
 }

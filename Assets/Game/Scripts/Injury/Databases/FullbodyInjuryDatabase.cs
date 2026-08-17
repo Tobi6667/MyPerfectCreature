@@ -69,7 +69,8 @@ public class FullbodyInjuryDatabase : MonoBehaviour, IDatabaseBase
                     instability = 0.3f,
                     pain = 0.7f
                 },
-                
+                region = EBodyRegion.Fullbody
+
             },
 
             // =====================================================
@@ -112,6 +113,8 @@ public class FullbodyInjuryDatabase : MonoBehaviour, IDatabaseBase
                     instability = 0.3f,
                     pain = 0.4f
                 },
+                                region = EBodyRegion.Fullbody
+
             },
 
             // =====================================================
@@ -131,6 +134,8 @@ public class FullbodyInjuryDatabase : MonoBehaviour, IDatabaseBase
                     coordinationLoss = 0.3f,
                     spineStiffness = 0.2f
                 },
+                                region = EBodyRegion.Fullbody
+
             },
 
             // =====================================================
@@ -151,6 +156,8 @@ public class FullbodyInjuryDatabase : MonoBehaviour, IDatabaseBase
                     neckProtection = 0.6f,
                     pain = 0.2f
                 },
+                                region = EBodyRegion.Fullbody
+
             },
 
             // =====================================================
@@ -171,6 +178,8 @@ public class FullbodyInjuryDatabase : MonoBehaviour, IDatabaseBase
                     rightLegWeakness = 0.4f,
                     pain = 0.6f
                 },
+                                region = EBodyRegion.Fullbody
+
             },
 
             // =====================================================
@@ -191,6 +200,8 @@ public class FullbodyInjuryDatabase : MonoBehaviour, IDatabaseBase
                     spineStiffness = 0.3f,
                     pain = 0.5f
                 },
+                                region = EBodyRegion.Fullbody
+
             }
         };
     }

@@ -65,7 +65,6 @@ public class TorsoController : BodyPartBase, IInteractable
 
     public override void MoveToObject(Transform target, Action onReached, float speed = 4, float arriveDistance = 0)
     {
-        throw new NotImplementedException();
     }
 
     public override CinemachineCamera GetTransitionCam()
@@ -81,6 +80,8 @@ public class TorsoController : BodyPartBase, IInteractable
 
     public override void OnInject(IInjuryData injury)
     {
+        _movementModule.Idle();
+        Debug.Log("inject in quiz");
         _movementModule.InjectInjury(injury as TorsoInjuryData);
 
     }

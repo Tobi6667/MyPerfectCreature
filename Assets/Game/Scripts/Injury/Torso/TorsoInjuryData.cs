@@ -35,8 +35,10 @@ public class TorsoInjuryData : IInjuryData
 
     public string Description => description;
 
+    public EBodyRegion region;
+
     
     public string FunFact => funFact;
 
-    EBodyPartType IInjuryData.BodyPartType => throw new System.NotImplementedException();
+    public EBodyRegion Region => region;
 }

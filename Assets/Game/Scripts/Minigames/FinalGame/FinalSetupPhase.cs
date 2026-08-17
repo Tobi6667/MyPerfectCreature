@@ -22,14 +22,15 @@ namespace Game.Minigames
 
             bodies = new List<BodyPartBase>();
             bodies = GameManager.Instance.BodypartsList;
-
+            int index = 1;
 
             foreach(var body in bodies)
             {
-                body.MoveToInteractionPoint(context.StartTransform.position, () =>
+                body.MoveToInteractionPoint(context.StartTransform.position - new Vector3(10f + index * 2, 0, 0), () =>
                 {
                     finished = true;
                 });
+                index++;
             }
 
 

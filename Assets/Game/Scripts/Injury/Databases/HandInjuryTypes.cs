@@ -32,7 +32,8 @@ public class HandInjuryTypes: IInjuryData
     public SingleFingerInjuryData middle;
     public SingleFingerInjuryData ring;
     public SingleFingerInjuryData pinky;
-   // public BodyPartType bodyPartType;
+
+    public EBodyRegion region;
 
    // public EBodyInjuryType _bodyinjuryType;
 
@@ -50,5 +51,5 @@ public class HandInjuryTypes: IInjuryData
 
     string IInjuryData.FunFact => funfact;
 
-    EBodyPartType IInjuryData.BodyPartType => throw new System.NotImplementedException();
+    EBodyRegion IInjuryData.Region => region;
 }

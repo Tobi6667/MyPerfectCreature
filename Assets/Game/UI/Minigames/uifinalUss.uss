@@ -1,0 +1,599 @@
+VisualElement {}
+
+/* ============================================================
+   FRANKENSTEIN // FINAL QUIZ UI
+   Industrial laboratory / violet electrical aesthetic
+   ============================================================ */
+
+
+/* ------------------------------------------------------------
+   ROOT
+   ------------------------------------------------------------ */
+
+.root {
+    width: 100%;
+    height: 100%;
+    flex-grow: 1;
+
+
+    padding-left: 90px;
+    padding-right: 90px;
+    padding-top: 55px;
+    padding-bottom: 45px;
+}
+
+
+/* ------------------------------------------------------------
+   MAIN PANEL
+   ------------------------------------------------------------ */
+
+.main-panel {
+    width: 100%;
+    height: 100%;
+
+    flex-grow: 1;
+
+    justify-content: space-between;
+
+    padding-left: 45px;
+    padding-right: 45px;
+    padding-top: 25px;
+    padding-bottom: 20px;
+
+    border-left-width: 1px;
+    border-right-width: 1px;
+
+    border-left-color: rgba(148, 92, 255, 0.35);
+    border-right-color: rgba(148, 92, 255, 0.35);
+}
+
+
+/* ------------------------------------------------------------
+   HEADER
+   ------------------------------------------------------------ */
+
+.header {
+    width: 100%;
+    height: 70px;
+
+    flex-direction: row;
+    align-items: center;
+}
+
+.game-title {
+    color: rgb(220, 211, 235);
+
+    font-size: 26px;
+    -unity-font-style: bold;
+
+    letter-spacing: 4px;
+
+    margin-right: 35px;
+}
+
+.question-counter {
+    color: rgb(151, 116, 202);
+
+    font-size: 18px;
+
+    letter-spacing: 3px;
+}
+
+.header-line {
+    height: 1px;
+
+    flex-grow: 1;
+
+    background-color: rgba(148, 92, 255, 0.4);
+
+    margin-left: 30px;
+    margin-right: 30px;
+}
+
+#header-line-right {
+    margin-left: 30px;
+    margin-right: 0;
+}
+
+
+/* ------------------------------------------------------------
+   QUESTION
+   ------------------------------------------------------------ */
+
+.question-panel {
+    width: 100%;
+
+    align-items: center;
+    justify-content: center;
+
+    flex-grow: 1;
+
+    padding-left: 80px;
+    padding-right: 80px;
+}
+
+.question-prefix {
+    color: rgb(137, 93, 206);
+
+    font-size: 19px;
+
+    letter-spacing: 5px;
+
+    margin-bottom: 30px;
+}
+
+.question-label {
+    max-width: 1500px;
+
+    color: rgb(236, 232, 242);
+
+    font-size: 72px;
+
+    -unity-font-style: bold;
+
+    -unity-text-align: middle-center;
+
+    white-space: normal;
+}
+
+.question-decoration {
+    flex-direction: row;
+
+    align-items: center;
+
+    margin-top: 45px;
+}
+
+.deco-line {
+    width: 150px;
+    height: 1px;
+
+    background-color: rgba(148, 92, 255, 0.5);
+}
+
+.deco-node {
+    width: 8px;
+    height: 8px;
+
+    margin-left: 12px;
+    margin-right: 12px;
+
+    background-color: rgb(167, 105, 255);
+
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+
+
+/* ------------------------------------------------------------
+   ANSWERS
+   ------------------------------------------------------------ */
+
+.answers-section {
+    width: 100%;
+
+    padding-left: 100px;
+    padding-right: 100px;
+
+    margin-bottom: 25px;
+}
+
+.answers-title {
+    color: rgb(115, 91, 149);
+
+    font-size: 16px;
+
+    letter-spacing: 4px;
+
+    margin-bottom: 15px;
+}
+
+.answers-container {
+    width: 100%;
+
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    justify-content: space-between;
+}
+
+
+/* ------------------------------------------------------------
+   ANSWER BUTTON
+   ------------------------------------------------------------ */
+
+.answer-btn {
+    width: 49%;
+    height: 85px;
+
+    margin-bottom: 12px;
+
+    padding-left: 30px;
+    padding-right: 30px;
+
+    background-color: rgba(25, 20, 36, 0.95);
+
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    border-right-width: 1px;
+
+    border-top-color: rgba(125, 92, 168, 0.45);
+    border-bottom-color: rgba(125, 92, 168, 0.45);
+    border-left-color: rgba(125, 92, 168, 0.45);
+    border-right-color: rgba(125, 92, 168, 0.45);
+
+    color: rgb(211, 204, 221);
+
+    font-size: 22px;
+
+    -unity-font-style: bold;
+
+    -unity-text-align: middle-left;
+}
+
+
+/* HOVER */
+
+.answer-btn:hover {
+    background-color: rgba(61, 35, 91, 0.95);
+
+    border-top-color: rgb(166, 101, 255);
+    border-bottom-color: rgb(166, 101, 255);
+    border-left-color: rgb(166, 101, 255);
+    border-right-color: rgb(166, 101, 255);
+
+    color: rgb(245, 240, 250);
+}
+
+
+/* PRESSED */
+
+.answer-btn:active {
+    background-color: rgba(115, 61, 167, 0.9);
+
+    border-top-color: rgb(203, 157, 255);
+    border-bottom-color: rgb(203, 157, 255);
+    border-left-color: rgb(203, 157, 255);
+    border-right-color: rgb(203, 157, 255);
+}
+
+
+/* ------------------------------------------------------------
+   FOOTER
+   ------------------------------------------------------------ */
+
+.footer {
+    width: 100%;
+
+    height: 35px;
+
+    flex-direction: row;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    border-top-width: 1px;
+    border-top-color: rgba(100, 75, 125, 0.3);
+
+    padding-top: 12px;
+}
+
+.footer-label {
+    color: rgb(88, 76, 103);
+
+    font-size: 13px;
+
+    letter-spacing: 2px;
+}
+
+
+/* ------------------------------------------------------------
+   RESULT PANEL
+   ------------------------------------------------------------ */
+
+.result-panel {
+    position: absolute;
+
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+
+    width: 100%;
+    height: 100%;
+
+    align-items: center;
+    justify-content: center;
+
+    background-color: rgba(5, 4, 10, 0.94);
+}
+
+
+/* ------------------------------------------------------------
+   RESULT FRAME
+   ------------------------------------------------------------ */
+
+.result-frame {
+    min-width: 850px;
+
+    padding-left: 100px;
+    padding-right: 100px;
+    padding-top: 80px;
+    padding-bottom: 80px;
+
+    align-items: center;
+
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+
+    border-top-color: rgba(156, 95, 255, 0.55);
+    border-bottom-color: rgba(156, 95, 255, 0.55);
+
+    background-color: rgba(22, 16, 31, 0.4);
+}
+
+.result-prefix {
+    color: rgb(133, 95, 178);
+
+    font-size: 17px;
+
+    letter-spacing: 5px;
+
+    margin-bottom: 30px;
+}
+
+.result-label {
+    color: rgb(195, 133, 255);
+
+    font-size: 100px;
+
+    -unity-font-style: bold;
+
+    letter-spacing: 8px;
+
+    -unity-text-align: middle-center;
+}
+
+.result-subtitle {
+    color: rgb(213, 205, 220);
+
+    font-size: 25px;
+
+    letter-spacing: 4px;
+
+    margin-top: 15px;
+}
+
+
+/* ------------------------------------------------------------
+   RESULT DECORATION
+   ------------------------------------------------------------ */
+
+.result-decoration {
+    flex-direction: row;
+
+    align-items: center;
+
+    margin-top: 40px;
+}
+
+.result-line {
+    width: 170px;
+    height: 1px;
+
+    background-color: rgba(156, 95, 255, 0.55);
+}
+
+.result-node {
+    width: 10px;
+    height: 10px;
+
+    margin-left: 15px;
+    margin-right: 15px;
+
+    background-color: rgb(174, 106, 255);
+
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+/* ============================================================
+   FINAL SCORE
+   ============================================================ */
+
+.final-score-panel {
+    position: absolute;
+
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+
+    width: 100%;
+    height: 100%;
+
+    align-items: center;
+    justify-content: center;
+
+    background-color: rgba(5, 4, 10, 0.97);
+}
+
+
+/* ------------------------------------------------------------
+   SCORE FRAME
+   ------------------------------------------------------------ */
+
+.final-score-frame {
+    width: 900px;
+
+    align-items: center;
+
+    padding-left: 100px;
+    padding-right: 100px;
+    padding-top: 75px;
+    padding-bottom: 65px;
+
+    background-color: rgba(20, 15, 29, 0.96);
+
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    border-right-width: 1px;
+
+    border-top-color: rgba(156, 95, 255, 0.7);
+    border-bottom-color: rgba(156, 95, 255, 0.7);
+    border-left-color: rgba(91, 64, 119, 0.35);
+    border-right-color: rgba(91, 64, 119, 0.35);
+}
+
+
+/* ------------------------------------------------------------
+   PREFIX
+   ------------------------------------------------------------ */
+
+.final-score-prefix {
+    color: rgb(133, 95, 178);
+
+    font-size: 17px;
+
+    letter-spacing: 5px;
+
+    margin-bottom: 22px;
+}
+
+
+/* ------------------------------------------------------------
+   TITLE
+   ------------------------------------------------------------ */
+
+.final-score-title {
+    color: rgb(220, 211, 235);
+
+    font-size: 42px;
+
+    -unity-font-style: bold;
+
+    letter-spacing: 7px;
+
+    -unity-text-align: middle-center;
+}
+
+
+/* ------------------------------------------------------------
+   SCORE DISPLAY
+   ------------------------------------------------------------ */
+
+.score-display {
+    flex-direction: row;
+
+    align-items: flex-end;
+    justify-content: center;
+
+    margin-top: 35px;
+    margin-bottom: 20px;
+}
+
+.score-value {
+    color: rgb(195, 133, 255);
+
+    font-size: 150px;
+
+    -unity-font-style: bold;
+
+    letter-spacing: 3px;
+
+    -unity-text-align: middle-center;
+}
+
+.score-divider {
+    color: rgb(105, 79, 133);
+
+    font-size: 75px;
+
+    margin-left: 15px;
+    margin-right: 15px;
+
+    margin-bottom: 18px;
+}
+
+.score-total {
+    color: rgb(164, 151, 181);
+
+    font-size: 75px;
+
+    -unity-font-style: bold;
+
+    margin-bottom: 18px;
+}
+
+
+/* ------------------------------------------------------------
+   DESCRIPTION
+   ------------------------------------------------------------ */
+
+.score-description {
+    color: rgb(213, 205, 220);
+
+    font-size: 22px;
+
+    letter-spacing: 5px;
+
+    -unity-font-style: bold;
+
+    -unity-text-align: middle-center;
+}
+
+
+/* ------------------------------------------------------------
+   DECORATION
+   ------------------------------------------------------------ */
+
+.score-decoration {
+    flex-direction: row;
+
+    align-items: center;
+
+    margin-top: 40px;
+    margin-bottom: 30px;
+}
+
+.score-line {
+    width: 170px;
+    height: 1px;
+
+    background-color: rgba(156, 95, 255, 0.5);
+}
+
+.score-node {
+    width: 9px;
+    height: 9px;
+
+    margin-left: 15px;
+    margin-right: 15px;
+
+    background-color: rgb(174, 106, 255);
+
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+
+/* ------------------------------------------------------------
+   FOOTER
+   ------------------------------------------------------------ */
+
+.score-footer {
+    color: rgb(88, 76, 103);
+
+    font-size: 13px;
+
+    letter-spacing: 3px;
+}

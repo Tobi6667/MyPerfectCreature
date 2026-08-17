@@ -23,12 +23,37 @@ public class IKBlendController : MonoBehaviour
     [SerializeField] private Transform spineTarget;
     [SerializeField] private Transform headTarget;
 
+    [SerializeField] private Transform leftHandTarget;
+    [SerializeField] private Transform rightHandTarget;
+
     [Header("GRAPH")]
     public BodyParameterGraph graph;
 
+    [Header("IDLE")]
+    [SerializeField] private float idleSwayFrequency = 0.5f;
+    [SerializeField] private float idleSwayAmount = 0.02f;
+    [SerializeField] private float idleBreatheFrequency = 0.3f;
+    [SerializeField] private float idleBreatheAmount = 0.015f;
+    [SerializeField] private float idleTremorFrequency = 9f;
+    [SerializeField] private float idleTremorAmount = 0.015f;
+    [SerializeField] private float idleSmooth = 4f;
+
+    [Header("IDLE - LEGS")]
+    [SerializeField] private float idleWeightShiftFrequency = 0.25f;
+    [SerializeField] private float idleFootLiftAmount = 0.015f;
+    [SerializeField] private float idleFootSwayAmount = 0.3f; // fraction of hip sway carried to feet
+
+    [Header("IDLE - ARMS")]
+    [SerializeField] private Vector3 leftHandRestOffset = new Vector3(-0.25f, 0.9f, 0f);
+    [SerializeField] private Vector3 rightHandRestOffset = new Vector3(0.25f, 0.9f, 0f);
+    [SerializeField] private float idleArmSwayFrequency = 0.4f;
+    [SerializeField] private float idleArmSwayAmount = 0.02f;
+
+    private bool _isIdle = true;
+
     public BodyState injuryState = new BodyState();
     private RuntimeWorkoutSettings runtime;
-    private SoWorkoutSettings baseSettings;
+    [SerializeField] private SoWorkoutSettings baseSettings;
     private float spineMod = 1f;
     private float pelvisMod = 1f;
     private float instabilityMod = 1f;
@@ -131,8 +156,16 @@ public class IKBlendController : MonoBehaviour
     void LateUpdate()
     {
         if (!_isActive || workoutSettings == null || graph == null) return;
-
+        // if (!_isActive || graph == null) return;
         ApplyInjuryState();
+
+        if (_isIdle)
+        {
+            UpdateWorldSpace();
+            SolveIdle();
+            return;
+        }
+
         ApplyInjuryToSettings();
 
         UpdateWorldSpace();
@@ -155,6 +188,14 @@ public class IKBlendController : MonoBehaviour
 
     internal void ActivateIK() => _isActive = true;
     internal void DeactivateIK() => _isActive = false;
+
+    internal void ActivateIdle()
+    {
+        animator.enabled = false;
+        animatorIK.enabled = true;
+        _isIdle = true;
+    }
+    internal void DeactivateIdle() => _isIdle = false;
 
     // ─────────────────────────────
     // WORLD SPACE
@@ -358,6 +399,103 @@ public class IKBlendController : MonoBehaviour
         spineTarget.position =
             Vector3.Lerp(spineTarget.position, spinePos,
             Time.deltaTime * runtime.spineSmooth);
+    }
+
+    // ─────────────────────────────
+    // IDLE (TARGET-DRIVEN, INJURY-MODULATED)
+    // ─────────────────────────────
+
+    void SolveIdle()
+    {
+
+        float t = Time.time;
+
+        float sway = Mathf.Sin(t * idleSwayFrequency) * idleSwayAmount * instabilityMod;
+        float breathe = Mathf.Sin(t * idleBreatheFrequency) * idleBreatheAmount;
+        float tremor = Mathf.Sin(t * idleTremorFrequency) * idleTremorAmount * painMod;
+
+        // ── HIPS ──
+        Vector3 restFlat = rootReference.position;
+        restFlat.y = groundY + runtime.hipHeightOffset;
+
+        Vector3 hipWorldTarget = restFlat + side * (sway + tremor);
+        Vector3 hipLocalTarget = hipsTarget.parent.InverseTransformPoint(hipWorldTarget);
+
+        hipsTarget.localPosition =
+            Vector3.Lerp(hipsTarget.localPosition, hipLocalTarget,
+            Time.deltaTime * idleSmooth * pelvisMod);
+
+        Quaternion tiltTarget = Quaternion.Euler(0f, 0f, (sway + tremor) * 20f * pelvisMod);
+        hipsTarget.localRotation =
+            Quaternion.Slerp(hipsTarget.localRotation, tiltTarget,
+            Time.deltaTime * idleSmooth);
+
+        // ── SPINE ──
+        Vector3 spinePos =
+            hipsTarget.position +
+            Vector3.up * (0.8f + breathe) +
+            side * ((sway + tremor) * 0.6f * spineMod);
+
+        spineTarget.position =
+            Vector3.Lerp(spineTarget.position, spinePos,
+            Time.deltaTime * idleSmooth);
+
+        // ── HEAD ──
+        Vector3 headPos =
+            hipsTarget.position +
+            Vector3.up * (1.15f + breathe) +
+            side * ((sway + tremor) * neckMod);
+
+        headTarget.position =
+            Vector3.Lerp(headTarget.position, headPos,
+            Time.deltaTime * idleSmooth);
+
+        // ── LEGS (weight shift, unweighted foot lifts slightly) ──
+        float weightShift = Mathf.Sin(t * idleWeightShiftFrequency);
+
+        float liftL = Mathf.Clamp01(weightShift) * idleFootLiftAmount * legModL;
+        float liftR = Mathf.Clamp01(-weightShift) * idleFootLiftAmount * legModR;
+
+        Vector3 leftIdleTarget = leftPlantPos + Vector3.up * liftL + side * (sway * idleFootSwayAmount);
+        Vector3 rightIdleTarget = rightPlantPos + Vector3.up * liftR + side * (sway * idleFootSwayAmount);
+
+        leftPos = Vector3.Lerp(leftPos, leftIdleTarget, Time.deltaTime * idleSmooth);
+        rightPos = Vector3.Lerp(rightPos, rightIdleTarget, Time.deltaTime * idleSmooth);
+        ApplyFootTargets();
+        SolveHints();
+
+        // ── ARMS ──
+        if (leftHandTarget != null)
+        {
+            float armWaveL = Mathf.Sin(t * idleArmSwayFrequency) * idleArmSwayAmount * legModL;
+
+            Vector3 leftHandPos =
+                hipsTarget.position +
+                Vector3.up * leftHandRestOffset.y +
+                side * leftHandRestOffset.x +
+                forward * (leftHandRestOffset.z + armWaveL) +
+                side * (sway + tremor) * 0.5f;
+
+            leftHandTarget.position =
+                Vector3.Lerp(leftHandTarget.position, leftHandPos,
+                Time.deltaTime * idleSmooth);
+        }
+
+        if (rightHandTarget != null)
+        {
+            float armWaveR = Mathf.Sin(t * idleArmSwayFrequency + Mathf.PI) * idleArmSwayAmount * legModR;
+
+            Vector3 rightHandPos =
+                hipsTarget.position +
+                Vector3.up * rightHandRestOffset.y +
+                side * rightHandRestOffset.x +
+                forward * (rightHandRestOffset.z + armWaveR) +
+                side * (sway + tremor) * 0.5f;
+
+            rightHandTarget.position =
+                Vector3.Lerp(rightHandTarget.position, rightHandPos,
+                Time.deltaTime * idleSmooth);
+        }
     }
 
     // ─────────────────────────────

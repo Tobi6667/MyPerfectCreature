@@ -8,7 +8,9 @@ public interface IInjuryData
     string Description { get; }
 
     string FunFact { get; }
-    EBodyPartType BodyPartType { get; }
+   // EBodyPartType BodyPartType { get; }
+
+   EBodyRegion Region { get; }
 
     //EBodyInjuryType EBodyInjuryType { get; }
 }

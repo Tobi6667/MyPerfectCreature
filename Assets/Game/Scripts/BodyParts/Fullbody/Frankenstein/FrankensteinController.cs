@@ -22,7 +22,7 @@ public class FrankensteinController : BodyPartBase, IInteractable
     public Transform Transform => transform;
     public IKBlendController IkBlendController => _ikController;
     public FrankensteinMovementModule FrankensteinMovementModule => _movementModule;
-
+    [SerializeField] private SoWorkoutSettings baseSettings;
     [SerializeField] private CinemachineCamera _followCam;
 
     /*
@@ -46,7 +46,6 @@ public class FrankensteinController : BodyPartBase, IInteractable
 
     public override void MoveToObject(Transform target, Action onReached, float speed = 4, float arriveDistance = 0)
     {
-        throw new NotImplementedException();
     }
 
     public override void OnInject(IInjuryData injury)
@@ -54,6 +53,10 @@ public class FrankensteinController : BodyPartBase, IInteractable
         Debug.Log("BLAAAAAAAAAAA");
         if (injury is FullbodyInjuryEntry fullbody)
         {
+            _ikController.SetStartData(baseSettings);
+            _movementModule.SetIdle();
+
+            _ikController.ActivateIdle();
             _ikController.InjectInjury(fullbody);
             return;
         }

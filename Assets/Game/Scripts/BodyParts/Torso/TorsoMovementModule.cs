@@ -17,7 +17,7 @@ public class TorsoMovementModule : MonoBehaviour
     [Header("Bang")]
 
     [SerializeField] private float minZ = -4.5f;
-    [SerializeField] private float maxZ = 5f;
+    [SerializeField] private float maxZ = 5.5f;
     [SerializeField] private float _bangAmount = 45f;
     [SerializeField] private float _bangCooldownTime = 0.3f;
     [SerializeField] private float _bangRecoverSpeed = 0.5f;
