@@ -18,35 +18,35 @@ MonoBehaviour:
       all visual inspections.\n\nUnfortunately, nobody checked whether it can stand.\n\nKeep
       the leg balanced while the laboratory's highly scientific \"Push Machine\"
       delivers random impacts.\n\nControls:\n\U0001F5B1 Move the mouse to maintain
-      balance.\n\U0001F4A5 Recover from sudden pushes.\nPress ENTER to start"
+      balance.\n\U0001F4A5 Recover from sudden pushes."
     showInstruction: 1
-    duration: 40
+    duration: 20
     targetScore: 3
     rootMoveMultiplier: 12.8
-    randomPushForce: 2.28
-    randomPushIntervalMin: 0.91
-    randomPushIntervalMax: 2.05
-    failDistance: 1.55
+    randomPushForce: 2.91
+    randomPushIntervalMin: 1
+    randomPushIntervalMax: 2
+    failDistance: 1.8
     gravity: 1.86
-    stiffness: 0.58
+    stiffness: 0.71
     damping: 0.44
-    maxOffset: 7.64
-    controlResponsiveness: 0.94
+    maxOffset: 5.34
+    controlResponsiveness: 0.96
   - roundId: LL
     instruction: Ready for Round 2?!
     showInstruction: 1
     duration: 30
     targetScore: 5
     rootMoveMultiplier: 1.59
-    randomPushForce: 1.22
-    randomPushIntervalMin: 0.87
-    randomPushIntervalMax: 0.87
+    randomPushForce: 4.12
+    randomPushIntervalMin: 1.68
+    randomPushIntervalMax: 2.95
     failDistance: 1.82
     gravity: 3.28
-    stiffness: 0.81
-    damping: 1.62
-    maxOffset: 1.21
-    controlResponsiveness: 0.85
+    stiffness: 0.72
+    damping: 0.9
+    maxOffset: 2.79
+    controlResponsiveness: 0.93
   audioClips:
     _playingClip: {fileID: 0}
     _roundEndClip: {fileID: 0}

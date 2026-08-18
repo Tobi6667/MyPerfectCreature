@@ -18,17 +18,31 @@ MonoBehaviour:
       Frank's magnificent body through the laboratory obstacle course. Avoid the
       spiked death-balls, leap over the spiders, and demonstrate that true elegance
       can be stitched together.\nControls:\n\U0001F5B1\uFE0F Mouse \u2013 Move left
-      and right\n\U0001FA70 SPACEBAR \u2013 Perform a dramatic Grand Jet\xE9\n\nDodge
-      the spikes.\nJump the spiders."
+      and right\n\nDodge the spikes."
     showInstruction: 1
-    duration: 40
-    targetScore: 0
-    roundDuration: 4
+    duration: 20
+    targetScore: 10
+    roundDuration: 20
     moveSpeedMultiplier: 1
     instabilityMultiplier: 0
     cangetHits: 4
     difficultyMultiplier: 1
     floorTargets: 0
     spawnInterval: 1.52
+    spiderPrefab: {fileID: 7748055232199553567, guid: 6939ae9fce477cc4f8abe67076df7059, type: 3}
+    bulletPrefab: {fileID: 6415753512613415255, guid: e0a9ed9e48f6d6949a3e975051ff5cf9, type: 3}
+  - roundId: mh
+    instruction: "Rpund 2 - Be aware of the spiders!\n\nDodge the spikes.\nJump the
+      spiders.\n\n\n\U0001FA70 SPACEBAR \u2013 Perform a dramatic Grand Jet\xE9\n"
+    showInstruction: 1
+    duration: 35
+    targetScore: 2
+    roundDuration: 35
+    moveSpeedMultiplier: 1.17
+    instabilityMultiplier: 0.26
+    cangetHits: 4
+    difficultyMultiplier: 1
+    floorTargets: 1
+    spawnInterval: 1.73
     spiderPrefab: {fileID: 7748055232199553567, guid: 6939ae9fce477cc4f8abe67076df7059, type: 3}
     bulletPrefab: {fileID: 6415753512613415255, guid: e0a9ed9e48f6d6949a3e975051ff5cf9, type: 3}

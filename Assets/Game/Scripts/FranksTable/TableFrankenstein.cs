@@ -66,7 +66,6 @@ public class TableFrankenstein : LabObjectBase
 
     public override void Initialize()
     {
-        throw new System.NotImplementedException();
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created

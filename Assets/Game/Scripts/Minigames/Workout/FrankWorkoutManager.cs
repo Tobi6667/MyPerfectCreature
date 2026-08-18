@@ -12,6 +12,8 @@ namespace Game.Minigames
     {
         public static FrankWorkoutManager Instance;
 
+        [SerializeField] private FinalGameManager finalGameManager;
+
         [Header("Data")]
         private List<FrankensteinWorkoutData> workoutDataList;
 
@@ -23,6 +25,8 @@ namespace Game.Minigames
         [Header("Body")]
         [SerializeField] private FrankensteinController _frankensteinBody;
         [SerializeField] private WorkoutReceiver _workoutReceiver;
+
+
         private FrankensteinWorkoutData activeWorkout;
 
         private int FAT = 60;
@@ -51,20 +55,31 @@ namespace Game.Minigames
                 (_FrankensteinWorkoutData) =>
                 {
                     activeWorkout = _FrankensteinWorkoutData;
-                    Debug.Log(_FrankensteinWorkoutData);
+                    Debug.Log(_FrankensteinWorkoutData.workoutType);
 
                     FAT -= _FrankensteinWorkoutData.fatigueCosts;
                     VAS -= _FrankensteinWorkoutData.vasCosts;
 
-                    if(_FrankensteinWorkoutData.workoutType == WorkoutType.Default)
+                    if (_FrankensteinWorkoutData.workoutType == WorkoutType.Default)
                     {
 
                         StartWorkout(_FrankensteinWorkoutData);
                     }
-                    if(_FrankensteinWorkoutData.workoutType == WorkoutType.Game)
+                    if (_FrankensteinWorkoutData.workoutType == WorkoutType.Quiz)
                     {
                         StartMiniGame(_FrankensteinWorkoutData);
+                        Debug.Log("! final game");
+                        //finalGameManager.StartMinigame();
+                        //StartMiniGame(_FrankensteinWorkoutData);
                     }
+
+                    if (_FrankensteinWorkoutData.workoutType == WorkoutType.Game)
+                    {
+                        Debug.Log("! final game");
+                        //StartMiniGame();
+                        StartMiniGame(_FrankensteinWorkoutData);
+                    }
+
                     UIMinigameManager.Instance.UpdateFatVas(FAT, VAS);
 
                 }
@@ -79,7 +94,7 @@ namespace Game.Minigames
             _frankensteinBody.FrankensteinMovementModule.MoveToTarget(workdata.workoutPosition, () =>
             {
                 CameraMinigameManager.Instance.ChangeTo(_yogamatCam);
-               WorkoutDatabase.Instance.SetIK(workdata);
+                WorkoutDatabase.Instance.SetIK(workdata);
                 _frankensteinBody.FrankensteinMovementModule.PlayWorkout(workdata);
                 GameManager.Instance.ChangeReceiver(_workoutReceiver);
             });
@@ -97,7 +112,9 @@ namespace Game.Minigames
 
         private void StartMiniGame(FrankensteinWorkoutData workdata)
         {
-            _frankensteinBody = Context.BodyPart as FrankensteinController;
+            _frankensteinBody = GameManager.Instance.ActiveBodyPart as FrankensteinController;
+            Context.BodyPart = _frankensteinBody;
+            Debug.Log(GameManager.Instance.ActiveBodyPart);
             _frankensteinBody.FrankensteinMovementModule.SetIKAnimator(true);
 
             Debug.Log("MiniGame placeholder");
@@ -105,13 +122,7 @@ namespace Game.Minigames
     workdata._minigame,
     Context.BodyPart
 );
-
         }
 
-        // ---------------------------------------------------
-        // IK SYSTEM (UNCHANGED)
-        // ---------------------------------------------------
-
-
     }
-}
+        }

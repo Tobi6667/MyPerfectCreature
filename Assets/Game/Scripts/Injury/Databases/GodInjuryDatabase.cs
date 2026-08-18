@@ -9,7 +9,7 @@ public static class GodInjuryDatabase
         {
             { EBodyRegion.Torso, new TorsoInjuryDatabase() },
             { EBodyRegion.Leg, new LegInjuryDatabase() },
-            { EBodyRegion.Arm, new HandInjuryDatabase() },
+            { EBodyRegion.Hand, new HandInjuryDatabase() },
             {EBodyRegion.Fullbody, new FullbodyInjuryDatabase()  },
            // { EBodyRegion.Head, new HeadInjuryDatabase() }
         };
@@ -24,7 +24,7 @@ public static class GodInjuryDatabase
         List<IInjuryData> all = new List<IInjuryData>();
         all.AddRange(Databases[EBodyRegion.Torso].GetAllInjuries());
         all.AddRange(Databases[EBodyRegion.Leg].GetAllInjuries());
-        all.AddRange(Databases[EBodyRegion.Arm].GetAllInjuries());
+        all.AddRange(Databases[EBodyRegion.Hand].GetAllInjuries());
         all.AddRange(Databases[EBodyRegion.Fullbody].GetAllInjuries());
 
         return all;
@@ -36,7 +36,7 @@ public static class GodInjuryDatabase
         List<IInjuryData> all = new List<IInjuryData>();
         all.AddRange(Databases[EBodyRegion.Torso].GetShownInjuries());
         all.AddRange(Databases[EBodyRegion.Leg].GetShownInjuries());
-        all.AddRange(Databases[EBodyRegion.Arm].GetShownInjuries());
+        all.AddRange(Databases[EBodyRegion.Hand].GetShownInjuries());
         all.AddRange(Databases[EBodyRegion.Fullbody].GetShownInjuries());
 
         return all;

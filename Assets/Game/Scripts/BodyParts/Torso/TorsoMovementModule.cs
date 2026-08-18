@@ -221,11 +221,7 @@ public class TorsoMovementModule : MonoBehaviour
 
             float rootWeight = (1f - t) * (1f - t);
 
-            float bang =
-                _bangCurrent *
-                _bangAmount *
-                rootWeight *
-                bangMask;
+            float bang = _bangCurrent * _bangAmount * rootWeight;
 
             Quaternion bangRot =
                 Quaternion.AngleAxis(

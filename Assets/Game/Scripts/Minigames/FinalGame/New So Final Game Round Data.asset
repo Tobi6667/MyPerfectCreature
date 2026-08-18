@@ -14,7 +14,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Game.Minigames.SoFinalGameRoundData
   rounds:
   - roundId: j
-    instruction: huhu
+    instruction: 'THE FINAL TEST
+
+
+      The body is assembled.
+
+      The power
+      is unstable.
+
+      One final challenge remains.
+
+
+      How well do you truly
+      understand the creature you have brought to life?
+
+
+      Answer carefully.
+      Every question matters.
+
+
+      The final test begins now.'
     showInstruction: 1
     duration: 40
     targetScore: 0

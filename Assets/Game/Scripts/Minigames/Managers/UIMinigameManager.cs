@@ -154,6 +154,17 @@ namespace Game.Minigames
             SetVisible(_feedbackPanel, false);
 
         }
+
+        public void HideHUD()
+        {
+            SetVisible(_hudPanel,false);
+        }
+
+        public void ShowHUD()
+        {
+            SetVisible(_hudPanel,true);
+        }
+
         public void ShowTutorial(string text)
         {
             Debug.Log(text + "aha");

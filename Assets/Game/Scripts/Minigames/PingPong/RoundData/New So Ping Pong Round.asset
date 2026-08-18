@@ -19,19 +19,36 @@ MonoBehaviour:
       The hand may be slightly used, but it should still function... probably.\n\nControls:\n\U0001F5B1
       Move the mouse to control the hand.\n\U0001F3D3 Don't let the ball escape."
     showInstruction: 1
-    duration: 40
+    duration: 20
     targetScore: 10
     requiredHits: 2
-    ballSpeed: 3.65
+    ballSpeed: 2.7
     ballsToSpawn: 1
     reactionSpeed: 6.06
     strikeOffsetZ: 0.94
     strikeDistance: 1.19
     strikeSpeed: 5.67
-    recoilDistance: 0.75
-    recoilRecoverSpeed: 5
+    recoilDistance: 0.5
+    recoilRecoverSpeed: 6
     stunTime: 0.34
     _pushVelocity: 0.16
+    _pushOffset: 0.48
+  - roundId: g
+    instruction: Round 2
+    showInstruction: 1
+    duration: 30
+    targetScore: 10
+    requiredHits: 2
+    ballSpeed: 4
+    ballsToSpawn: 1
+    reactionSpeed: 6.06
+    strikeOffsetZ: 0.94
+    strikeDistance: 1.19
+    strikeSpeed: 5.67
+    recoilDistance: 0.7
+    recoilRecoverSpeed: 5
+    stunTime: 0.2
+    _pushVelocity: 0.26
     _pushOffset: 0.48
   audioClips:
     _playingClip: {fileID: 0}

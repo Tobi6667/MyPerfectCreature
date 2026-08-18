@@ -15,7 +15,7 @@ public class HandGameCollider : MonoBehaviour
         // Debug.Log("collided with " + other.name);
         if (other.CompareTag("Ball"))
         {
-            _controller.BallOut();
+            _controller.BallOut(this);
         }
     }
 }

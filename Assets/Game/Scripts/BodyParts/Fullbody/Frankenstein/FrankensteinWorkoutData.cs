@@ -21,13 +21,16 @@ public class FrankensteinWorkoutData
     public MinigameBase _minigame;
 
 
+
+
 }
 
 
 public enum WorkoutType
 {
     Default,
-    Game
+    Game,
+    Quiz
 }
 
 

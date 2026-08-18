@@ -1,37 +1,65 @@
 using Game.Body;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 
 public class HandInjuryDatabase : IDatabaseBase
 {
-    private readonly List<IInjuryData> _shownInjuries = new();
 
-    List<IInjuryData> IDatabaseBase.GetAllInjuries()
+    private static List<HandInjuryTypes> _cache;
+    private readonly List<HandInjuryTypes> _shownInjuries = new List<HandInjuryTypes> ();
+
+    public List<HandInjuryTypes> GetAll()
     {
-        return injuries.Cast<IInjuryData>().ToList();
+        if (_cache == null)
+            _cache = BuildDatabase();
+
+        return _cache;
     }
 
-    IInjuryData IDatabaseBase.GetRandomInjury()
+
+    public List<IInjuryData> GetAllInjuries()
     {
-        if (injuries == null || injuries.Count == 0)
+        return GetAll()
+            .ConvertAll<IInjuryData>(x => x);
+    }
+
+    public HandInjuryTypes GetRandomInjury()
+    {
+
+        return GetRandomHandInjury();
+
+
+    }
+
+
+    private HandInjuryTypes GetRandomHandInjury()
+    {
+        var list = GetAll();
+
+        if (list.Count == 0)
             return null;
 
-        var injury = injuries[Random.Range(0, injuries.Count)];
-        var data = (IInjuryData)injury;
+        var inj = list[Random.Range(0, list.Count)];
 
-        _shownInjuries.Add(data);
-        return data;
+        _shownInjuries.Add(inj);
+        return inj;
     }
 
-    List<IInjuryData> IDatabaseBase.GetShownInjuries()
+
+    public List<IInjuryData> GetShownInjuries()
     {
-        return _shownInjuries;
+        return _shownInjuries.ConvertAll(x => (IInjuryData)x);
     }
 
-    public List<HandInjuryTypes> injuries = new()
+    private List<HandInjuryTypes> BuildDatabase()
     {
+
+
+        return new List<HandInjuryTypes>()
+        { 
         // =====================================================
         // GAMER THUMB
         // =====================================================
@@ -394,6 +422,11 @@ public class HandInjuryDatabase : IDatabaseBase
 
         },
     };
+    }
 
 
+    IInjuryData IDatabaseBase.GetRandomInjury()
+    {
+        return GetRandomInjury();
+    }
 }

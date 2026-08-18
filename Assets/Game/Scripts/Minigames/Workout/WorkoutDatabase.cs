@@ -13,6 +13,8 @@ public class WorkoutDatabase : MonoBehaviour
     [SerializeField] private List<IKTarget> iks;
     [SerializeField] private Animator animator;
 
+    [SerializeField] private FrankensteinController frank;
+
     private void Awake()
     {
         Instance = this;
@@ -52,6 +54,8 @@ public class WorkoutDatabase : MonoBehaviour
         {
             TweenIKWeight(ik, 0f);
         }
+
+        frank.IkBlendController.DeactivateIK();
     }
 
     private void TweenIKWeight(IKTarget ikTarget, float targetWeight)

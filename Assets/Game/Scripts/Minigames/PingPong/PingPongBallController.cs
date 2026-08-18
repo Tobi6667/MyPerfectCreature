@@ -11,9 +11,15 @@ public class PingPongBallController : MonoBehaviour
     [SerializeField] private Transform _targetPosition;
     [SerializeField] private float _initSpeedBall;
 
+    [Header("Stuck Ball Recovery")]
+    [SerializeField] private float _stuckTimeout = 5f;
+    [SerializeField] private float _pushForce = 2f;
+    private float _lastHitTime;
+
     [Header("Refs")]
     [SerializeField] private EnemyPingPongHand _enemyHand;
     [SerializeField] private HandGameCollider _handGameCollider;
+    [SerializeField] private HandGameCollider _enemyHandGameCollider;
     private BulletController _activeBall;
     private PingPongGameplayPhase _phase;
     private bool _isPlaying = false;
@@ -29,13 +35,39 @@ public class PingPongBallController : MonoBehaviour
     {
         _phase = phase;
         _handGameCollider.Initialize(this);
+        _enemyHandGameCollider.Initialize(this);
         _enemyHand.SetBallController(this);
+    }
+
+    private void Update()
+    {
+        if (!_isPlaying || _activeBall == null)
+            return;
+
+        if (Time.time - _lastHitTime >= _stuckTimeout)
+        {
+            PushStuckBall();
+            _lastHitTime = Time.time;
+        }
+    }
+
+    private void PushStuckBall()
+    {
+        Vector3 currentVelocity = _activeBall.GetComponent<Rigidbody>().linearVelocity;
+        float speed = currentVelocity.magnitude;
+        if (speed < 0.01f)
+            speed = _initSpeedBall;
+
+        Vector3 sideways = Random.value < 0.5f ? Vector3.left : Vector3.right;
+        Vector3 newDir = (currentVelocity.normalized + sideways * 0.5f).normalized;
+
+        _activeBall.SetVelocity(newDir * speed);
     }
 
     public void StopBall()
     {
         _isPlaying = false;
-        if(_activeBall != null)
+        if (_activeBall != null)
         {
             Destroy(_activeBall.gameObject);
             _activeBall = null;
@@ -44,7 +76,7 @@ public class PingPongBallController : MonoBehaviour
 
     public void StartBall()
     {
-        _isPlaying=true;
+        _isPlaying = true;
         SpawnBall();
     }
 
@@ -65,6 +97,8 @@ public class PingPongBallController : MonoBehaviour
             _initSpeedBall);
 
         _enemyHand.SetBallTarget(_activeBall.transform);
+
+        _lastHitTime = Time.time;
     }
 
 
@@ -72,27 +106,30 @@ public class PingPongBallController : MonoBehaviour
     {
         Debug.Log("player hit");
         _lastHitter = LastHitter.Player;
+        _lastHitTime = Time.time;
     }
 
     public void EnemyHitBall()
     {
         _lastHitter = LastHitter.Enemy;
+        _lastHitTime = Time.time;
     }
 
 
-    public void BallOut()
+    public void BallOut(HandGameCollider collider)
     {
         var next = false;
         if (_activeBall != null)
         {
             Destroy(_activeBall.gameObject);
             _activeBall = null;
+            
         }
-      
-        if (_lastHitter == LastHitter.Player)
+
+        if (collider == _handGameCollider)
             next = _phase.RegisterPoint(isPlayer: true);
-        else if (_lastHitter == LastHitter.Enemy)
-           next = _phase.RegisterPoint(isPlayer: false);
+        else if (collider == _enemyHandGameCollider)
+            next = _phase.RegisterPoint(isPlayer: false);
 
         _lastHitter = LastHitter.None;
         if (next)

@@ -31,15 +31,27 @@ MonoBehaviour:
       Miss too
       many gestures and the arm may develop opinions of its own.'
     showInstruction: 1
-    duration: 40
+    duration: 20
     targetScore: 10
     handGestures: 020000000300000004000000
-    gestureMatchThreshold: 0.74
+    gestureMatchThreshold: 2
     requiredCorrectGestures: 19
     gestureMatchTimer: 40
     maxWrongCount: 4
     resetTime: 1
-    gestureInterval: 0.8
+    gestureInterval: 1.4
+  - roundId: dd
+    instruction: Round 2
+    showInstruction: 1
+    duration: 30
+    targetScore: 10
+    handGestures: 020000000300000004000000
+    gestureMatchThreshold: 1.4
+    requiredCorrectGestures: 19
+    gestureMatchTimer: 40
+    maxWrongCount: 4
+    resetTime: 0.5
+    gestureInterval: 1
   audioClips:
     _playingClip: {fileID: 8300000, guid: c2e1647427f842f42b14c26ce2997239, type: 3}
     _roundEndClip: {fileID: 0}

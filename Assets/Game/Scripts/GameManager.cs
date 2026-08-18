@@ -46,12 +46,15 @@ namespace Game.Main
                 OnInteract(interactor);
             });
             _inputModule.SetReceiver(_inputReceiver);
+
         }
 
         public void FrankReady()
         {
             _awakeTimeline.Play();
-
+            UIMinigameManager.Instance.HideAll();
+            UIMinigameManager.Instance.HideHUD();
+            AudioMinigameManager.Instance.StopAll();
             StartCoroutine(CoWait());
         }
 

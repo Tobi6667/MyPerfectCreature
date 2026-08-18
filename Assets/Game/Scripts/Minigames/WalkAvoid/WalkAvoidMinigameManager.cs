@@ -1,5 +1,7 @@
 using Game.Body;
 using Game.Input;
+using Game.Main;
+using System;
 using UnityEngine;
 
 namespace Game.Minigames
@@ -18,6 +20,8 @@ namespace Game.Minigames
 
         protected override void BuildPipeline()
         {
+            UIMinigameManager.Instance.ShowHUD();
+            Completed += OnDone;
             Pipeline = new MinigamePipeline();
 
             foreach (var round in _data.rounds)
@@ -25,10 +29,20 @@ namespace Game.Minigames
                 Pipeline
                     .Add(new SetUpPhase())
                     .Add(new TutorialPhase(round.instruction))
-                    .Add(new ReadyPhase(2f))
+                    .Add(new ReadyPhase(1f))
                     .Add(new CountdownPhase(3))
                     .Add(new WalkAvoidGameplayPhase(round, _workoutSettings, this));
             }
+
         }
+
+        private void OnDone()
+        {
+            Debug.Log("done 11");
+            WorkoutDatabase.Instance.ResetIK();
+            GameManager.Instance.ChangeToDefaultReceiver();
+            CameraMinigameManager.Instance.VictorCam();
+        }
+
     }
 }

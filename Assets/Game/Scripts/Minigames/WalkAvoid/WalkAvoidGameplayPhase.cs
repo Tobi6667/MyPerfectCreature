@@ -81,7 +81,7 @@ namespace Game.Minigames
 
                     yield return null;
                 }
-                context.Cancelled = true;
+                //context.Cancelled = true;
                 _roundFinished = true;
             }
             finally
@@ -90,10 +90,11 @@ namespace Game.Minigames
 
                 StopSpawnLoop();
                 DestroyAllSpawned();
-                b.IkBlendController.DeactivateIK();
+                
+               /* b.IkBlendController.DeactivateIK();
                 WorkoutDatabase.Instance.ResetIK();
                 GameManager.Instance.ChangeToDefaultReceiver();
-                CameraMinigameManager.Instance.VictorCam();
+                CameraMinigameManager.Instance.VictorCam();*/
 
             }
         }
@@ -121,8 +122,14 @@ namespace Game.Minigames
             while (!_roundFinished)
             {
                 if (!IsPaused)
-                    Spawn(_round.spiderPrefab, _spawnSpider.position);
-                Spawn(_round.bulletPrefab, _spawnBullet.position);
+                {
+                    if (_round.floorTargets)
+                    {
+                        Spawn(_round.spiderPrefab, _spawnSpider.position);
+                    }
+                    
+                    Spawn(_round.bulletPrefab, _spawnBullet.position);
+                }
 
                 yield return new WaitForSeconds(_round.spawnInterval);
             }

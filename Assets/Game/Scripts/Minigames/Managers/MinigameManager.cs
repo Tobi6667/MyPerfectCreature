@@ -27,6 +27,7 @@ namespace Game.Minigames
         {
             Instance = this;
         }
+
         public void StartMinigame(BodyPartBase bodyPart)
         {
             Debug.Log($"[Minigame] Start request from BodyPart: {bodyPart.name}");
@@ -84,7 +85,7 @@ namespace Game.Minigames
         public void StartMinigame(MinigameBase prefab, BodyPartBase bodyPart = null)
         {
             Debug.Log($"[Minigame] Starting {prefab.name}");
-
+            _activeBodyPart = bodyPart;
             var instance = Instantiate(prefab);
             _activeMinigame = instance;
             _activeMinigame.Completed += OnMinigameCompleted;
@@ -120,8 +121,11 @@ namespace Game.Minigames
 
         private void OnMinigameCompleted()
         {
+
+            UIMinigameManager.Instance.HideAll();
             if (_activeBodyPart as FrankensteinController)
-            { Debug.Log("test frank");
+            {
+                Debug.Log("test frank");
 
                 var frank = _activeBodyPart as FrankensteinController;
                 //frank.FrankensteinMovementModule.MoveToTarget();
@@ -130,10 +134,12 @@ namespace Game.Minigames
                 return;
             }
             Debug.Log("minigame Done");
+
             if (_activeBodyPart.GetTransitionCam() != null)
-            { 
+            {
                 CameraMinigameManager.Instance.ChangeTo(_activeBodyPart.GetTransitionCam());
             }
+
 
             _activeMinigame.Completed -= OnMinigameCompleted;
             if (_activeMinigame.gameObject != null)
@@ -155,7 +161,7 @@ namespace Game.Minigames
             else
             {
                 CameraMinigameManager.Instance.ChangeTo(_activeBodyPart.GetTransitionCam());
-                AudioMinigameManager.Instance.PlayMusic(_defaultAudio, true);
+                AudioMinigameManager.Instance.PlayDefault();
                 Debug.Log("should move");
 
                 MoveToTable();

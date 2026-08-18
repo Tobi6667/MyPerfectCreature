@@ -33,11 +33,11 @@ public class FinalGameQuizController: MonoBehaviour
     private List<EQuizType> _allowedTypes = new List<EQuizType>
     {
         EQuizType.GuessInjuryFromSymptoms,
-        EQuizType.GuessInjuryFromVisual
-       // EQuizType.GuessBodyPartFromInjury,
-       // EQuizType.GuessInjuryFromDescription,
-       // EQuizType.GuessInjuryFromFunFact,
-       // EQuizType.GuessRealNameFromFunnyName,
+        EQuizType.GuessInjuryFromVisual,
+        EQuizType.GuessBodyPartFromInjury,
+        EQuizType.GuessInjuryFromDescription,
+        EQuizType.GuessInjuryFromFunFact,
+        EQuizType.GuessRealNameFromFunnyName,
     };
 
     private static readonly string[] BodyParts =  { "Head", "Torso", "LeftArm", "RightArm", "LeftLeg", "RightLeg" };
@@ -102,10 +102,20 @@ public class FinalGameQuizController: MonoBehaviour
     {
 
         _currentType = _allowedTypes[UnityEngine.Random.Range(0, _allowedTypes.Count)];
+
+        if(_activeBodypart as FrankensteinController)
+        {
+            var fr = _activeBodypart as FrankensteinController;
+            fr.OnQuiz();
+        }
+        Debug.Log("active part: " + _activeBodypart);
         _activeBodypart.transform.DOMove(_bodyTarget.position + _activeBodypart.OffsetPositionAtFinal, 2f).OnComplete(()=>
         {
 
             _activeBodypart.transform.DOLocalRotate(_activeBodypart.OffsetAtFinal, 1f);
+
+
+
             _activeBodypart.OnInject(_currentInjury);
 
                 _lastBody = _activeBodypart;
@@ -153,7 +163,7 @@ public class FinalGameQuizController: MonoBehaviour
         {
             EQuizType.GuessBodyPartFromInjury => new List<string>(BodyParts),
             EQuizType.GuessRealNameFromFunnyName => _allInjuries.ConvertAll(i => i.InjuryRealName),
-            _ => _injuries.ConvertAll(i => i.InjuryName)
+            _ => _allInjuries.ConvertAll(i => i.InjuryName)
         };
 
         // Remove correct from pool to avoid duplicates

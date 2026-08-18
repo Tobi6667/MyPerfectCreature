@@ -26,13 +26,21 @@ namespace Game.Minigames
 
             foreach(var body in bodies)
             {
+                body.gameObject.SetActive(true);
+                
+                if(body.Region == EBodyRegion.Fullbody)
+                {
+                    var fr = body as FrankensteinController;
+                    fr.IkBlendController.ActivateIdle();
+                }
+
                 body.MoveToInteractionPoint(context.StartTransform.position - new Vector3(10f + index * 2, 0, 0), () =>
                 {
                     finished = true;
                 });
                 index++;
             }
-
+            
 
             CameraMinigameManager.Instance.ChangeTo(context.Minigame.GameCam);
 

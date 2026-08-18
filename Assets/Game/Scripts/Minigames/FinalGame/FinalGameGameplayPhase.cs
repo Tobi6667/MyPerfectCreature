@@ -35,6 +35,7 @@ public class FinalGameGameplayPhase : IMinigamePhase
     public IEnumerator Execute(MinigameContext context)
     {
 
+        AudioMinigameManager.Instance.PlayMusic(context.Minigame.GameMusic, true);
 
         float timer = _round.duration;
 

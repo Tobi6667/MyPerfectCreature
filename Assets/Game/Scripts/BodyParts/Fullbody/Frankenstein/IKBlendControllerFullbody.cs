@@ -49,7 +49,7 @@ public class IKBlendController : MonoBehaviour
     [SerializeField] private float idleArmSwayFrequency = 0.4f;
     [SerializeField] private float idleArmSwayAmount = 0.02f;
 
-    private bool _isIdle = true;
+    private bool _isIdle = false;
 
     public BodyState injuryState = new BodyState();
     private RuntimeWorkoutSettings runtime;

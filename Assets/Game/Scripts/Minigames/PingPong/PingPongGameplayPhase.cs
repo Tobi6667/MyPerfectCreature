@@ -39,6 +39,7 @@ namespace Game.Minigames
             context.Receiver.Bind(context.BodyPart);
             float timer = _round.duration;
             AudioMinigameManager.Instance.PlayMusic(context.Minigame.GameMusic, true);
+            UIMinigameManager.Instance.ShowScorePanel();
 
 
             HandController hand = context.BodyPart as HandController;

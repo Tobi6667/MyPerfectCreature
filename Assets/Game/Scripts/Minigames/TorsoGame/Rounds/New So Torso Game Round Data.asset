@@ -20,7 +20,7 @@ MonoBehaviour:
       Move Left\n\u27A1\uFE0F D \u2013 Move Right\n\U0001F4A5 SPACE \u2013 Bang your
       head to catch falling photos"
     showInstruction: 1
-    duration: 10
+    duration: 30
     targetScore: 44
     moveSpeedMultiplier: 1
     instabilityMultiplier: 0
@@ -28,9 +28,9 @@ MonoBehaviour:
     dropSpeed: 0.3
     imagesToCollect: 10
     imageObject: {fileID: 4268697087459164248, guid: 8c2a6fc3d503dd24e8b7e8926ee1158c, type: 3}
-    difficultyMultiplier: 0.24
+    difficultyMultiplier: 0.51
     maxBangAmount: 3
-    dropSpeedMultiplier: 1
+    dropSpeedMultiplier: 1.35
   audioClips:
     _playingClip: {fileID: 0}
     _roundEndClip: {fileID: 0}
